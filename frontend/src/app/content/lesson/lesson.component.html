@@ -1,1 +1,105 @@
-<p>lesson works!</p>
+<article class="lesson">
+    <section class="info">
+        <img src="../../../assets/images/dark_logo.png">
+
+        <div>
+            <p class="module">02. Introdução ao Vue.js</p>
+            <h1 class="name">Trabalhando com Slots e Components</h1>
+            <div>
+                <span class="badge">Aula 25</span>
+                <span class="badge dark">12:56 min</span>
+            </div>
+
+            <div class="actions">
+                <button><i class="cil-media-step-backward"></i></button>
+                <button><i class="cil-media-step-forward"></i></button>
+            </div>
+        </div>
+
+        <div>
+            <div class="about-track">
+                <div class="detail">
+                    <label>Tamanho:</label>
+                    <p>14,6MB</p>
+                </div>
+    
+                <hr/>
+
+                <div class="detail">
+                    <label>Qualidade:</label>
+                    <p>1280x720p</p>
+                </div>
+
+                <hr/>
+
+                <div class="detail">
+                    <label>Formato:</label>
+                    <p>.MP4</p>
+                </div>
+            </div>
+            
+            <div>
+                <button><i class="cil-cloud-download"></i> Fazer Download</button>
+                <button class="secondary">Assistir Mais Tarde</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="video-dumb">
+
+    </div>
+</article>
+
+<article class="course">
+    <section>
+        <div class="info">
+            <span id="about">Sobre o Curso</span>
+            <h1 class="name">Aprenda a ser um Desenvolvedor Completo Utilizando Vue.JS e Spring Boot</h1>
+            <p class="module">Professor João da Silva</p>
+
+            <p class="description">Aprenda os fundamentos de Vue.js e Spring Boot, boas práticas e construa várias aplicações web</p>
+            <div>
+                <span class="badge">730 aulas</span>
+                <span class="badge primary">300 min</span>
+            </div>
+            <div class="actions">
+                <button><i class="cil-share-alt"></i></button>
+                <button><i class="cil-star"></i></button>
+                <button><i class="cil-check-circle"></i></button>
+            </div>
+        </div>
+        <div class="banner" style="background: url('https://blog.fellyph.com.br/wp-content/uploads/2018/02/vue-banner.png')"></div>
+    </section>
+
+    <section class="content">
+        <ul class="modules">
+            <li *ngFor="let i of lessons">
+                <div>
+                    <p>01. Introdução</p>
+                    <span>15:01 min</span>
+                </div>
+                <div class="amount">
+                    <i class="cil-screen-desktop"></i>
+                    <span>04</span>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="lessons">
+            <li *ngFor="let i of lessons">
+                <div class="completion hide">
+                    <i class="cil-check-circle"></i>
+                </div>
+                <div class="information">
+                    <p>Visão Geral do Curso</p>
+                    <span>06:39 min</span>
+                </div>
+                <div class="actions">
+                    <button><i class="cil-check-circle"></i></button>
+                    <button><i class="cil-cloud-download"></i></button>
+                    <button><i class="cil-media-play"></i></button>
+                </div>
+            </li>
+        </ul>
+    </section>
+</article>

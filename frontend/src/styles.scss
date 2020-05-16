@@ -32,7 +32,7 @@ button {
     background: $primary-color;
     color: transparentize(black, 0.4);
     font-size: 14px;
-    padding: 12px 24px;
+    padding: 12px 36px;
     border-radius: 21px;
     white-space: nowrap;
     box-sizing: border-box;
@@ -98,5 +98,23 @@ button,
     &.primary {
         background: $primary-color;
         color: transparentize($color: #000000, $amount: 0.3);
+    }
+}
+
+.detail {
+    display: inline-block;
+
+    label {
+        font-size: 10px;
+        color: $primary-color;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    p {
+        margin: 0;
+        font-size: 20px;
+        color: #D0D0CF;
+        font-weight: 200;
     }
 }
