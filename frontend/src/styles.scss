@@ -1,1 +1,64 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~src/variables.scss";
+
+* {
+    font-family: $font;
+}
+
+body {
+    background: #262626;
+    margin: 0;
+}
+
+input {
+    font-size: 14px;
+    background: #222222;
+    color: #575757;
+    border: 0;
+    border-radius: 21px;
+    padding: 12px 20px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: all 150ms ease;
+
+    &:hover,
+    &:focus {
+        transform: scale(1.03);
+    }
+
+    &::placeholder {
+        color: #3E3E3E
+    }
+}
+
+.btn,
+button {
+    background: $primary-color;
+    color: transparentize(black, 0.4);
+    font-size: 14px;
+    padding: 12px;
+    border-radius: 21px;
+    box-sizing: border-box;
+    border: 0;
+    transition: all 150ms ease;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+        transform: scale(1.03);
+    }
+
+    &.secondary {
+        background: none;
+        color: $primary-color;
+        padding: 4px 12px;
+    }
+}
+
+a {
+    color: $primary-color;
+    text-decoration: none;
+
+    &:visited {
+        color: $primary-color;
+    }
+}
