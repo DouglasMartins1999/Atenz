@@ -1,0 +1,9 @@
+:host {
+    display: flex;
+}
+
+article {
+    flex-grow: 1;
+    height: 100vh;
+    overflow-y: scroll;
+}
