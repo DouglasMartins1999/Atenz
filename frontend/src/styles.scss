@@ -79,3 +79,24 @@ button,
     text-transform: uppercase;
     margin: 0;
 }
+
+.badge {
+    display: inline-block;
+    font-size: 12px;
+    color: #2A2A2A;
+    background: #FFF;
+    padding: 3px 8px;
+    margin-right: 8px;
+    border-radius: 4px;
+    cursor: default;
+
+    &.dark {
+        background: #4A4A4A;
+        color:#888888;
+    }
+
+    &.primary {
+        background: $primary-color;
+        color: transparentize($color: #000000, $amount: 0.3);
+    }
+}

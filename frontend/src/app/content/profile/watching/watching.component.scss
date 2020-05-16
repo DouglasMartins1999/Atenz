@@ -70,22 +70,6 @@
 
     .badges {
         margin-top: 10px;
-
-        span {
-            display: inline-block;
-            font-size: 12px;
-            color: #2A2A2A;
-            background: #FFF;
-            padding: 3px 8px;
-            margin-right: 8px;
-            border-radius: 4px;
-            cursor: default;
-
-            &.dark {
-                background: #4A4A4A;
-                color:#888888;
-            }
-        }
     }
 
     .actions {

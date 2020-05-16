@@ -1,4 +1,4 @@
-<section>
+<section class="profile">
     <div id="user-info">
         <h1>@douglasm</h1>
         <p>Membro desde Julho de 2020</p>
@@ -67,7 +67,23 @@
     <atz-header></atz-header>
 
     <main>
-        <h1 class="title">Continue Assistindo</h1>
-        <atz-watching></atz-watching>
+        <section>
+            <h1 class="title">Continue Assistindo</h1>
+            <atz-watching></atz-watching>
+        </section>
+
+        <section>
+            <h1 class="title">Cursos Recentes</h1>
+            <ul class="card-list three-itens">
+                <li *ngFor="let i of recents"><atz-course-card></atz-course-card></li>
+            </ul>
+        </section>
+
+        <section>
+            <h1 class="title">Livros Mais Lidos</h1>
+            <ul class="card-list four-itens">
+                <li *ngFor="let i of reads"><atz-book-card></atz-book-card></li>
+            </ul>
+        </section>
     </main>
 </article>
