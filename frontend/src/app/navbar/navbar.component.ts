@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-	private isEnabled: Boolean = true;
-	private user: String = "H"
+	isEnabled: Boolean = true;
+	user: String = "H"
 
 	constructor() {}
 	
