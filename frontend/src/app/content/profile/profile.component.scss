@@ -136,9 +136,18 @@ section {
         button {
             flex-grow: 1;
         }
+
+        .secondary {
+            padding-right: 0;
+        }
     }
 }
 
 article {
     flex-grow: 1;
+
+    main {
+        margin: 42px 70px;
+
+    }
 }

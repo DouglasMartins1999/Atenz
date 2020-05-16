@@ -26,11 +26,15 @@ input {
 
 .btn,
 button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     background: $primary-color;
     color: transparentize(black, 0.4);
     font-size: 14px;
-    padding: 12px;
+    padding: 12px 24px;
     border-radius: 21px;
+    white-space: nowrap;
     box-sizing: border-box;
     border: 0;
     cursor: pointer;
@@ -38,7 +42,12 @@ button {
     &.secondary {
         background: none;
         color: $primary-color;
-        padding: 4px 12px;
+        padding: 4px 24px;
+    }
+
+    i {
+        font-size: 18px;
+        margin-right: 12px;
     }
 }
 
@@ -61,4 +70,12 @@ button,
     &:focus {
         transform: scale(1.03);
     }
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 300;
+    color: #484747;
+    text-transform: uppercase;
+    margin: 0;
 }
