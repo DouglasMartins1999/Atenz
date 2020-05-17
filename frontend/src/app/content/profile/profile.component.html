@@ -65,7 +65,7 @@
 
 <article>
     <atz-header></atz-header>
-
+    
     <main>
         <section>
             <h1 class="title">Continue Assistindo</h1>
@@ -80,7 +80,39 @@
         </section>
 
         <section>
-            <h1 class="title">Livros Mais Lidos</h1>
+            <h1 class="title">Lidos Recentemente</h1>
+            <ul class="card-list four-itens">
+                <li *ngFor="let i of reads"><atz-book-card></atz-book-card></li>
+            </ul>
+        </section>
+
+        <section>
+            <div class="header-row">
+                <h1 class="title">Cursos Favoritos</h1>
+                <button class="secondary"><i class="cil-list"></i><span>Expandir</span></button>
+            </div>
+            <ul class="card-list three-itens">
+                <li *ngFor="let i of recents"><atz-course-card></atz-course-card></li>
+            </ul>
+        </section>
+
+        <section>
+            <div class="header-row">
+                <h1 class="title">Assistir Mais Tarde</h1>
+                <button class="secondary"><i class="cil-list"></i><span>Expandir</span></button>
+            </div>
+            <ul class="card-list three-itens">
+                <li *ngFor="let i of recents">
+                    <atz-lesson-card>
+                        <span class="badge spaceless">03:40 m</span>
+                        <p class="name small">Trabalhando com Slots e Componentes Personalizados</p>
+                    </atz-lesson-card>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h1 class="title">Mais Lidos</h1>
             <ul class="card-list four-itens">
                 <li *ngFor="let i of reads"><atz-book-card></atz-book-card></li>
             </ul>

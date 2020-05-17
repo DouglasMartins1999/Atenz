@@ -23,13 +23,10 @@
     <section class="featured">
         <article *ngFor="let i of featured" [ngClass]="{ 'active': i }" class="card">
             <header>
-                <div class="banner scale">
-                    <img src="https://s3.amazonaws.com/thinkific/courses/course_card_image_000/565/7531585219903.medium.jpg?1585219903">
-                    <div class="overlay">
-                        <p class="lessons">120 aulas</p>
-                        <p class="name">React Native: Desenvolva APPs Nativas para Android e iOS</p>
-                    </div>
-                </div>
+                <atz-lesson-card class="banner">
+                    <p class="lessons">120 aulas</p>
+                    <p class="name">React Native: Desenvolva APPs Nativas para Android e iOS</p>
+                </atz-lesson-card>
 
                 <div class="metadata">
                     <div class="detail">
@@ -54,14 +51,11 @@
     <section class="results">
         <ul class="courses">
             <li *ngFor="let i of itens" [ngClass]="{ 'active': i }">
-                <div class="banner scale">
-                    <img src="https://s3.amazonaws.com/thinkific/courses/course_card_image_000/565/7531585219903.medium.jpg?1585219903">
-                    <div class="overlay"></div>
-                </div>
+                <atz-lesson-card class="scale" [width]="20"></atz-lesson-card>
 
                 <div class="data">
                     <p class="meta">02. Introdução ao Vue.js</p>
-                    <h3 class="name">Trabalhando com Slots e<br> Componentes Personalizados</h3>
+                    <h3 class="name">Trabalhando com Slots e Componentes Personalizados</h3>
                 </div>
 
                 <div class="badges">
