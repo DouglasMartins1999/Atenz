@@ -27,23 +27,20 @@ aside {
         cursor: default;
     }
 
-    ul {
-        padding: 0;
-        list-style: none;
-
-        li {
-            color: $primary_color;
-            font-size: 22px;
-            margin: 32px 0;
-            cursor: pointer;
-        }
+    ul li {
+        color: $primary_color;
+        font-size: 22px;
+        margin: 32px 0;
+        cursor: pointer;
 
         i {
             display: block;
-
+    
             &:hover{
                 transform: scale(1.2);
             }
         }
     }
+
+    
 }

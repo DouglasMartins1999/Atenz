@@ -4,11 +4,12 @@ import { ProfileComponent } from './profile/profile.component';
 import { GenericsModule } from '../generics/generics.module';
 import { WatchingComponent } from './profile/watching/watching.component';
 import { LessonComponent } from './lesson/lesson.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
 	declarations: [
 		ProfileComponent, 
-		WatchingComponent, LessonComponent
+		WatchingComponent, LessonComponent, SearchComponent
 	],
 	imports: [
 		CommonModule,
