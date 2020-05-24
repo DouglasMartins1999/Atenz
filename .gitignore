@@ -78,3 +78,6 @@ msbuild.wrn
 
 # Visual Studio 2015
 .vs/
+
+# Protected Info
+Environment.txt
