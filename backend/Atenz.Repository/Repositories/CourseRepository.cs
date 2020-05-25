@@ -55,7 +55,8 @@ namespace Atenz.Repository.Repositories
                 .ToListAsync();
         }
 
-        public async Task<dynamic> Query(string keyword, long userId, int page = 1, int limit = 10){
+        public async Task<dynamic> Query(string keyword, long userId, int page = 1, int limit = 10)
+        {
             var querystring = keyword.ToLower();
             var courses = Context.Courses
                 .Include(c => c.Modules)
@@ -123,7 +124,8 @@ namespace Atenz.Repository.Repositories
                 .ToListAsync();
         }
 
-        public async Task<dynamic> QueryFeatured(string query, long user){
+        public async Task<dynamic> QueryFeatured(string query, long user)
+        {
             return await Context.Lessons
                 .Include(l => l.Module)
                 .ThenInclude(m => m.Course)
@@ -143,6 +145,69 @@ namespace Atenz.Repository.Repositories
                     lessonsAmount = m.Module.Course.Modules.Select(x => x.Lessons.Count).Sum()
                 })
                 .ToListAsync();
+        }
+
+        public async Task<bool> AddToFavorites(long userId, long courseId)
+        {
+            try 
+            {
+                var fav = await Context.FavoriteCourses
+                    .Where(f => f.UserId == userId && f.CourseId == courseId)
+                    .SingleOrDefaultAsync();
+
+                if(fav == null && userId != 0 && courseId != 0){
+                    var favorite = new FavoriteCourse(userId, courseId);
+                    await Context.FavoriteCourses.AddAsync(favorite);
+                }
+
+                return (await Context.SaveChangesAsync()) > 0;
+            } 
+            catch(Exception e)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> AddToWatchLater(long userId, long lessonId)
+        {
+            try 
+            {
+                var wl = await Context.WatchLater
+                    .Where(w => w.UserId == userId && w.LessonId == lessonId)
+                    .SingleOrDefaultAsync();
+
+                if(wl == null && userId != 0 && lessonId != 0){
+                    var watch = new WatchLater(userId, lessonId);
+                    await Context.WatchLater.AddAsync(watch);
+                }
+
+                return (await Context.SaveChangesAsync()) > 0;
+            } 
+            catch(Exception e)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> AddToHistory(long userId, long lessonId)
+        {
+            try 
+            {
+                var history = await Context.History
+                    .Where(w => w.UserId == userId && w.LessonId == lessonId)
+                    .SingleOrDefaultAsync();
+
+                if(history == null && userId != 0 && lessonId != 0){
+                    var entry = new History(userId, lessonId);
+                    await Context.History.AddAsync(entry);
+                }
+
+                return (await Context.SaveChangesAsync()) > 0;
+            } 
+            catch(Exception e)
+            {
+                return false;
+            }
         }
     }
 }

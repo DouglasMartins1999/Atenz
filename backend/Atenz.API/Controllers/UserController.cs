@@ -20,7 +20,8 @@ namespace Atenz.API.Controllers
         }
 
         [Route("profile/{id:long}")]
-        public async Task<ActionResult> Get(long id){
+        public async Task<ActionResult> Get(long id)
+        {
             var user = await repository.ProfileBasic(id);
             var latest = await repository.LatestWatched(id);
             var recentCourse = await repository.RecentsCourses(id);

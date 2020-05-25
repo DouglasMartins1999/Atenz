@@ -11,5 +11,14 @@ namespace Atenz.Domain.Entities
         public Course Course { get; set; }
         public long CourseId { get; set; }
         public DateTime CreatedAt { get; set; }
+
+        public FavoriteCourse(){}
+        
+        public FavoriteCourse(long user, long course)
+        {
+            this.UserId = user;
+            this.CourseId = course;
+        }
+
     }
 }

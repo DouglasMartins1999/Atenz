@@ -11,5 +11,13 @@ namespace Atenz.Domain.Entities
         public Lesson Lesson { get; set; }
         public long LessonId { get; set; }
         public DateTime CreatedAt { get; set; }
+
+        public History(){}
+
+        public History(long user, long lesson)
+        {
+            this.UserId = user;
+            this.LessonId = lesson;
+        }
     }
 }

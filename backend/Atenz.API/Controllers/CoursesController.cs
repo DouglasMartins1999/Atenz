@@ -35,10 +35,11 @@ namespace Atenz.API.Controllers
         }
 
         [Route("module/lesson/{id:long}")]
-        public async Task<ActionResult> GetLesson(long id)
+        public async Task<ActionResult> GetLesson(long id, [FromQuery] long user)
         {
             var lesson = await repository.GetLessonById(id);
             var result = mapper.Map<LessonDTO>(lesson);
+            await repository.AddToHistory(user, id);
             return Ok(result);
         }
 
@@ -52,6 +53,22 @@ namespace Atenz.API.Controllers
         public async Task<ActionResult> Featured([FromQuery] string q, [FromQuery] long user){
             var result = await repository.QueryFeatured(q, user);
             return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("{id:long}/favorite")]
+        public async Task<ActionResult> AddToFavorites([FromQuery] long user, long id)
+        {
+            var result = await repository.AddToFavorites(user, id);
+            return Ok(new { added = result });
+        }
+
+        [HttpPost]
+        [Route("module/lesson/{id:long}/watchlater")]
+        public async Task<ActionResult> AddToWatchLater([FromQuery] long user, long id)
+        {
+            var result = await repository.AddToWatchLater(user, id);
+            return Ok(new { added = result });
         }
     }
 }
