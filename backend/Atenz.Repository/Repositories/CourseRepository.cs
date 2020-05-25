@@ -164,6 +164,7 @@ namespace Atenz.Repository.Repositories
             } 
             catch(Exception e)
             {
+                Console.WriteLine(e.Message);
                 return false;
             }
         }
@@ -185,6 +186,7 @@ namespace Atenz.Repository.Repositories
             } 
             catch(Exception e)
             {
+                Console.WriteLine(e.Message);
                 return false;
             }
         }
@@ -206,6 +208,7 @@ namespace Atenz.Repository.Repositories
             } 
             catch(Exception e)
             {
+                Console.WriteLine(e.Message);
                 return false;
             }
         }
