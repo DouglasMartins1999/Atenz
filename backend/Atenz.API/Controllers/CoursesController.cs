@@ -27,14 +27,16 @@ namespace Atenz.API.Controllers
         }
 
         [Route("module/{id:long}")]
-        public async Task<ActionResult> GetModule(long id){
+        public async Task<ActionResult> GetModule(long id)
+        {
             var lessons = await repository.GetLessonByModule(id);
             var result = mapper.Map<IEnumerable<ModuleLessonDTO>>(lessons);
             return Ok(result);
         }
 
         [Route("module/lesson/{id:long}")]
-        public async Task<ActionResult> GetLesson(long id){
+        public async Task<ActionResult> GetLesson(long id)
+        {
             var lesson = await repository.GetLessonById(id);
             var result = mapper.Map<LessonDTO>(lesson);
             return Ok(result);

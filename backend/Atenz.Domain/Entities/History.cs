@@ -8,7 +8,7 @@ namespace Atenz.Domain.Entities
         public long Id { get; set; }
         public User User { get; set; }
         public long UserId { get; set; }
-        public Lesson Lesson { get; }
+        public Lesson Lesson { get; set; }
         public long LessonId { get; set; }
         public DateTime CreatedAt { get; set; }
     }

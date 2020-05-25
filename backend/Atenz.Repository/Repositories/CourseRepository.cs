@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Atenz.Domain.Entities;
 using System;
+using System.Collections.Generic;
 
 namespace Atenz.Repository.Repositories
 {
@@ -14,7 +15,8 @@ namespace Atenz.Repository.Repositories
             Context = context;
         }
 
-        public async Task<dynamic> GetById(long id){
+        public async Task<dynamic> GetById(long id)
+        {
             return await Context.Courses
                 .Include(c => c.Modules)
                 .ThenInclude(m => m.Lessons)
@@ -37,14 +39,16 @@ namespace Atenz.Repository.Repositories
                 .FirstOrDefaultAsync();
         }
 
-        public Task<Lesson> GetLessonById(long id){
+        public Task<Lesson> GetLessonById(long id)
+        {
             return Context.Lessons
                 .Where(l => l.Id == id)
                 .Include(l => l.Module)
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<dynamic> GetLessonByModule(long moduleId){
+        public async Task<List<Lesson>> GetLessonByModule(long moduleId)
+        {
             return await Context.Lessons
                 .Where(l => l.ModuleId == moduleId)
                 .Include(l => l.Watches)
