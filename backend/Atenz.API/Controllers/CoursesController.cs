@@ -41,5 +41,17 @@ namespace Atenz.API.Controllers
             var result = mapper.Map<LessonDTO>(lesson);
             return Ok(result);
         }
+
+        [Route("search")]
+        public async Task<ActionResult> Search([FromQuery] string q, [FromQuery] long user, [FromQuery] int pag = 1){
+            var result = await repository.Query(q, user, pag);
+            return Ok(result);
+        }
+
+        [Route("search/featured")]
+        public async Task<ActionResult> Featured([FromQuery] string q, [FromQuery] long user){
+            var result = await repository.QueryFeatured(q, user);
+            return Ok(result);
+        }
     }
 }

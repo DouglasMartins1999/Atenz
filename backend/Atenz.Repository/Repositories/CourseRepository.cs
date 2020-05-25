@@ -54,5 +54,95 @@ namespace Atenz.Repository.Repositories
                 .Include(l => l.Watches)
                 .ToListAsync();
         }
+
+        public async Task<dynamic> Query(string keyword, long userId, int page = 1, int limit = 10){
+            var querystring = keyword.ToLower();
+            var courses = Context.Courses
+                .Include(c => c.Modules)
+                .Where(c => 
+                    c.Name.ToLower().Contains(querystring) ||
+                    c.Teacher.ToLower().Contains(querystring) ||
+                    c.Description.ToLower().Contains(querystring) ||
+                    c.Keywords.Contains(keyword)
+                )
+                .Select(c => new {
+                    name = c.Name,
+                    banner = c.Banner,
+                    label = null as string,
+                    duration = null as string,
+                    wasWatched = false,
+                    amount = c.Modules.Count,
+                    course = c.Id,
+                    module = 0L,
+                    lesson = 0L,
+                });
+
+
+            var modules = Context.Modules
+                .Include(m => m.Course)
+                .Include(m => m.Lessons)
+                .Where(m => m.Name.ToLower().Contains(querystring))
+                .Select(m => new {
+                    name = m.Name,
+                    banner = m.Course.Banner,
+                    label = null as string,
+                    duration = null as string,
+                    wasWatched = false,
+                    amount = m.Lessons.Count,
+                    course = m.CourseId,
+                    module = m.Id,
+                    lesson = 0L,
+                });
+
+            var lessons = Context.Lessons
+                .Include(l => l.Module)
+                .ThenInclude(m => m.Course)
+                .Include(l => l.Watches)
+                .Where(l => l.Name.ToLower().Contains(querystring))
+                .Select(m => new {
+                    name = m.Name,
+                    banner = m.Module.Course.Banner,
+                    label = m.Module.Name,
+                    duration = m.Duration.ToString(),
+                    wasWatched = m.Watches.Where(i => i.UserId == userId).Count() > 0,
+                    amount = 0,
+                    course = m.Module.CourseId,
+                    module = m.ModuleId,
+                    lesson = m.Id,
+                })
+                .Skip(page == 1 ? 2 : 0);
+
+            return await courses
+                .Union(modules)
+                .Union(lessons)
+                .OrderBy(s => s.course)
+                .ThenBy(s => s.module)
+                .ThenBy(s => s.lesson)
+                .Skip((page - 1) * limit)
+                .Take(limit)
+                .ToListAsync();
+        }
+
+        public async Task<dynamic> QueryFeatured(string query, long user){
+            return await Context.Lessons
+                .Include(l => l.Module)
+                .ThenInclude(m => m.Course)
+                .Include(l => l.Watches)
+                .Where(l => l.Name.ToLower().Contains(query.ToLower()))
+                .Take(2)
+                .Select(m => new {
+                    id = m.Id,
+                    name = m.Name,
+                    banner = m.Module.Course.Banner,
+                    course = m.Module.Course.Name,
+                    module = m.Module.Name,
+                    teacher = m.Module.Course.Teacher,
+                    duration = m.Duration.ToString(),
+                    wasWatched = m.Watches.Where(i => i.UserId == user).Count() > 0,
+                    position = m.Position,
+                    lessonsAmount = m.Module.Course.Modules.Select(x => x.Lessons.Count).Sum()
+                })
+                .ToListAsync();
+        }
     }
 }
