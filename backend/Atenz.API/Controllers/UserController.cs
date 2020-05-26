@@ -1,8 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Atenz.API.Helpers;
 using Atenz.Domain.DTOs;
+using Atenz.Domain.Identity;
 using Atenz.Repository.Repositories;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atenz.API.Controllers
@@ -17,6 +21,32 @@ namespace Atenz.API.Controllers
         {
             this.repository = userRepository;
             this.mapper = Mapper;
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("signin")]
+        public async Task<ActionResult> Login(User u)
+        {
+            try {
+                var user = await repository.Auth(u.Username, u.Password);
+                var result = new { token = TokenService.GenerateToken(user) };
+                return Ok(result);
+
+            } catch(Exception e){
+                Console.WriteLine(e.Message);
+                return Unauthorized();
+            }
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("signup")]
+        public async Task<ActionResult> SignIn(User u)
+        {
+            var user = await repository.Register(u);
+            var result = new { token = TokenService.GenerateToken(user) };
+            return Ok(result);
         }
 
         [Route("profile")]
@@ -75,6 +105,7 @@ namespace Atenz.API.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [Route("profile/watchlater")]
         public async Task<ActionResult> ToWatchLater([FromQuery] long id, [FromQuery] int pag)
         {

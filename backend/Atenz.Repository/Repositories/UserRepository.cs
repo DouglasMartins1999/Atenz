@@ -17,6 +17,34 @@ namespace Atenz.Repository.Repositories
             context = Context;
         }
 
+        public async Task<User> Auth(string username, string password)
+        {
+            var user = await context.Users
+                .Where(u => u.Username == username)
+                .FirstOrDefaultAsync();
+
+            if(user == null) {
+                throw new Exception("Usuário não encontrado");
+            }
+
+            var isValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
+
+            if(!isValid) {
+                throw new Exception("Senha inválida");
+            }
+
+            return user;
+        }
+
+        public async Task<User> Register(User user)
+        {
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            user.Password = hashedPassword;
+            await context.Users.AddAsync(user);
+            var data = await context.SaveChangesAsync();
+            return user;
+        }
+
         public async Task<User> ProfileBasic(long id){
             return await context.Users
                 .Where(u => u.Id == id)
