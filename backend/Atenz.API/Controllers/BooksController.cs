@@ -25,6 +25,7 @@ namespace Atenz.API.Controllers
             return Ok(result);
         }
 
+        [HttpPost]
         [Route("{id:long}/favorite")]
         public async Task<ActionResult> MarkAsFavorite(long id, [FromQuery] long user)
         {
@@ -32,6 +33,7 @@ namespace Atenz.API.Controllers
             return Ok(result);
         }
 
+        [HttpPost]
         [Route("{id:long}/read")]
         public async Task<ActionResult> MarkAsReaded(long id, [FromQuery] long user)
         {

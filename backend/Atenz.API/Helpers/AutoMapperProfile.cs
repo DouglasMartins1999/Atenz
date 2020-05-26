@@ -27,6 +27,8 @@ namespace Atenz.API.Helpers
 
             CreateMap<Lesson, MinimalLesson>()
                 .ForMember(dest => dest.Banner, opt => opt.MapFrom(src => src.Module.Course.Banner));
+            
+            CreateMap<Book, MinimalBook>();
         }
     }
 }

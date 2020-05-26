@@ -22,6 +22,6 @@ namespace Atenz.Domain.DTOs
         public List<MinimalBook> RecentBooks { get; set; }
         public List<MinimalCourse> FavCourses { get; set; }
         public List<MinimalLesson> WatchLater { get; set; }
-        public List<MinimalBook> MostReaded { get; set; }
+        public List<MinimalBook> FavBooks { get; set; }
     }
 }

@@ -19,17 +19,19 @@ namespace Atenz.API.Controllers
             this.mapper = Mapper;
         }
 
-        [Route("profile/{id:long}")]
-        public async Task<ActionResult> Get(long id)
+        [Route("profile")]
+        public async Task<ActionResult> Get([FromQuery] long id)
         {
             var user = await repository.ProfileBasic(id);
-            var latest = await repository.LatestWatched(id);
-            var recentCourse = await repository.RecentsCourses(id);
-            var favoriteCourse = await repository.FavoriteCourses(id);
-            var watchLater = await repository.LessonsToWatchLater(id);
-            var interests = await repository.Interests(id);
             var statistics = await repository.Statistics(id);
+            var interests = await repository.Interests(id);
             var goals = await repository.Goals(id);
+            var latest = await repository.LatestWatched(id);
+            var recentCourse = await repository.RecentsCourses(id, 1, 4);
+            var favoriteCourse = await repository.FavoriteCourses(id, 1, 4);
+            var watchLater = await repository.LessonsToWatchLater(id, 1, 4);
+            var recentBooks = await repository.RecentsBooks(id, 1, 4);
+            var favoriteBooks = await repository.FavoriteBooks(id, 1, 4);
             
             var result = mapper.Map<ProfileDTO>(user);
             result.Latest = mapper.Map<Latest>(latest);
@@ -39,7 +41,44 @@ namespace Atenz.API.Controllers
             result.Interests = interests;
             result.Statistics = statistics;
             result.Goals = goals;
+            result.RecentBooks = mapper.Map<List<MinimalBook>>(recentBooks);
+            result.FavBooks = mapper.Map<List<MinimalBook>>(favoriteBooks);
 
+            return Ok(result);
+        }
+
+        [Route("profile/recents/courses")]
+        public async Task<ActionResult> RecentCourses([FromQuery] long id, [FromQuery] int pag)
+        {
+            var result = await repository.RecentsCourses(id, pag);
+            return Ok(result);
+        }
+
+        [Route("profile/recents/books")]
+        public async Task<ActionResult> RecentBooks([FromQuery] long id, [FromQuery] int pag)
+        {
+            var result = await repository.RecentsBooks(id, pag);
+            return Ok(result);
+        }
+
+        [Route("profile/favorite/courses")]
+        public async Task<ActionResult> FavoriteCourses([FromQuery] long id, [FromQuery] int pag)
+        {
+            var result = await repository.FavoriteCourses(id, pag);
+            return Ok(result);
+        }
+
+        [Route("profile/favorite/books")]
+        public async Task<ActionResult> FavoriteBooks([FromQuery] long id, [FromQuery] int pag)
+        {
+            var result = await repository.FavoriteBooks(id, pag);
+            return Ok(result);
+        }
+
+        [Route("profile/watchlater")]
+        public async Task<ActionResult> ToWatchLater([FromQuery] long id, [FromQuery] int pag)
+        {
+            var result = await repository.LessonsToWatchLater(id, pag);
             return Ok(result);
         }
     }

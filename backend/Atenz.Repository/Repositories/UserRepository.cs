@@ -35,7 +35,7 @@ namespace Atenz.Repository.Repositories
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<List<Course>> RecentsCourses(long userId)
+        public async Task<List<Course>> RecentsCourses(long userId, int pag = 1, int limit = 12)
         {
             return await context.History
                 .Where(h => h.UserId == userId)
@@ -45,11 +45,12 @@ namespace Atenz.Repository.Repositories
                 .OrderByDescending(h => h.CreatedAt)
                 .Select(h => h.Lesson.Module.Course)
                 .Distinct()
-                .Take(4)
+                .Take(limit)
+                .Skip((pag - 1) * limit)
                 .ToListAsync();
         }
 
-        public async Task<List<Course>> FavoriteCourses(long userId)
+        public async Task<List<Course>> FavoriteCourses(long userId, int pag = 1, int limit = 12)
         {
             return await context.FavoriteCourses
                 .Where(f => f.UserId == userId)
@@ -57,11 +58,12 @@ namespace Atenz.Repository.Repositories
                 .Include(f => f.Course)
                 .Select(f => f.Course)
                 .Distinct()
-                .Take(4)
+                .Take(limit)
+                .Skip((pag - 1) * limit)
                 .ToListAsync();
         }
 
-        public async Task<List<Lesson>> LessonsToWatchLater(long userId)
+        public async Task<List<Lesson>> LessonsToWatchLater(long userId, int pag = 1, int limit = 12)
         {
             return await context.WatchLater
                 .Where(wl => wl.UserId == userId)
@@ -71,7 +73,8 @@ namespace Atenz.Repository.Repositories
                 .OrderByDescending(wl => wl.CreatedAt)
                 .Select(wl => wl.Lesson)
                 .Distinct()
-                .Take(4)
+                .Take(limit)
+                .Skip((pag - 1) * limit)
                 .ToListAsync();
         }
 
@@ -141,7 +144,11 @@ namespace Atenz.Repository.Repositories
                 .Distinct()
                 .CountAsync();
 
-            var books = 0;
+            var books = await context.ReadHistory
+                .Where(h => h.UserId == userId)
+                .Select(i => i.BookId)
+                .Distinct()
+                .CountAsync();
 
             var courses = await context.History
                 .Include(h => h.Lesson)
@@ -164,7 +171,9 @@ namespace Atenz.Repository.Repositories
                 .Where(h => h.UserId == userId)
                 .CountAsync();
 
-            var booksAmount = 0;
+            var booksAmount = await context.ReadHistory
+                .Where(h => h.UserId == userId)
+                .CountAsync();
 
             return new List<bool>(){
                 lessonsAmount > 0,
@@ -173,6 +182,30 @@ namespace Atenz.Repository.Repositories
                 booksAmount > 10,
                 lessonsAmount > 500
             };
+        }
+    
+        public async Task<List<Book>> RecentsBooks(long userId, int pag = 1, int limit = 12)
+        {
+            return await context.ReadHistory
+                .Include(h => h.Book)
+                .Where(h => h.UserId == userId)
+                .OrderByDescending(h => h.CreatedAt)
+                .Select(h => h.Book)
+                .Skip((pag - 1) * limit)
+                .Take(limit)
+                .ToListAsync();
+        }
+
+        public async Task<List<Book>> FavoriteBooks(long userId, int pag = 1, int limit = 12)
+        {
+            return await context.FavoriteBooks
+                .Include(h => h.Book)
+                .Where(h => h.UserId == userId)
+                .OrderByDescending(h => h.CreatedAt)
+                .Select(h => h.Book)
+                .Skip((pag - 1) * limit)
+                .Take(limit)
+                .ToListAsync();
         }
     }
 }
