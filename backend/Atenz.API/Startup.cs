@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Text;
+using Atenz.API.Helpers;
 using Atenz.Repository;
 using Atenz.Repository.Repositories;
 using AutoMapper;
@@ -64,10 +65,7 @@ namespace Atenz.API
                 app.UseDeveloperExceptionPage();
             }
 
-            // app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
 

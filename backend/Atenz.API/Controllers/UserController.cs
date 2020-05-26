@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Atenz.API.Helpers;
 using Atenz.Domain.DTOs;
@@ -49,9 +50,12 @@ namespace Atenz.API.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [Route("profile")]
-        public async Task<ActionResult> Get([FromQuery] long id)
+        public async Task<ActionResult> Get()
         {
+            var id = long.Parse(User.Claims.First().Value);
+
             var user = await repository.ProfileBasic(id);
             var statistics = await repository.Statistics(id);
             var interests = await repository.Interests(id);
@@ -77,38 +81,47 @@ namespace Atenz.API.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [Route("profile/recents/courses")]
-        public async Task<ActionResult> RecentCourses([FromQuery] long id, [FromQuery] int pag)
+        public async Task<ActionResult> RecentCourses([FromQuery] int pag)
         {
+            var id = long.Parse(User.Claims.First().Value);
             var result = await repository.RecentsCourses(id, pag);
             return Ok(result);
         }
 
+        [Authorize]
         [Route("profile/recents/books")]
-        public async Task<ActionResult> RecentBooks([FromQuery] long id, [FromQuery] int pag)
+        public async Task<ActionResult> RecentBooks([FromQuery] int pag)
         {
+            var id = long.Parse(User.Claims.First().Value);
             var result = await repository.RecentsBooks(id, pag);
             return Ok(result);
         }
 
+        [Authorize]
         [Route("profile/favorite/courses")]
-        public async Task<ActionResult> FavoriteCourses([FromQuery] long id, [FromQuery] int pag)
+        public async Task<ActionResult> FavoriteCourses([FromQuery] int pag)
         {
+            var id = long.Parse(User.Claims.First().Value);
             var result = await repository.FavoriteCourses(id, pag);
             return Ok(result);
         }
 
+        [Authorize]
         [Route("profile/favorite/books")]
-        public async Task<ActionResult> FavoriteBooks([FromQuery] long id, [FromQuery] int pag)
+        public async Task<ActionResult> FavoriteBooks([FromQuery] int pag)
         {
+            var id = long.Parse(User.Claims.First().Value);
             var result = await repository.FavoriteBooks(id, pag);
             return Ok(result);
         }
 
         [Authorize]
         [Route("profile/watchlater")]
-        public async Task<ActionResult> ToWatchLater([FromQuery] long id, [FromQuery] int pag)
+        public async Task<ActionResult> ToWatchLater([FromQuery] int pag)
         {
+            var id = long.Parse(User.Claims.First().Value);
             var result = await repository.LessonsToWatchLater(id, pag);
             return Ok(result);
         }
