@@ -11,6 +11,7 @@ namespace Atenz.Repository
         public DbSet<Course> Courses { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<Book> Books { get; set; }
 
 
         public DbSet<User> Users { get; set; }
@@ -19,6 +20,8 @@ namespace Atenz.Repository
         public DbSet<History> History { get; set; }
         public DbSet<FavoriteCourse> FavoriteCourses { get; set; }
         public DbSet<WatchLater> WatchLater { get; set; }
+        public DbSet<Read> ReadHistory { get; set; }
+        public DbSet<FavoriteBook> FavoriteBooks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder){
             builder.Entity<User>()
@@ -35,6 +38,14 @@ namespace Atenz.Repository
 
             builder.Entity<WatchLater>()
                 .Property(wl => wl.CreatedAt)
+                .HasDefaultValueSql("NOW()");
+
+            builder.Entity<Read>()
+                .Property(r => r.CreatedAt)
+                .HasDefaultValueSql("NOW()");
+
+            builder.Entity<FavoriteBook>()
+                .Property(fb => fb.CreatedAt)
                 .HasDefaultValueSql("NOW()");
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -8,6 +9,30 @@ namespace Atenz.Repository.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Books",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Title = table.Column<string>(nullable: true),
+                    Subtitle = table.Column<string>(nullable: true),
+                    Author = table.Column<string>(nullable: true),
+                    Publisher = table.Column<string>(nullable: true),
+                    ReleasedAt = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    ISBN = table.Column<string>(nullable: true),
+                    Keywords = table.Column<List<string>>(nullable: true),
+                    Pages = table.Column<int>(nullable: false),
+                    Format = table.Column<string>(nullable: true),
+                    Cover = table.Column<string>(nullable: true),
+                    Link = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Books", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Courses",
                 columns: table => new
@@ -62,6 +87,33 @@ namespace Atenz.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FavoriteBooks",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<long>(nullable: false),
+                    BookId = table.Column<long>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "NOW()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FavoriteBooks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FavoriteBooks_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FavoriteBooks_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FavoriteCourses",
                 columns: table => new
                 {
@@ -82,6 +134,33 @@ namespace Atenz.Repository.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_FavoriteCourses_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReadHistory",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<long>(nullable: false),
+                    BookId = table.Column<long>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "NOW()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReadHistory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ReadHistory_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReadHistory_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -166,6 +245,16 @@ namespace Atenz.Repository.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_FavoriteBooks_BookId",
+                table: "FavoriteBooks",
+                column: "BookId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FavoriteBooks_UserId",
+                table: "FavoriteBooks",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_FavoriteCourses_CourseId",
                 table: "FavoriteCourses",
                 column: "CourseId");
@@ -196,6 +285,16 @@ namespace Atenz.Repository.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ReadHistory_BookId",
+                table: "ReadHistory",
+                column: "BookId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReadHistory_UserId",
+                table: "ReadHistory",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_WatchLater_LessonId",
                 table: "WatchLater",
                 column: "LessonId");
@@ -209,13 +308,22 @@ namespace Atenz.Repository.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "FavoriteBooks");
+
+            migrationBuilder.DropTable(
                 name: "FavoriteCourses");
 
             migrationBuilder.DropTable(
                 name: "History");
 
             migrationBuilder.DropTable(
+                name: "ReadHistory");
+
+            migrationBuilder.DropTable(
                 name: "WatchLater");
+
+            migrationBuilder.DropTable(
+                name: "Books");
 
             migrationBuilder.DropTable(
                 name: "Lessons");

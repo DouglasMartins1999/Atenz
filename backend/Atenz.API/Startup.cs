@@ -29,6 +29,7 @@ namespace Atenz.API
             services.AddDbContext<AtenzDBContext>(opt => opt.UseNpgsql(Variables["DB_CONN"].ToString()));
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<CourseRepository>();
+            services.AddScoped<BookRepository>();
             services.AddScoped<UserRepository>();
             services.AddControllers();
         }
