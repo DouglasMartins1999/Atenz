@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Atenz.API.Helpers;
 using Atenz.Repository.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -12,10 +13,12 @@ namespace Atenz.API.Controllers
     public class BooksController : ControllerBase
     {
         private readonly BookRepository repository;
+        private readonly StorageService storage;
         private readonly IMapper mapper;
 
-        public BooksController(BookRepository bookRepository, IMapper mapper)
+        public BooksController(BookRepository bookRepository, IMapper mapper, StorageService storage)
         {
+            this.storage = storage;
             this.mapper = mapper;
             this.repository = bookRepository;
         }
@@ -25,6 +28,9 @@ namespace Atenz.API.Controllers
         public async Task<ActionResult> GetOne(long id)
         {
             var result = await repository.GetById(id);
+            var link = await storage.GetPreSignedLink(result.Link);
+
+            result.Link = link;
             return Ok(result);
         }
 

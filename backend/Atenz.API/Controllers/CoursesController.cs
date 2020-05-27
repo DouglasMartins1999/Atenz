@@ -6,6 +6,7 @@ using AutoMapper;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
+using Atenz.API.Helpers;
 
 namespace Atenz.API.Controllers
 {
@@ -14,11 +15,13 @@ namespace Atenz.API.Controllers
     public class CoursesController : ControllerBase
     {
         private readonly IMapper mapper;
+        private readonly StorageService storage;
         private readonly CourseRepository repository;
-        public CoursesController(CourseRepository courseRepository, IMapper mapper)
+        public CoursesController(CourseRepository courseRepository, IMapper mapper, StorageService storage)
         {
             this.repository = courseRepository;
             this.mapper = mapper;
+            this.storage = storage;
         }
 
         [Authorize]
@@ -54,7 +57,12 @@ namespace Atenz.API.Controllers
         {
             var user = long.Parse(User.Claims.First().Value);
             var lesson = await repository.GetLessonById(id);
+            var link = await storage.GetPreSignedLink(lesson.Link);
+            var metadata = await storage.GetObjectInfo(lesson.Link);
             var result = mapper.Map<LessonDTO>(lesson);
+
+            result.Link = link;
+            result.Size = metadata.Size;
             await repository.AddToHistory(user, id);
             return Ok(result);
         }

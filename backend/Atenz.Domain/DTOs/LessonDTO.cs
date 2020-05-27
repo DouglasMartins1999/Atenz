@@ -8,6 +8,6 @@ namespace Atenz.Domain.DTOs
         public string Module { get; set; }
         public string Duration { get; set; }
         public string Link { get; set; }
-        public string Size { get; set; }
+        public long Size { get; set; }
     }
 }

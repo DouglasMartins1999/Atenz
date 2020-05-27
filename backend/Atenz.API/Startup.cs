@@ -37,6 +37,7 @@ namespace Atenz.API
             services.AddScoped<CourseRepository>();
             services.AddScoped<BookRepository>();
             services.AddScoped<UserRepository>();
+            services.AddScoped<StorageService>();
             services.AddControllers();
 
             services
