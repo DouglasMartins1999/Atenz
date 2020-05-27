@@ -61,7 +61,7 @@ namespace Atenz.API.Controllers
             var metadata = await storage.GetObjectInfo(lesson.Link);
             var result = mapper.Map<LessonDTO>(lesson);
 
-            result.Link = link;
+            result.Link = link ?? lesson.Link;
             result.Size = metadata.Size;
             await repository.AddToHistory(user, id);
             return Ok(result);

@@ -193,24 +193,12 @@ namespace Atenz.Repository.Repositories
 
         public async Task<bool> AddToHistory(long userId, long lessonId)
         {
-            try 
-            {
-                var history = await Context.History
-                    .Where(w => w.UserId == userId && w.LessonId == lessonId)
-                    .SingleOrDefaultAsync();
-
-                if(history == null && userId != 0 && lessonId != 0){
-                    var entry = new History(userId, lessonId);
-                    await Context.History.AddAsync(entry);
-                }
-
-                return (await Context.SaveChangesAsync()) > 0;
-            } 
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return false;
+            if(userId != 0 && lessonId != 0){
+                var entry = new History(userId, lessonId);
+                await Context.History.AddAsync(entry);
             }
+
+            return (await Context.SaveChangesAsync()) > 0;
         }
     }
 }
