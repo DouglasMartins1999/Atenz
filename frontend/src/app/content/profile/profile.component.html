@@ -1,26 +1,26 @@
 <section class="profile">
     <div id="user-info">
-        <h1>@douglasm</h1>
-        <p>Membro desde Julho de 2020</p>
+        <h1>@{{ content?.username || auth.authUser.unique_name }}</h1>
+        <p>Membro desde {{ content?.registeredAt | date:'LLLL \'de\' yyyy' }}</p>
     </div>
 
-    <div id="progress">
+    <div id="progress" *ngIf="content?.statistics">
         <span>
-            <span>12</span>
+            <span>{{ content?.statistics.lessons }}</span>
             <p>aulas acessadas</p>
         </span>
 
         <hr/>
 
         <span>
-            <span>10</span>
+            <span>{{ content?.statistics.books }}</span>
             <p>livros lidos</p>
         </span>
 
         <hr/>
 
         <span>
-            <span>03</span>
+            <span>{{ content?.statistics.courses }}</span>
             <p>Cursos em Andamento</p>
         </span>
     </div>
@@ -28,13 +28,7 @@
     <div id="interests">
         <h2 class="subtitle">Tópicos de Interesse</h2>
         <ul>
-            <li>Java</li>
-            <li>GraphQL</li>
-            <li>Python</li>
-            <li>SQL</li>
-            <li>React</li>
-            <li>.NET Framework</li>
-            <li>Arduíno</li>
+            <li *ngFor="let i of content.interests">{{ i }}</li>
         </ul>
     </div>
 
@@ -42,23 +36,45 @@
         <h2 class="subtitle">Metas & Objetivos</h2>
         <ul>
             <li>
-                <div class="check active"></div>
-                <div class="completed">
+                <div class="check" [ngClass]="{ 'active': content?.goals[0] }"></div>
+                <div [ngClass]="{ 'completed': content?.goals[0] }">
                     <p>Matrícule-se e assista uma aula</p>
-                    <p>Concluído!</p>
+                    <p *ngIf="content?.goals[0]">Concluído!</p>
                 </div>
             </li>
             <li>
-                <div class="check"></div>
-                <div>
-                    <p>Matrícule-se e assista uma aula</p>
+                <div class="check" [ngClass]="{ 'active': content?.goals[1] }"></div>
+                <div [ngClass]="{ 'completed': content?.goals[1] }">
+                    <p>Leia seu primeiro livro</p>
+                    <p *ngIf="content?.goals[1]">Concluído!</p>
+                </div>
+            </li>
+            <li>
+                <div class="check" [ngClass]="{ 'active': content?.goals[2] }"></div>
+                <div [ngClass]="{ 'completed': content?.goals[2] }">
+                    <p>Assista 30 aulas de qualquer curso</p>
+                    <p *ngIf="content?.goals[2]">Concluído!</p>
+                </div>
+            </li>
+            <li>
+                <div class="check" [ngClass]="{ 'active': content?.goals[3] }"></div>
+                <div [ngClass]="{ 'completed': content?.goals[3] }">
+                    <p>Marque 10 livros como lidos</p>
+                    <p *ngIf="content?.goals[3]">Concluído!</p>
+                </div>
+            </li>
+            <li>
+                <div class="check" [ngClass]="{ 'active': content?.goals[4] }"></div>
+                <div [ngClass]="{ 'completed': content?.goals[4] }">
+                    <p>Assista 500 aulas de qualquer curso</p>
+                    <p *ngIf="content?.goals[4]">Concluído!</p>
                 </div>
             </li>
         </ul>
     </div>
 
     <div id="reset">
-        <button>Fazer Logout</button>
+        <button (click)="auth.signout()">Fazer Logout</button>
         <button class="secondary">Limpar Progresso</button>
     </div>
 </section>
@@ -69,20 +85,20 @@
     <main>
         <section>
             <h1 class="title">Continue Assistindo</h1>
-            <atz-watching></atz-watching>
+            <atz-watching [latest]="content?.latest"></atz-watching>
         </section>
 
         <section>
             <h1 class="title">Cursos Recentes</h1>
             <ul class="card-list three-itens">
-                <li *ngFor="let i of recents"><atz-course-card></atz-course-card></li>
+                <li *ngFor="let i of content.recentCourses"><atz-course-card [course]="i"></atz-course-card></li>
             </ul>
         </section>
 
         <section>
             <h1 class="title">Lidos Recentemente</h1>
             <ul class="card-list four-itens">
-                <li *ngFor="let i of reads"><atz-book-card></atz-book-card></li>
+                <li *ngFor="let i of content?.recentBooks"><atz-book-card [book]="i"></atz-book-card></li>
             </ul>
         </section>
 
@@ -92,7 +108,7 @@
                 <button class="secondary"><i class="cil-list"></i><span>Expandir</span></button>
             </div>
             <ul class="card-list three-itens">
-                <li *ngFor="let i of recents"><atz-course-card></atz-course-card></li>
+                <li *ngFor="let i of content?.favCourses"><atz-course-card [course]="i"></atz-course-card></li>
             </ul>
         </section>
 
@@ -102,10 +118,10 @@
                 <button class="secondary"><i class="cil-list"></i><span>Expandir</span></button>
             </div>
             <ul class="card-list three-itens">
-                <li *ngFor="let i of recents">
-                    <atz-lesson-card>
-                        <span class="badge spaceless">03:40 m</span>
-                        <p class="name small">Trabalhando com Slots e Componentes Personalizados</p>
+                <li *ngFor="let i of content?.watchLater">
+                    <atz-lesson-card [image]="i.banner">
+                        <span class="badge spaceless">{{ i.duration | timeduration }} m</span>
+                        <p class="name small">{{ i.name }}</p>
                     </atz-lesson-card>
                 </li>
             </ul>
@@ -114,7 +130,7 @@
         <section>
             <h1 class="title">Mais Lidos</h1>
             <ul class="card-list four-itens">
-                <li *ngFor="let i of reads"><atz-book-card></atz-book-card></li>
+                <li *ngFor="let i of content?.favBooks"><atz-book-card [book]="i"></atz-book-card></li>
             </ul>
         </section>
     </main>

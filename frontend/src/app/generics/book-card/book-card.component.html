@@ -1,10 +1,10 @@
 <div class="container scale">
-    <img src="https://cdn.shopify.com/s/files/1/0155/7645/products/p_8b0dbdac-77ec-4194-afd9-8bdbd1ac7d42_large.jpg?v=1573153826">
+    <img [src]="book.cover">
 </div>
 
 <div class="description">
-    <p class="author">Kheronn K. Machado</p>
-    <h3 class="name">Angular 8 e Firebase</h3>
-    <p>Construindo uma aplicação integrada com a plataforma do Google</p>
-    <span class="badge dark">190 pag</span>
+    <p class="author">{{ book.author }}</p>
+    <h3 class="name">{{ book.title }}</h3>
+    <p *ngIf="book.subtitle">{{ book.subtitle }}</p>
+    <span class="badge dark">{{ book.pages }} pag</span>
 </div>

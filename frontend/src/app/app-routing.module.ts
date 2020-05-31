@@ -24,7 +24,7 @@ const routes: Routes = [
     component: ProfileComponent
   },
   {
-    path: "course",
+    path: "view",
     canActivate: [ActivateRouteGuard],
     component: LessonComponent
   },

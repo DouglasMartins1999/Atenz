@@ -1,14 +1,14 @@
-<atz-lesson-card [width]="60">
-    <p class="lessons">120 aulas</p>
-    <p class="name">React Native: Desenvolva APPs Nativas para Android e iOS</p>
+<atz-lesson-card [width]="50" [image]="content?.banner">
+    <p class="lessons">{{ content?.maxLessons }} aulas</p>
+    <p class="name">{{ content?.course }}</p>
 </atz-lesson-card>
 
 <div class="lesson">
-    <p class="module">03. Fundamentos de React Native</p>
-    <h1 class="name">Eventos de Software & Componentes</h1>
+    <p class="module">{{ content?.module }}</p>
+    <h1 class="name">{{ content?.name }}</h1>
     <div class="badges">
-        <span class="badge">Aula 28</span>
-        <span class="badge dark">12:07 min</span>
+        <span class="badge">Aula {{ content?.position | padstart : 3 }}</span>
+        <span class="badge dark">{{ content?.duration | timeduration }} min</span>
     </div>
     <div class="actions">
         <button><i class="cil-media-play"></i> Assistir Agora</button>

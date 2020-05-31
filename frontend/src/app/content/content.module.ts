@@ -5,15 +5,19 @@ import { GenericsModule } from '../generics/generics.module';
 import { WatchingComponent } from './profile/watching/watching.component';
 import { LessonComponent } from './lesson/lesson.component';
 import { SearchComponent } from './search/search.component';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
 	declarations: [
 		ProfileComponent, 
-		WatchingComponent, LessonComponent, SearchComponent
+		WatchingComponent, 
+		LessonComponent, 
+		SearchComponent
 	],
 	imports: [
 		CommonModule,
-		GenericsModule
+		GenericsModule,
+		PipesModule
 	]
 })
 export class ContentModule { }

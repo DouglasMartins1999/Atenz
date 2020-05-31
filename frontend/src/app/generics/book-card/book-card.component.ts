@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'atz-book-card',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./book-card.component.scss']
 })
 export class BookCardComponent implements OnInit {
+  @Input()
+  book;
 
   constructor() { }
 

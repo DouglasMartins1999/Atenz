@@ -10,6 +10,9 @@ export class LessonCardComponent implements OnInit {
   @HostBinding('style.width.%')
   width: number = 100;
 
+  @Input()
+  image: string;
+
   constructor() { }
 
   ngOnInit(): void {}

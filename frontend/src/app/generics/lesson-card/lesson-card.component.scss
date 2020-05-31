@@ -2,6 +2,7 @@
 
 :host {
     width: 60%;
+    flex-shrink: 0;
     display: inline-block;
     border-radius: 7px;
     position: relative;

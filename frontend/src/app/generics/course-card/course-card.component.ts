@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'atz-course-card',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./course-card.component.scss']
 })
 export class CourseCardComponent implements OnInit {
+  @Input() course;
 
   constructor() { }
 

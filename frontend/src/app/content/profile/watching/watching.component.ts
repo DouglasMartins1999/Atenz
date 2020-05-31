@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'atz-watching',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./watching.component.scss']
 })
 export class WatchingComponent implements OnInit {
+  @Input('latest')
+  content;
 
   constructor() { }
 

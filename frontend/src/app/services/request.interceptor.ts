@@ -1,5 +1,5 @@
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpErrorResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, shareReplay } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { ModalService, ModalData } from './modal.service';
 import { Router } from '@angular/router';
@@ -32,6 +32,7 @@ export class RequestInterceptor implements HttpInterceptor {
                     this.loadingService.changeVisibility(false);
                     return item;
                 }),
+                shareReplay(1),
                 catchError((err) => {
 					const modaldata = new ModalData()
 						.fromService(this.modalService)

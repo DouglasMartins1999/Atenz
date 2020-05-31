@@ -1,8 +1,10 @@
+import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, ObservableInput } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { ModalService, ModalData } from './modal.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { ModalService } from './modal.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -11,10 +13,20 @@ export class AuthService {
 	private token: string;
 	private user: User;
 
-	constructor(private http: HttpClient, private modal: ModalService) { }
+	constructor(
+		private http: HttpClient, 
+		private modal: ModalService,
+		private router: Router
+	) {
+		this.fetchToken().decodeToken();
+	}
 
 	get isAuth(){
 		return !!this.retrieveToken()
+	}
+
+	get authUser(){
+		return this.user
 	}
 
 	private fetchToken(){
@@ -33,7 +45,9 @@ export class AuthService {
 	}
 
 	decodeToken(): User {
-		return JSON.parse(atob(this.token.split('.')[1]))
+		if(!this.token) return null;
+		this.user = JSON.parse(atob(this.token.split('.')[1]))
+		return this.user;
 	}
 
 	signin(username: string, password: string): Observable<User> {
@@ -41,9 +55,7 @@ export class AuthService {
 			.pipe(
 				map(item => {
 					this.token = item?.token;
-					this.user = this.decodeToken();
-
-					return this.storeToken().user;
+					return this.storeToken().decodeToken();
 				})
 			)
 	}
@@ -51,6 +63,7 @@ export class AuthService {
 	signout(){
 		this.token = null;
 		localStorage.removeItem("token");
+		this.router.navigate(['login'])
 		return this;
 	}
 }
