@@ -53,7 +53,7 @@ button {
         padding: 12px 18px;
     }
 
-    *:not(:last-child) {
+    *:not(.unique) {
         margin-right: 12px;
     }
 }

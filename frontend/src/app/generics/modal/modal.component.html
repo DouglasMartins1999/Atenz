@@ -1,0 +1,5 @@
+<div class="container">
+    <h1 class="title">{{ content?.title }}</h1>
+    <p class="description">{{ content?.desc }}</p>
+    <button *ngFor="let a of content?.actions" [ngClass]="{ 'secondary': !a.isPrimary }" (click)="a.action()">{{ a.title }}</button>
+</div>

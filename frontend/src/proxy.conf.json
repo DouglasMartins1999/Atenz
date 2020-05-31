@@ -1,0 +1,6 @@
+{
+    "/api/*": {
+        "target": "https://atenz.xyz",
+        "secure": false
+    }
+}

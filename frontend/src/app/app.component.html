@@ -1,4 +1,6 @@
-<atz-navbar></atz-navbar>
+<atz-modal *ngIf="modalContent.isVisible" [value]="modalContent"></atz-modal>
+<atz-loading *ngIf="loadingStatus"></atz-loading>
+<atz-navbar *ngIf="authService.isAuth"></atz-navbar>
 
 <article>
     <router-outlet></router-outlet>

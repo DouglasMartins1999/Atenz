@@ -7,10 +7,10 @@
 
 <aside>
     <img class="logo" src="../../../assets/images/dark_logo.png" />
-    <form>
-        <input name="username" type="text" placeholder="Nome de Usuário"/>
-        <input name="password" type="password" placeholder="Senha"/>
-        <button>Fazer Login</button>
+    <form [formGroup]="formLogin" (ngSubmit)="login()">
+        <input name="username" type="text" placeholder="Nome de Usuário" formControlName="username"/>
+        <input name="password" type="password" placeholder="Senha" formControlName="password"/>
+        <input name="send" type="submit" value="Fazer Login" class="btn"/>
         <button class="secondary">Esqueci Minha Senha</button>
     </form>
     <hr/>
