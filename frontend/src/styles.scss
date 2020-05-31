@@ -53,7 +53,7 @@ button {
         padding: 12px 18px;
     }
 
-    *:not(.unique) {
+    i:not(.unique) {
         margin-right: 12px;
     }
 }
@@ -73,8 +73,8 @@ button,
 .scale {
     transition: all 150ms ease;
 
-    &:hover,
-    &:focus {
+    &:hover:not(.plyr input),
+    &:focus:not(.plyr input) {
         transform: scale(1.03);
     }
 }
@@ -138,4 +138,9 @@ button,
 ul {
     padding: 0;
     list-style: none;
+}
+
+.plyr--video,
+.plyr__video-wrapper {
+    border-radius: 5px;
 }

@@ -1,11 +1,12 @@
 @import "~src/variables.scss";
 
-.video-dumb {
+.video-player {
     background: linear-gradient(to bottom right, #BB2A49, #CC7E00);
     border-radius: 5px;
     width: 800px;
-    height: 480px;
+    height: 450px;
     flex-shrink: 0;
+    box-shadow: 1px 1px 9px rgba(0, 0, 0, 0.5);
 }
 
 .name {
@@ -39,6 +40,7 @@
     background-color: #202020;
     padding: 70px;
     display: flex;
+    align-items: center;
 
     .info {
         display: flex;
@@ -47,6 +49,10 @@
         align-items: flex-start;
         margin: 28px 0;
         margin-right: 36px;
+
+        .data {
+            margin: 42px 0;
+        }
 
         .name {
             margin-bottom: 10px;
@@ -150,6 +156,7 @@
             align-items: center;
             padding: 16px 18px;
             border-bottom: 1px solid #373737;
+            cursor: pointer;
 
             p {
                 color: #FFF;
@@ -200,6 +207,7 @@
             background: #353535;
             display: flex;
             align-items: center;
+            cursor: pointer;
 
             &:nth-child(2n) {
                 background: transparent;

@@ -55,7 +55,7 @@ export class ModalData {
 		return this;
 	}
 
-	setCloseAction(title: string, isPrimary: boolean = true){
+	setCloseAction(title: string = "Ok, entendi", isPrimary: boolean = true){
 		this.actions.push({ 
 			title, isPrimary, 
 			action: () => this.service.toggleVisibility()

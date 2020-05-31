@@ -1,18 +1,18 @@
-<article class="lesson">
+<article class="lesson" *ngIf="lesson">
     <section class="info">
         <img src="../../../assets/images/dark_logo.png">
 
-        <div>
-            <p class="module">02. Introdução ao Vue.js</p>
-            <h1 class="name">Trabalhando com Slots e Components</h1>
+        <div class="data">
+            <p class="module">{{ lesson.module }}</p>
+            <h1 class="name">{{ lesson.name }}</h1>
             <div>
-                <span class="badge">Aula 25</span>
-                <span class="badge dark">12:56 min</span>
+                <span class="badge">Aula {{ lesson.position | padstart: 3 }}</span>
+                <span class="badge dark">{{ lesson.duration | timeduration }} min</span>
             </div>
 
             <div class="actions">
-                <button><i class="cil-media-step-backward"></i></button>
-                <button><i class="cil-media-step-forward"></i></button>
+                <button (click)="prevLesson()"><i class="cil-media-step-backward"></i></button>
+                <button (click)="nextLesson()"><i class="cil-media-step-forward"></i></button>
             </div>
         </div>
 
@@ -20,46 +20,37 @@
             <div class="about-track">
                 <div class="detail">
                     <label>Tamanho:</label>
-                    <p>14,6MB</p>
+                    <p>{{ lesson.size | filesize }}</p>
                 </div>
     
                 <hr/>
 
                 <div class="detail">
-                    <label>Qualidade:</label>
-                    <p>1280x720p</p>
-                </div>
-
-                <hr/>
-
-                <div class="detail">
                     <label>Formato:</label>
-                    <p>.MP4</p>
+                    <p>{{ lesson.link | fileformat }}</p>
                 </div>
             </div>
             
             <div>
-                <button><i class="cil-cloud-download"></i> Fazer Download</button>
-                <button class="secondary">Assistir Mais Tarde</button>
+                <a class="btn" [download]="lesson.name" [href]="lesson.link"><i class="cil-cloud-download"></i> Fazer Download</a>
+                <button class="secondary" (click)="addToWatchLater()">Assistir Mais Tarde</button>
             </div>
         </div>
     </section>
 
-    <div class="video-dumb">
-
-    </div>
+    <div plyr class="video-player" [plyrSources]="lesson.video"></div>
 </article>
 
 <article class="course">
     <section>
         <div class="info">
             <span id="about">Sobre o Curso</span>
-            <h1 class="name">Aprenda a ser um Desenvolvedor Completo Utilizando Vue.JS e Spring Boot</h1>
-            <p class="module">Professor João da Silva</p>
+            <h1 class="name">{{ course?.name }}</h1>
+            <p class="module">{{ course?.teacher}}</p>
 
-            <p class="description">Aprenda os fundamentos de Vue.js e Spring Boot, boas práticas e construa várias aplicações web</p>
+            <p class="description">{{ course?.description }}</p>
             <div>
-                <span class="badge">730 aulas</span>
+                <span class="badge">{{ course?.modules[0].lessonsAmount | padstart: 3 }} aulas</span>
                 <span class="badge primary">300 min</span>
             </div>
             <div class="actions">
@@ -68,31 +59,31 @@
                 <button><i class="cil-check-circle"></i></button>
             </div>
         </div>
-        <div class="banner" style="background: url('https://blog.fellyph.com.br/wp-content/uploads/2018/02/vue-banner.png')"></div>
+        <div class="banner" [ngStyle]="{'background-image': 'url(' + course?.banner + ')'}"></div>
     </section>
 
     <section class="content">
         <ul class="modules">
-            <li *ngFor="let i of lessons">
+            <li *ngFor="let i of course?.modules" (click)="fetchModuleLesson(i.id).subscribe()">
                 <div>
-                    <p>01. Introdução</p>
-                    <span>15:01 min</span>
+                    <p>{{ i.name }}</p>
+                    <span>{{ i.duration | timeduration }}</span>
                 </div>
                 <div class="amount">
                     <i class="cil-screen-desktop"></i>
-                    <span>04</span>
+                    <span>{{ i.lessonsAmount | padstart: 2 }}</span>
                 </div>
             </li>
         </ul>
 
         <ul class="lessons">
-            <li *ngFor="let i of lessons">
-                <div class="completion hide">
+            <li *ngFor="let i of module" (click)="toLesson(i.id)">
+                <div class="completion" [ngClass]="{ 'hide': !i.wasWatched }">
                     <i class="cil-check-circle"></i>
                 </div>
                 <div class="information">
-                    <p>Visão Geral do Curso</p>
-                    <span>06:39 min</span>
+                    <p>{{ i.name }}</p>
+                    <span>{{ i.duration }}</span>
                 </div>
                 <div class="actions">
                     <button><i class="cil-check-circle"></i></button>

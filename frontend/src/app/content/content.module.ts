@@ -6,6 +6,7 @@ import { WatchingComponent } from './profile/watching/watching.component';
 import { LessonComponent } from './lesson/lesson.component';
 import { SearchComponent } from './search/search.component';
 import { PipesModule } from '../pipes/pipes.module';
+import { PlyrModule } from 'ngx-plyr';
 
 @NgModule({
 	declarations: [
@@ -17,7 +18,8 @@ import { PipesModule } from '../pipes/pipes.module';
 	imports: [
 		CommonModule,
 		GenericsModule,
-		PipesModule
+		PipesModule,
+		PlyrModule
 	]
 })
 export class ContentModule { }

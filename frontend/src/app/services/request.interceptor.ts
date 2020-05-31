@@ -38,7 +38,7 @@ export class RequestInterceptor implements HttpInterceptor {
 						.fromService(this.modalService)
 						.setTitle("Oops...")
 						.setDescription("Aparentemente, não conseguimos processar sua solicitação no momento. Por favor, tente mais tarde")
-						.setCloseAction("Ok, entendi")
+						.setCloseAction()
 						.setVisibility(true);
 	
 					if(err instanceof HttpErrorResponse){

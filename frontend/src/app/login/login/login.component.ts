@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       .fromService(this.modalService)
       .setVisibility(true)
       .setTitle("Oops...")
-      .setCloseAction("Ok, entendi", true);
+      .setCloseAction();
 
     if(!this.formLogin.valid){
       const { controls } = this.formLogin;
