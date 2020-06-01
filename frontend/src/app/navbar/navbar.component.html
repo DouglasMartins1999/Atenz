@@ -1,5 +1,5 @@
 <aside *ngIf="isEnabled">
-    <div class="avatar">{{ user }}</div>
+    <div class="avatar" [routerLink]="['/']">{{ user }}</div>
     <ul>
         <li><i class="cil-media-play scale"></i></li>
         <li><i class="cil-book scale"></i></li>

@@ -9,9 +9,13 @@ img {
     height: 42px;
 }
 
-input {
+form {
     width: 50%;
     margin-left: 42px;
+
+    input {
+        width: 100%;
+    }
 }
 
 i {

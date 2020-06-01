@@ -11,8 +11,8 @@
             </div>
 
             <div class="actions">
-                <button (click)="prevLesson()"><i class="cil-media-step-backward"></i></button>
-                <button (click)="nextLesson()"><i class="cil-media-step-forward"></i></button>
+                <button (click)="toLesson(lesson.id - 1)"><i class="cil-media-step-backward"></i></button>
+                <button (click)="toLesson(lesson.id + 1)"><i class="cil-media-step-forward"></i></button>
             </div>
         </div>
 
@@ -32,7 +32,7 @@
             </div>
             
             <div>
-                <a class="btn" [download]="lesson.name" [href]="lesson.link"><i class="cil-cloud-download"></i> Fazer Download</a>
+                <a class="btn" download="{{ lesson.name }}" [href]="lesson.link"><i class="cil-cloud-download"></i> Fazer Download</a>
                 <button class="secondary" (click)="addToWatchLater()">Assistir Mais Tarde</button>
             </div>
         </div>
