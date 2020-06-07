@@ -36,7 +36,7 @@ namespace Atenz.API.Controllers
 
             } catch(Exception e){
                 Console.WriteLine(e.Message);
-                return Unauthorized();
+                return Forbid();
             }
         }
 
@@ -61,9 +61,9 @@ namespace Atenz.API.Controllers
             var interests = await repository.Interests(id);
             var goals = await repository.Goals(id);
             var latest = await repository.LatestWatched(id);
-            var recentCourse = await repository.RecentsCourses(id, 1, 4);
-            var favoriteCourse = await repository.FavoriteCourses(id, 1, 4);
-            var watchLater = await repository.LessonsToWatchLater(id, 1, 4);
+            var recentCourse = await repository.RecentsCourses(id, 1, 3);
+            var favoriteCourse = await repository.FavoriteCourses(id, 1, 3);
+            var watchLater = await repository.LessonsToWatchLater(id, 1, 3);
             var recentBooks = await repository.RecentsBooks(id, 1, 4);
             var favoriteBooks = await repository.FavoriteBooks(id, 1, 4);
             

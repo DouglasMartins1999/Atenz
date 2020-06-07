@@ -44,6 +44,7 @@ namespace Atenz.Repository.Repositories
             return Context.Lessons
                 .Where(l => l.Id == id)
                 .Include(l => l.Module)
+                .ThenInclude(l => l.Course)
                 .SingleOrDefaultAsync();
         }
 

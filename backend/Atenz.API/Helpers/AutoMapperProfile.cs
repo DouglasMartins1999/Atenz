@@ -10,7 +10,10 @@ namespace Atenz.API.Helpers
         public AutoMapperProfile()
         {
             CreateMap<Lesson, LessonDTO>()
-                .ForMember(dest => dest.Module, opt => opt.MapFrom(src => src.Module.Name));
+                .ForMember(dest => dest.Module, opt => opt.MapFrom(src => src.Module.Name))
+                .ForMember(dest => dest.ModuleId, opt => opt.MapFrom(src => src.ModuleId))
+                .ForMember(dest => dest.Banner, opt => opt.MapFrom(src => src.Module.Course.Banner))
+                .ForMember(dest => dest.CourseId, opt => opt.MapFrom(src => src.Module.CourseId));
 
             CreateMap<Lesson, ModuleLessonDTO>()
                 .ForMember(dest => dest.WasWatched, opt => opt.MapFrom(src => (src.Watches.Count > 0)));
@@ -20,6 +23,7 @@ namespace Atenz.API.Helpers
 
             CreateMap<Lesson, Latest>()
                 .ForMember(dest => dest.Module, opt => opt.MapFrom(src => src.Module.Name))
+                .ForMember(dest => dest.CourseId, opt => opt.MapFrom(src => src.Module.Course.Id))
                 .ForMember(dest => dest.Course, opt => opt.MapFrom(src => src.Module.Course.Name))
                 .ForMember(dest => dest.Banner, opt => opt.MapFrom(src => src.Module.Course.Banner));
 
