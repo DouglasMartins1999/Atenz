@@ -1,8 +1,21 @@
 <aside *ngIf="isEnabled">
     <div class="avatar" [routerLink]="['/']">{{ user }}</div>
     <ul>
-        <li><i class="cil-media-play scale"></i></li>
-        <li><i class="cil-book scale"></i></li>
-        <!-- <li><i class="cil-mic scale"></i></li> -->
+        <li class="active">
+            <i class="cil-contact scale"></i>
+            <span class="menu-label">Inicial</span>
+        </li>
+        <li>
+            <i class="cil-star scale"></i>
+            <span class="menu-label">Favoritos</span>
+        </li>
+        <li>
+            <i class="cil-history scale"></i>
+            <span class="menu-label">Histórico</span>
+        </li>
+        <li>
+            <i class="cil-clock scale"></i>
+            <span class="menu-label">A Assistir</span>
+        </li>
     </ul>
 </aside>
