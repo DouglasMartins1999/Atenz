@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 42px 70px 10px;
+    padding: 42px 70px 10px;
 }
 
 img {
@@ -12,13 +12,20 @@ img {
 form {
     width: 50%;
     margin-left: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     input {
         width: 100%;
     }
+
+    i {
+        display: none;
+    }
 }
 
-i {
+div i {
     display: inline-block;
     color: #4F4F4F;
     font-size: 24px;
@@ -26,5 +33,57 @@ i {
 
     &:hover {
         transform: scale(1.2);
+    }
+}
+
+@media screen and (max-width: 700px){
+    :host {
+        padding: 25px 34px 0px 30px;
+    }
+
+    form {
+        min-height: 43px;
+        min-width: 52px;
+        width: auto;
+        order: -1;
+        margin-left: 0;
+        background: #626262;
+        mix-blend-mode: overlay;
+        border-radius: 21px;
+
+        i {
+            display: inline-block;
+            font-size: 16px;
+            margin: 0 18px;
+        }
+
+        i, input {
+            color: #FFF;
+        }
+
+        input {
+            width: 0px;
+            padding: 0;
+            background: transparent;
+            transition: all ease-in-out 200ms;
+
+            &::placeholder {
+                color: #EEE;
+            }
+
+            &.active {
+                width: 200px;
+            }
+        }
+    }
+
+    .logo {
+        width: 0;
+        max-height: 30px;
+        transition: all ease-in-out 200ms;
+
+        &.active {
+            width: 90px;
+        }
     }
 }

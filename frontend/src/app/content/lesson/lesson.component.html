@@ -1,6 +1,8 @@
+<atz-header class="mobile" bg-color="#202020"></atz-header>
+
 <article class="lesson" *ngIf="lesson">
     <section class="info">
-        <img src="../../../assets/images/dark_logo.png">
+        <img src="../../../assets/images/dark_logo.png" class="logo">
 
         <div class="data">
             <p class="module">{{ lesson.module }}</p>
@@ -15,6 +17,8 @@
                 <button (click)="navigate(lesson.id + 1)"><i class="cil-media-step-forward"></i></button>
             </div>
         </div>
+
+        <div plyr class="video-player mobile" [plyrSources]="lesson.video" [plyrPoster]="lesson.banner" [plyrTitle]="lesson.name"></div>
 
         <div>
             <div class="about-track">
@@ -38,7 +42,7 @@
         </div>
     </section>
 
-    <div plyr class="video-player" [plyrSources]="lesson.video" [plyrPoster]="lesson.banner" [plyrTitle]="lesson.name"></div>
+    <div plyr class="video-player desktop" [plyrSources]="lesson.video" [plyrPoster]="lesson.banner" [plyrTitle]="lesson.name"></div>
 </article>
 
 <article class="course">

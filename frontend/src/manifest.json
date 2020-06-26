@@ -1,4 +1,5 @@
 {
     "name": "Atenz",
-    "display": "standalone"
+    "display": "standalone",
+    "theme_color": "#262626"
 }

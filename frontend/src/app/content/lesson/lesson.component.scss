@@ -3,11 +3,17 @@
 .video-player {
     background: linear-gradient(to bottom right, #BB2A49, #CC7E00);
     border-radius: 5px;
-    width: 800px;
-    height: 450px;
+    width: 65%;
+    // height: 450px;
     flex-shrink: 0;
     box-shadow: 1px 1px 9px rgba(0, 0, 0, 0.5);
 }
+
+.mobile {
+    display: none;
+}
+
+
 
 .name {
     margin: 0;
@@ -254,6 +260,49 @@
                 * {
                     display: none;
                 }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1024px){
+    atz-header.mobile {
+        display: flex;
+    }
+    
+    .video-player {
+        width: 100%;
+    }
+
+    .mobile {
+        display: initial;
+    }
+
+    .desktop { 
+        display: none;
+    }
+
+    .module {
+        font-size: 12px;
+    }
+
+    .name {
+        font-size: 26px;
+    }
+
+    .lesson {
+        padding: 7vw;
+        flex-grow: unset;
+
+        .logo {
+            display: none;
+        }
+
+        .info {
+            margin: 0;
+
+            .data {
+                margin-top: 0;
             }
         }
     }
