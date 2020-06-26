@@ -11,8 +11,8 @@
             </div>
 
             <div class="actions">
-                <button (click)="toLesson(lesson.id - 1)"><i class="cil-media-step-backward"></i></button>
-                <button (click)="toLesson(lesson.id + 1)"><i class="cil-media-step-forward"></i></button>
+                <button (click)="navigate(lesson.id - 1)"><i class="cil-media-step-backward"></i></button>
+                <button (click)="navigate(lesson.id + 1)"><i class="cil-media-step-forward"></i></button>
             </div>
         </div>
 
@@ -38,7 +38,7 @@
         </div>
     </section>
 
-    <div plyr class="video-player" [plyrSources]="lesson.video"></div>
+    <div plyr class="video-player" [plyrSources]="lesson.video" [plyrPoster]="lesson.banner" [plyrTitle]="lesson.name"></div>
 </article>
 
 <article class="course">
@@ -50,13 +50,12 @@
 
             <p class="description">{{ course?.description }}</p>
             <div>
-                <span class="badge">{{ course?.modules[0].lessonsAmount | padstart: 3 }} aulas</span>
-                <span class="badge primary">300 min</span>
+                <span class="badge">{{ getLessonAmount() | padstart: 3 }} aulas</span>
+                <span class="badge primary">{{ getModuleDuration() | durationconcat }}</span>
             </div>
             <div class="actions">
-                <button><i class="cil-share-alt"></i></button>
-                <button><i class="cil-star"></i></button>
-                <button><i class="cil-check-circle"></i></button>
+                <button (click)="shareIt()"><i class="cil-share-alt"></i></button>
+                <button (click)="favoriteIt()"><i class="cil-star"></i></button>
             </div>
         </div>
         <div class="banner" [ngStyle]="{'background-image': 'url(' + course?.banner + ')'}"></div>
@@ -64,7 +63,7 @@
 
     <section class="content">
         <ul class="modules">
-            <li *ngFor="let i of course?.modules" (click)="fetchModuleLesson(i.id).subscribe()">
+            <li *ngFor="let i of course?.modules" (click)="navigate(null, i.id)">
                 <div>
                     <p>{{ i.name }}</p>
                     <span>{{ i.duration | timeduration }}</span>
@@ -77,7 +76,7 @@
         </ul>
 
         <ul class="lessons">
-            <li *ngFor="let i of module" (click)="toLesson(i.id)">
+            <li *ngFor="let i of module" (click)="navigate(i.id)">
                 <div class="completion" [ngClass]="{ 'hide': !i.wasWatched }">
                     <i class="cil-check-circle"></i>
                 </div>
@@ -86,9 +85,9 @@
                     <span>{{ i.duration }}</span>
                 </div>
                 <div class="actions">
-                    <button><i class="cil-check-circle"></i></button>
-                    <button><i class="cil-cloud-download"></i></button>
-                    <button><i class="cil-media-play"></i></button>
+                    <button (click)="breakBubbling($event)" (click)="acessLesson(i.id, true)"><i class="cil-cloud-download"></i></button>
+                    <button (click)="breakBubbling($event)" (click)="acessLesson(i.id)"><i class="cil-check-circle"></i></button>
+                    <button (click)="breakBubbling($event)" (click)="addToWatchLater(i.id)"><i class="cil-clock"></i></button>
                 </div>
             </li>
         </ul>

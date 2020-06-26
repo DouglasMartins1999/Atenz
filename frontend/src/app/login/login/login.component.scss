@@ -43,6 +43,7 @@ aside {
     justify-content: center;
     align-items: center;
     flex-grow: 1;
+    min-width: 380px;
 
     .logo {
         height: 50px;
@@ -53,7 +54,8 @@ aside {
     form {
         display: flex;
         flex-direction: column;
-        width: 300px;
+        max-width: 300px;
+        width: 100%;
 
         * {
             margin-bottom: 16px;
@@ -73,5 +75,72 @@ aside {
         color: $default_text;
         font-size: 14px;
         font-weight: 300;
+    }
+}
+
+@media screen and (max-width: 960px){
+    main h1 {
+        font-size: 2em;
+    }
+}
+
+
+
+@media screen and (max-width: 768px){
+    :host {
+        flex-direction: column;
+        height: 100%;
+    }
+
+    main {
+        width: 100%;
+        height: auto;
+        flex-grow: 1;
+
+        section {
+            width: 100%;
+            max-width: 310px;
+            margin: 0 10% 40px;
+        }
+
+        h1 {
+            font-size: 50px;
+        }
+
+        p {
+            font-size: 12px;
+        }
+    }
+
+    .logo {
+        display: none;
+    }
+
+    aside {
+        flex-grow: unset;
+        padding: 52px 40px;
+        border-bottom: $primary_color solid 5px;
+        min-width: unset;
+
+        .mobile-small {
+            font-size: 12px;
+            margin: 0 !important;
+        }
+
+        hr {
+            margin: 14px;
+        }
+    }    
+}
+
+@media screen and (max-width: 640px){
+    main h1 {
+        font-size: 8vw;
+    }
+}
+
+@media screen and (max-width: 360px){
+    main h1 {
+        font-size: 28px;
     }
 }

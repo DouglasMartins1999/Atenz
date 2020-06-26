@@ -1,5 +1,5 @@
 <img [src]="course?.banner">
-<div class="overlay">
+<div class="overlay" (click)="navigate(course?.id)">
     <div>
         <span class="badge primary">{{ course?.lessons }} aulas</span>
         <span class="badge">{{ course?.duration }} min</span>

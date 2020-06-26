@@ -155,6 +155,10 @@ article {
     .card-list {
         display: grid;
         gap: 12px;
+
+        li {
+            cursor: pointer;
+        }
     }
 
     .three-itens {
