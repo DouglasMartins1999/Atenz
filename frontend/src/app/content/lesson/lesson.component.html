@@ -20,7 +20,7 @@
 
         <div plyr class="video-player mobile" [plyrSources]="lesson.video" [plyrPoster]="lesson.banner" [plyrTitle]="lesson.name"></div>
 
-        <div>
+        <div class="track">
             <div class="about-track">
                 <div class="detail">
                     <label>Tamanho:</label>
@@ -35,9 +35,12 @@
                 </div>
             </div>
             
-            <div>
-                <a class="btn" download="{{ lesson.name }}" [href]="lesson.link"><i class="cil-cloud-download"></i> Fazer Download</a>
-                <button class="secondary" (click)="addToWatchLater()">Assistir Mais Tarde</button>
+            <div class="track-actions">
+                <a class="btn" download="{{ lesson.name }}" [href]="lesson.link"><i class="cil-cloud-download"></i> <span>Fazer Download</span></a>
+                <button class="secondary" (click)="addToWatchLater()">
+                    <span>Assistir Mais Tarde</span>
+                    <i class="mobile cil-clock"></i>
+                </button>
             </div>
         </div>
     </section>
@@ -65,8 +68,15 @@
         <div class="banner" [ngStyle]="{'background-image': 'url(' + course?.banner + ')'}"></div>
     </section>
 
+    <nav class="mobile">
+        <ul class="tabs">
+            <li [ngClass]="{ 'active': !lessonTabActive }" (click)="lessonTabActive = false">Módulos</li>
+            <li [ngClass]="{ 'active': lessonTabActive }" (click)="lessonTabActive = true">Aulas</li>
+        </ul>
+    </nav>
+
     <section class="content">
-        <ul class="modules">
+        <ul class="modules" [ngClass]="{ 'mobile-hidden': lessonTabActive }">
             <li *ngFor="let i of course?.modules" (click)="navigate(null, i.id)">
                 <div>
                     <p>{{ i.name }}</p>
@@ -79,7 +89,7 @@
             </li>
         </ul>
 
-        <ul class="lessons">
+        <ul class="lessons" [ngClass]="{ 'mobile-hidden': !lessonTabActive }">
             <li *ngFor="let i of module" (click)="navigate(i.id)">
                 <div class="completion" [ngClass]="{ 'hide': !i.wasWatched }">
                     <i class="cil-check-circle"></i>

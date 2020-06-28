@@ -23,7 +23,7 @@
     <section class="featured">
         <article *ngFor="let i of featured" [ngClass]="{ 'active': i.wasWatched }" class="card" (click)="goToItem(i)">
             <header>
-                <atz-lesson-card class="banner" [image]="i.banner" [width]="75">
+                <atz-lesson-card class="banner" [image]="i.banner">
                     <p class="lessons">{{ i.lessonsAmount }} aulas</p>
                     <p class="name">{{ i.name }}</p>
                 </atz-lesson-card>

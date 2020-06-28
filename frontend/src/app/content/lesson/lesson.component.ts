@@ -13,6 +13,8 @@ export class LessonComponent implements OnInit {
 	lesson: Lesson;
 	course: Course;
 	module: ModuleLesson[];
+
+	lessonTabActive: boolean = false;
 	
 	constructor(
 		private router: Router,
