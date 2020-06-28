@@ -4,8 +4,8 @@ import * as moment from 'moment';
 @Pipe({ name: 'timeduration' })
 export class DurationPipe implements PipeTransform {
     transform(value: string): string {
-        const time = value.split(":");
-        return parseInt(time[0]) === 0 ? time.slice(1).join(":") : time.join(":")
+        const time = value?.split(":") || ['0'];
+        return parseInt(time[0]) === 0 ? time?.slice(1).join(":") : time?.join(":")
     } 
 }
 

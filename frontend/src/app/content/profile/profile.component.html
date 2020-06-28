@@ -30,7 +30,7 @@
     <div id="interests">
         <h2 class="subtitle">Tópicos de Interesse</h2>
         <ul>
-            <li *ngFor="let i of content.interests">{{ i }}</li>
+            <li *ngFor="let i of content?.interests">{{ i }}</li>
         </ul>
     </div>
 
@@ -93,14 +93,18 @@
         <section>
             <h1 class="title">Cursos Recentes</h1>
             <ul class="card-list three-itens">
-                <li *ngFor="let i of content.recentCourses"><atz-course-card [course]="i"></atz-course-card></li>
+                <li *ngFor="let i of content?.recentCourses"><atz-course-card [course]="i"></atz-course-card></li>
             </ul>
         </section>
 
         <section>
             <h1 class="title">Lidos Recentemente</h1>
-            <ul class="card-list four-itens">
-                <li *ngFor="let i of content?.recentBooks"><atz-book-card [book]="i"></atz-book-card></li>
+            <ul class="swiper-container" id="recents-books">
+                <div class="swiper-wrapper">
+                    <li *ngFor="let i of content?.recentBooks" class="swiper-slide">
+                        <atz-book-card [book]="i"></atz-book-card>
+                    </li>
+                </div>
             </ul>
         </section>
 
@@ -131,8 +135,12 @@
 
         <section>
             <h1 class="title">Mais Lidos</h1>
-            <ul class="card-list four-itens">
-                <li *ngFor="let i of content?.favBooks"><atz-book-card [book]="i"></atz-book-card></li>
+            <ul class="swiper-container" id="mostreaded-books">
+                <div class="swiper-wrapper">
+                    <li *ngFor="let i of content?.favBooks" class="swiper-slide">
+                        <atz-book-card [book]="i"></atz-book-card>
+                    </li>
+                </div>
             </ul>
         </section>
     </main>

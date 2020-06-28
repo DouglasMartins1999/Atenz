@@ -1,4 +1,4 @@
-<img src="../../../assets/images/dark_logo.png" class="logo" [ngClass]="{ 'active': !isFormActive }">
+<img src="../../../assets/images/dark_logo.png" class="logo" [ngClass]="{ 'active': !isFormActive }" [routerLink]="['/']">
 <form (submit)="search($event, searchbox.value)" (click)="showInput(searchbox)">
     <i class="cil-magnifying-glass"></i>
     <input type="search" placeholder="Busque por um mundo..." [ngClass]="{ 'active': isFormActive }" (blur)="isFormActive = false" #searchbox>
