@@ -1,4 +1,6 @@
 <section class="profile">
+    <div class="close-btn"><i class="cil-x-circle"></i></div>
+
     <div id="user-info">
         <h1>@{{ content?.username || auth.authUser.unique_name }}</h1>
         <p>Membro desde {{ content?.registeredAt | date:'LLLL \'de\' yyyy' }}</p>
@@ -79,7 +81,7 @@
     </div>
 </section>
 
-<article>
+<article class="initial">
     <atz-header></atz-header>
     
     <main>

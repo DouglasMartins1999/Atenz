@@ -11,6 +11,10 @@
     padding: 52px;
     box-sizing: border-box;
 
+    .close-btn {
+        display: none;
+    }
+
     .subtitle {
         margin: 0;
         text-transform: uppercase;
@@ -167,5 +171,44 @@ article {
 
     .four-itens {
         grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media screen and (max-width: 620px){
+    .profile {
+        border-top: 10px solid #1a1a1a;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 12vw;
+        height: auto;
+        display: none;
+
+        .close-btn {
+            display: block;
+            position: fixed;
+            right: 8vw;
+            color: #FFFFFFB3;
+            font-size: 22px;
+            top: 15.5vw;
+            background: #0000001c;
+            padding: 7px 10px;
+            border-radius: 4px;
+        }
+    }
+
+    .initial {
+        // display: none;
+        main {
+            margin: 0 10vw 0;
+    
+            > section:first-child {
+                margin-top: 5vw;
+            }
+        }
+
+        .three-itens,
+        .four-itens {
+            grid-template-columns: 1fr;
+        }
     }
 }

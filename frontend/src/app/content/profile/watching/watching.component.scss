@@ -39,3 +39,31 @@
 atz-lesson-card {
     cursor: pointer;
 }
+
+
+@media screen and (max-width: 620px){
+    :host {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .lesson {
+        margin: 7vw 0 0;
+
+        .name {
+            font-size: 9vw;
+        }
+
+        .actions {
+            text-align: center;
+
+            button {
+                margin-bottom: 3vw;
+            }
+        }
+    }
+
+    atz-lesson-card {
+        width: 100% !important;
+    }
+}
