@@ -122,7 +122,8 @@ namespace Atenz.API.Controllers
         public async Task<ActionResult> ToWatchLater([FromQuery] int pag)
         {
             var id = long.Parse(User.Claims.First().Value);
-            var result = await repository.LessonsToWatchLater(id, pag);
+            var data = await repository.LessonsToWatchLater(id, pag);
+            var result = mapper.Map<List<MinimalLesson>>(data);
             return Ok(result);
         }
     }
