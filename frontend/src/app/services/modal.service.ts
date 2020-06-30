@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Action } from 'rxjs/internal/scheduler/Action';
 
 @Injectable({
 	providedIn: 'root'

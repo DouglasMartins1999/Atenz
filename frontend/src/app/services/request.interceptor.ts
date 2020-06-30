@@ -47,7 +47,7 @@ export class RequestInterceptor implements HttpInterceptor {
                         }
                         
                         if(err.status == 401){
-                            this.router.navigate(['login'])
+                            this.authService.signout();
                             modaldata.setDescription("Sua sessão expirou, faça login novamente para continuar utilizando nossos serviços");
                         }
 					}

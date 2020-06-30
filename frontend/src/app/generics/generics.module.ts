@@ -7,6 +7,7 @@ import { BookCardComponent } from './book-card/book-card.component';
 import { LessonCardComponent } from './lesson-card/lesson-card.component';
 import { ModalComponent } from './modal/modal.component';
 import { LoadingComponent } from './loading/loading.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
 	declarations: [
@@ -18,7 +19,8 @@ import { LoadingComponent } from './loading/loading.component';
 		LoadingComponent
 	],
 	imports: [
-		CommonModule
+		CommonModule,
+		RouterModule
 	],
 	exports: [
 		HeaderComponent, 

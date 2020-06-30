@@ -202,7 +202,8 @@ article {
     }
 
     .initial {
-        // display: none;
+        height: calc(100vh - 64px);
+
         main {
             margin: 0 10vw 0;
     

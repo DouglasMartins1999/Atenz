@@ -14,8 +14,7 @@ export class AuthService {
 	private user: User;
 
 	constructor(
-		private http: HttpClient, 
-		private modal: ModalService,
+		private http: HttpClient,
 		private router: Router
 	) {
 		this.fetchToken().decodeToken();
