@@ -8,6 +8,7 @@ import { LessonCardComponent } from './lesson-card/lesson-card.component';
 import { ModalComponent } from './modal/modal.component';
 import { LoadingComponent } from './loading/loading.component';
 import { RouterModule } from '@angular/router';
+import { DOMChangeDirective } from './observe.directive';
 
 @NgModule({
 	declarations: [
@@ -16,7 +17,8 @@ import { RouterModule } from '@angular/router';
 		BookCardComponent, 
 		LessonCardComponent, 
 		ModalComponent, 
-		LoadingComponent
+		LoadingComponent,
+		DOMChangeDirective
 	],
 	imports: [
 		CommonModule,
@@ -28,7 +30,8 @@ import { RouterModule } from '@angular/router';
 		BookCardComponent,
 		LessonCardComponent,
 		ModalComponent,
-		LoadingComponent
+		LoadingComponent,
+		DOMChangeDirective
 	]
 })
 export class GenericsModule { }

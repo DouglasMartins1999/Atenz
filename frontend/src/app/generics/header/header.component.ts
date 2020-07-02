@@ -18,7 +18,6 @@ export class HeaderComponent implements OnInit {
   }
 
   search(event, q){
-    console.log("oi")
     event.preventDefault();
     this.router.navigate(['search'], { queryParams: { q }})
   }
