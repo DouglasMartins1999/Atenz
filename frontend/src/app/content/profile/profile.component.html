@@ -1,6 +1,4 @@
-<section class="profile">
-    <div class="close-btn"><i class="cil-x-circle"></i></div>
-
+<section class="profile" [ngClass]="{ 'mobile-hide': activeSection != 'profile' }">
     <div id="user-info">
         <h1>@{{ content?.username || auth.authUser.unique_name }}</h1>
         <p>Membro desde {{ content?.registeredAt | date:'LLLL \'de\' yyyy' }}</p>
@@ -81,7 +79,7 @@
     </div>
 </section>
 
-<article class="initial" (scroll)="scrollHandler($event)">
+<article class="initial" (scroll)="scrollHandler($event)" [ngClass]="{ 'mobile-hide': activeSection === 'profile' }">
     <atz-header></atz-header>
     
     <main #wrapper>

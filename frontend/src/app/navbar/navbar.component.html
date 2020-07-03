@@ -1,21 +1,21 @@
 <aside *ngIf="isEnabled">
     <div class="avatar" [routerLink]="['/']">{{ user }}</div>
     <ul>
-        <li class="active">
+        <li routerLinkActive="active" routerLink="/" [routerLinkActiveOptions]="{ exact: true }">
             <i class="cil-contact scale"></i>
             <span class="menu-label">Inicial</span>
         </li>
-        <li>
+        <li routerLinkActive="active" routerLink="/favCourses">
             <i class="cil-star scale"></i>
             <span class="menu-label">Favoritos</span>
         </li>
-        <li>
-            <i class="cil-history scale"></i>
-            <span class="menu-label">Histórico</span>
-        </li>
-        <li>
+        <li routerLinkActive="active" routerLink="/watchLater">
             <i class="cil-clock scale"></i>
             <span class="menu-label">A Assistir</span>
+        </li>
+        <li routerLinkActive="active" routerLink="/favBooks">
+            <i class="cil-notes scale"></i>
+            <span class="menu-label">Leituras</span>
         </li>
     </ul>
 </aside>

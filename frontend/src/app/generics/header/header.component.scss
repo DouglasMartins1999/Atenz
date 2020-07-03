@@ -36,6 +36,10 @@ div i {
     }
 }
 
+.mobile {
+    display: none !important;
+}
+
 @media screen and (max-width: 700px){
     :host {
         padding: 18px 30px;
@@ -85,5 +89,15 @@ div i {
         &.active {
             width: 90px;
         }
+    }
+}
+
+@media screen and (max-width: 620px){
+    .mobile {
+        display: inline-block !important;
+    }
+
+    .desktop {
+        display: none !important;
     }
 }

@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, AfterContentInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import Swiper from 'swiper';
 
 @Component({
@@ -32,10 +32,15 @@ export class ProfileComponent implements OnInit {
 	constructor (
 		public auth: AuthService, 
 		private http: HttpClient,
-		private router: Router
+		private router: Router,
+		private route: ActivatedRoute
 	) { }
 		
 	ngOnInit(): void {
+		this.route.params.subscribe(param => {
+			this.activeSection = param['section'];
+		})
+
 		this.http.get("/api/profile")
 			.subscribe(data => { 
 				this.content = data;

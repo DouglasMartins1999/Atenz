@@ -180,29 +180,30 @@ article {
 }
 
 @media screen and (max-width: 620px){
+    .mobile-hide {
+        display: none;
+    }
+
     .profile {
         border-top: 10px solid #1a1a1a;
         box-sizing: border-box;
         width: 100%;
         padding: 12vw;
         height: auto;
-        display: none;
 
-        .close-btn {
-            display: block;
-            position: fixed;
-            right: 8vw;
-            color: #FFFFFFB3;
-            font-size: 22px;
-            top: 15.5vw;
-            background: #0000001c;
-            padding: 7px 10px;
-            border-radius: 4px;
+        #reset {
+            flex-wrap: wrap;
+
+            .secondary {
+                padding: 16px 24px;
+            }
         }
     }
 
     .initial {
         height: calc(100vh - 64px);
+        border-right: $subsection_color solid 10px;
+        box-sizing: border-box;
 
         main {
             margin: 0 10vw 0;

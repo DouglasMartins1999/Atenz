@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, mergeMap, map, distinctUntilChanged } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
