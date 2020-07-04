@@ -72,7 +72,6 @@ namespace Atenz.Repository.Repositories
                 .ThenInclude(m => m.Course)
                 .OrderByDescending(h => h.CreatedAt)
                 .Select(h => h.Lesson.Module.Course)
-                .Distinct()
                 .Skip((pag - 1) * limit)
                 .Take(limit)
                 .ToListAsync();
@@ -99,7 +98,6 @@ namespace Atenz.Repository.Repositories
                 .ThenInclude(m => m.Course)
                 .OrderByDescending(wl => wl.CreatedAt)
                 .Select(wl => wl.Lesson)
-                .Distinct()
                 .Skip((pag - 1) * limit)
                 .Take(limit)
                 .ToListAsync();
