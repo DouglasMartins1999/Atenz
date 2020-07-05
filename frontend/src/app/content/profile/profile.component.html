@@ -151,5 +151,14 @@
                 </div>
             </ul>
         </section>
+
+        <section *ngIf="activeSection === 'favBooks'">
+            <h1 class="title">Minhas Leituras</h1>
+            <ul class="card-list four-itens">
+                <li *ngFor="let i of content?.favBooks" class="swiper-slide">
+                    <atz-book-card [book]="i" [isScaled]="true"></atz-book-card>
+                </li>
+            </ul>
+        </section>
     </main>
 </article>

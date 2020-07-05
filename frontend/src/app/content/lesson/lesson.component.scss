@@ -371,18 +371,59 @@
         .info {
             width: 100%;
             padding: 10vw;
-            // padding-bottom: 8vw;
+            
+            #about {
+                font-size: 12px;
+            }
+
+            .name {
+                margin-top: 3px;
+            }
+
+            .module {
+                font-size: 11px;
+                margin-top: 6px;
+            }
+
+            .description {
+                font-size: 13px;
+                margin: 16px 0;
+            }
         }
 
         .content {
             padding: 0;
-            padding-left: 10vw;
+            padding-left: 8vw;
             padding-bottom: 20px;
         }
 
         .modules {
             width: 100%;
             margin: 0;
+
+            li {
+                padding: 16px;
+
+                & > div:not(.amount) {
+                    margin-right: 10px;
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                p {
+                    font-size: 15px;
+                    line-height: 1.2;
+                }
+
+                span {
+                    font-size: 11px;
+                    margin-top: 4px;
+                }
+
+                .amount {
+                    font-size: 11px;
+                }
+            }
         }
 
         .lessons {
@@ -394,6 +435,17 @@
             li {
                 flex-wrap: wrap;
                 padding: 16px 20px;
+
+                .information {
+                    p {
+                        font-size: 15px;
+                        line-height: 1.2;
+                    }
+
+                    span {
+                        font-size: 12px;
+                    }
+                }
             }
 
             .completion {

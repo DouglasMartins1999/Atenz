@@ -26,6 +26,11 @@ export class ProfileComponent implements OnInit {
 			url: "favorite/courses",
 			isBusy: false,
 			pag: 1,
+		},
+		favBooks: {
+			url: "favorite/books",
+			isBusy: false,
+			pag: 1,
 		}
 	}
 
@@ -38,6 +43,11 @@ export class ProfileComponent implements OnInit {
 		
 	ngOnInit(): void {
 		this.route.params.subscribe(param => {
+			if(param['section'] === "home"){
+				this.activeSection = null;
+				return;
+			}
+
 			this.activeSection = param['section'];
 		})
 

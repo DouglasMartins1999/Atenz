@@ -7,6 +7,9 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class BookCardComponent implements OnInit {
   @Input()
+  isScaled: boolean = false;
+
+  @Input()
   book;
 
   constructor() { }

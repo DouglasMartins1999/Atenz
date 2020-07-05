@@ -1,4 +1,4 @@
-<div [routerLink]="['/']">
+<div [routerLink]="['/home']">
     <img src="../../../assets/images/dark_logo.png" class="logo" [ngClass]="{ 'active': !isFormActive }">
 </div>
 <form (submit)="search($event, searchbox.value)" (click)="showInput(searchbox)">

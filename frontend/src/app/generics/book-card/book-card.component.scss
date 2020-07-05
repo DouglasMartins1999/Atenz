@@ -23,7 +23,29 @@
         border-radius: 7px;
     }
 
-    
+    &.scale-wrapper {
+        height: 200px;
+        overflow: hidden;
+
+        img {
+            position: absolute;
+        }
+
+        img.scale {
+            height: 200px;
+            object-fit: contain;
+            object-position: center;
+        }
+
+        img.blurred {
+            height: 220px;
+            width: 106%;
+            top: -10px;
+            left: -3%;
+            object-fit: cover;
+            filter: blur(20px);
+        }
+    }
 }
 
 .description {

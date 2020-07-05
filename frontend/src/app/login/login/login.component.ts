@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
 
     const { username, password } = this.formLogin.value;
     this.auth.signin(username, password)
-      .subscribe(data => this.router.navigate(['/']))
+      .subscribe(data => this.router.navigate(['/home']))
   }
 
 }

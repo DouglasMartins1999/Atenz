@@ -45,3 +45,13 @@
         line-height: 1.2;
     }
 }
+
+@media screen and (max-width: 440px){
+    :host {
+        padding-bottom: 57.5%;
+
+        img {
+            position: absolute;
+        }
+    }
+}

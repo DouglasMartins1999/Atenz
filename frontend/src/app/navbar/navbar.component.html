@@ -1,7 +1,7 @@
 <aside *ngIf="isEnabled">
-    <div class="avatar" [routerLink]="['/']">{{ user }}</div>
+    <div class="avatar" [routerLink]="['/home']">{{ user }}</div>
     <ul>
-        <li routerLinkActive="active" routerLink="/" [routerLinkActiveOptions]="{ exact: true }">
+        <li routerLinkActive="active" routerLink="/home" [routerLinkActiveOptions]="{ exact: true }">
             <i class="cil-contact scale"></i>
             <span class="menu-label">Inicial</span>
         </li>

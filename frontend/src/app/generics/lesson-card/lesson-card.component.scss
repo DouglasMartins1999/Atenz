@@ -54,3 +54,22 @@
 }
 
 
+@media screen and (max-width: 440px){
+    :host {
+        padding-bottom: 57.5%;
+
+        img {
+            position: absolute;
+        }
+
+        ::ng-deep {
+            p {
+                max-width: 90%;
+            }
+
+            .name {
+                font-size: 5.5vw;
+            }
+        }
+    }
+}

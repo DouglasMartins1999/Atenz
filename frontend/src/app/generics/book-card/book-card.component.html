@@ -1,5 +1,6 @@
-<div class="container scale">
-    <img [src]="book.cover">
+<div class="container scale" [ngClass]="{ 'scale-wrapper': isScaled }">
+    <img [src]="book.cover" *ngIf="isScaled" class="blurred">
+    <img [src]="book.cover" [ngClass]="{ 'scale': isScaled }">
 </div>
 
 <div class="description">
