@@ -1,7 +1,7 @@
 <section class="profile" [ngClass]="{ 'mobile-hide': activeSection != 'profile' }">
     <div id="user-info">
         <h1>@{{ content?.username || auth.authUser.unique_name }}</h1>
-        <p>Membro desde {{ content?.registeredAt | date:'LLLL \'de\' yyyy' }}</p>
+        <p>Membro desde {{ content?.registeredAt | date:'MMMM \'de\' yyyy' : '-3' : 'pt-BR' }}</p>
     </div>
 
     <div id="progress" *ngIf="content?.statistics">

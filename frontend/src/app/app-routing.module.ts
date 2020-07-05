@@ -6,6 +6,7 @@ import { LessonComponent } from './content/lesson/lesson.component';
 import { SearchComponent } from './content/search/search.component';
 import { ActivateRouteGuard } from './services/auth.guard';
 import { ContentModule } from './content/content.module';
+import { BookComponent } from './content/book/book.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,11 @@ const routes: Routes = [
     path: "view",
     canActivate: [ActivateRouteGuard],
     component: LessonComponent
+  },
+  {
+    path: "read",
+    canActivate: [ActivateRouteGuard],
+    component: BookComponent
   },
   {
     path: "",

@@ -1,0 +1,96 @@
+@import '~src/app/content/lesson/lesson.component.scss';
+
+
+
+.book {
+    .subtitle {
+        font-size: 16px;
+        font-weight: 300;
+        color: #BBB;
+        margin: 0;
+    }
+
+    .info .name {
+        margin: 0;
+    }
+
+    .badges {
+        margin-top: 14px;
+    }
+}
+
+.cover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        height: auto;
+        max-height: 560px;
+        box-shadow: -2px -2px 40px rgba($color: #000000, $alpha: 0.6);
+        
+    }
+
+    .small {
+        width: 35%;
+        margin-right: -40px;
+        border-radius: 4px;
+        margin-top: 50px;
+    }
+
+    .large {
+        max-width: 70%;
+        border-radius: 6px;
+        margin-bottom: -16vh;
+    }
+}
+
+.read {
+    display: flex;
+    padding: 15vh 5vw;
+    color: #CCCCCC;
+
+    section {
+        display: block;
+    }
+
+    .info {
+        width: 30%;
+        margin-right: 5vw;
+        padding: unset;
+        transition: 400ms all ease-in-out;
+
+        &.hidden {
+            width: 0;
+            margin-right: 0;
+        }
+
+        p {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 200;
+            line-height: 1.6;
+            margin-bottom: 26px;
+
+            &.label {
+                font-size: 20px;
+            }
+        }
+
+        h3 {
+            color: $primary-color;
+            margin-bottom: 0;
+            font-size: 10px;
+        }
+    }
+
+    .book-reader {
+        border: 0;
+        flex-grow: 1;
+        background: #BBB;
+        border-radius: 5px;
+        height: 90vh;
+        position: sticky;
+        top: 5vh;
+    }
+}

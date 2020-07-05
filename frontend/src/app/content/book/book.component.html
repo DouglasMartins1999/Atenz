@@ -1,0 +1,65 @@
+<article class="book" *ngIf="content">
+    <section class="info">
+        <img src="../../../assets/images/dark_logo.png" class="logo">
+
+        <div class="data">
+            <p class="module">{{ content?.author }}</p>
+            <h1 class="name">{{ content?.title }}</h1>
+            <h2 class="subtitle" *ngIf="content?.subtitle">{{ content?.subtitle }}</h2>
+            <div class="badges">
+                <span class="badge">{{ content?.pages | padstart: 3 }} pags</span>
+                <span class="badge dark">{{ content?.format }}</span>
+            </div>
+        </div>
+        
+        <div class="track">
+            <div class="about-track">
+                <div class="detail">
+                    <label>Editora:</label>
+                    <p>{{ content?.publisher }}</p>
+                </div>
+    
+                <hr/>
+
+                <div class="detail">
+                    <label>Lançamento:</label>
+                    <p>{{ content?.releasedAt | date: 'MMM / yyyy' : '-3' : 'pt-BR' | uppercase }}</p>
+                </div>
+            </div>
+            
+            <div class="track-actions">
+                <a class="btn" download="{{ content?.title }}" [href]="content?.link"><i class="cil-cloud-download"></i> <span>Fazer Download</span></a>
+                <button class="secondary">
+                    <span>Marcar como Lido</span>
+                    <i class="mobile cil-clock"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="cover">
+        <img [src]="content?.cover" class="small">
+        <img [src]="content?.cover" class="large">
+    </section>
+</article>
+
+<article class="read">
+    <section class="info" [ngClass]="{ 'hidden': hideDetails }">
+        <h2 id="about">Sobre o Livro</h2>
+        <p>{{ content?.description }}</p>
+
+        <h3>ISBN:</h3>
+        <p class="label">{{ content?.isbn }}</p>
+
+        <h3>Tags:</h3>
+        <p class="label">{{ content?.keywords }}</p>
+
+        <div class="actions">
+            <button><i class="cil-share-alt"></i></button>
+            <button><i class="cil-star"></i></button>
+            <button (click)="hideDetails = !hideDetails"><i class="cil-low-vision"></i></button>
+        </div>
+    </section>
+
+    <iframe src="https://atenz.s3.fr-par.scw.cloud/books/vue.pdf" class="book-reader"></iframe>
+</article>

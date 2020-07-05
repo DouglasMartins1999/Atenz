@@ -7,13 +7,15 @@ import { LessonComponent } from './lesson/lesson.component';
 import { SearchComponent } from './search/search.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { PlyrModule } from 'ngx-plyr';
+import { BookComponent } from './book/book.component';
 
 @NgModule({
 	declarations: [
 		ProfileComponent, 
 		WatchingComponent, 
 		LessonComponent, 
-		SearchComponent
+		SearchComponent, 
+		BookComponent
 	],
 	imports: [
 		CommonModule,

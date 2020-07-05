@@ -12,7 +12,6 @@ import { ActivateRouteGuard } from './services/auth.guard';
 
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
-
 registerLocaleData(ptBr);
 
 @NgModule({
@@ -30,7 +29,6 @@ registerLocaleData(ptBr);
   providers: [
     ActivateRouteGuard,
     RequestInterceptorConfig,
-    { provide: LOCALE_ID, useValue: 'pt' }
   ],
   bootstrap: [AppComponent]
 })

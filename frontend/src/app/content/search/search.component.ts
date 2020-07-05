@@ -91,7 +91,12 @@ export class SearchComponent implements OnInit {
 	}
 
 	searchfeatured(){
-		const url = "/api/courses/search/featured?q=" + this.query;
+		const opts = { ...this.opts }
+		const url = "/api/courses/search/featured?q=" + this.query +
+			"&fav=" + opts.favoriteds +
+			"&hist=" + opts.watcheds +
+			"&watch=" + opts.toWatchLater;
+
 		return this.http.get(url).pipe(map(item => this.featured = item));
 	}
 

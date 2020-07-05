@@ -47,12 +47,14 @@
     }
 }
 
+.book,
 .lesson {
     flex-grow: 1;
     background-color: #202020;
     padding: 70px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 
     .info {
         display: flex;
@@ -61,6 +63,7 @@
         align-items: flex-start;
         margin: 28px 0;
         margin-right: 36px;
+        max-width: 40%;
 
         .data {
             margin: 42px 0;
@@ -98,6 +101,7 @@
     }
 }
 
+.read,
 .course {
     section {
         display: flex;
