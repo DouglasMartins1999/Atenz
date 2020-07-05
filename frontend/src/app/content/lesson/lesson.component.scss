@@ -1,5 +1,13 @@
 @import "~src/variables.scss";
 
+:host {
+    display: block;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    height: 100vh;
+}
+
+
 .video-player {
     background: linear-gradient(to bottom right, #BB2A49, #CC7E00);
     border-radius: 5px;
@@ -12,8 +20,6 @@
 .mobile {
     display: none;
 }
-
-
 
 .name {
     margin: 0;

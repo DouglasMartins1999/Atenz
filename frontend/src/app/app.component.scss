@@ -5,8 +5,7 @@
 article {
     flex-grow: 1;
     height: 100vh;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
+    overflow: hidden;
 }
 
 @media screen and (max-width: 560px){

@@ -1,22 +1,21 @@
 <atz-header></atz-header>
 
-<main>
+<main #search_wrapper>
     <h1 class="title">Resultado da sua busca por "{{ query }}"</h1>
-    <h2 class="results-amount">52 resultados</h2>
 
     <div class="filters">
         <ul class="tabs">
-            <li>Todos</li>
-            <li class="active">Cursos</li>
-            <li>Módulos</li>
-            <li>Aulas</li>
-            <li>Livros</li>
+            <li [ngClass]="{ 'active': !opts.tab, 'blocked': (opts.watcheds || opts.toWatchLater) }" (click)="updateOptions({ tab: null })">Todos</li>
+            <li [ngClass]="{ 'active': opts.tab === 'c', 'blocked': (opts.watcheds || opts.toWatchLater) }" (click)="updateOptions({ tab: 'c' })">Cursos</li>
+            <li [ngClass]="{ 'active': opts.tab === 'm', 'blocked': (opts.watcheds || opts.toWatchLater) }" (click)="updateOptions({ tab: 'm' })">Módulos</li>
+            <li [ngClass]="{ 'active': opts.tab === 'l' }" (click)="updateOptions({ tab: 'l' })">Aulas</li>
+            <li [ngClass]="{ 'active': opts.tab === 'b', 'blocked': (opts.watcheds || opts.toWatchLater) }" (click)="updateOptions({ tab: 'b' })">Livros</li>
         </ul>
 
         <div class="toggles">
-            <i class="cil-history"></i>
-            <i class="cil-clock"></i>
-            <i class="cil-star active"></i>
+            <i class="cil-history" [ngClass]="{ 'active': opts.watcheds }" (click)="updateOptions({ watcheds: !opts.watcheds })"></i>
+            <i class="cil-clock" [ngClass]="{ 'active': opts.toWatchLater }" (click)="updateOptions({ toWatchLater: !opts.toWatchLater })"></i>
+            <i class="cil-star" [ngClass]="{ 'active': opts.favoriteds }" (click)="updateOptions({ favoriteds: !opts.favoriteds })"></i>
         </div>
     </div>
 
@@ -51,10 +50,15 @@
     <section class="results">
         <ul class="courses">
             <li *ngFor="let i of content" [ngClass]="{ 'active': i.wasWatched }" (click)="goToItem(i)">
-                <atz-lesson-card class="scale" [width]="20" [image]="i.banner"></atz-lesson-card>
+                <atz-lesson-card class="scale" [width]="20" [image]="i.banner">
+                    <div *ngIf="i.amount" class="module-badge">
+                        <i class="cil-layers"></i>
+                        <span>{{ i.amount | padstart: 2 }}</span>
+                    </div>
+                </atz-lesson-card>
 
                 <div class="data">
-                    <p class="meta" *ngIf="i.label">{{ i.label }}</p>
+                    <p class="meta">{{ i.label ? i.label : i.module ? '(Módulo)' : '(Curso)' }}</p>
                     <h3 class="name">{{ i.name }}</h3>
                 </div>
 

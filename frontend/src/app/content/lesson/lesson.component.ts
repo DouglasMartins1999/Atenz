@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, mergeMap, map, distinctUntilChanged } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
@@ -20,7 +20,8 @@ export class LessonComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private http: HttpClient,
-		private modal: ModalService
+		private modal: ModalService,
+		private host: ElementRef
 	) {}
 		
 	ngOnInit(): void {
@@ -56,8 +57,10 @@ export class LessonComponent implements OnInit {
 	navigate(lesson = null, module = null, course = null){
 		const queryParams: any = {}
 		
-		if(lesson !== null)
-		queryParams.lesson = lesson;
+		if(lesson !== null){
+			queryParams.lesson = lesson;
+			this.scrollToTop();
+		}
 
 		if(module !== null)
 		queryParams.module = module;
@@ -149,6 +152,11 @@ export class LessonComponent implements OnInit {
 					this.modal.changeModalContent(data);
 				}
 			})
+	}
+
+	scrollToTop(){
+		this.host.nativeElement.scrollTo(0,0);
+		return this;
 	}
 
 	breakBubbling = (evt: any) => evt.stopPropagation();

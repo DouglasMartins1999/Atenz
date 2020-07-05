@@ -3,6 +3,12 @@
 $default-bg: #2D2D2D;
 $active-bg: #202020;
 
+:host {
+    display: block;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
 main {
     margin: 52px 70px;
 }
@@ -32,6 +38,23 @@ main {
 
     & .active {
         color: $primary-color;
+    }
+}
+
+.module-badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background: #c76218;
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+    right: -5px;
+    bottom: 12px;
+
+    & > *:first-child {
+        margin-right: 5px;
     }
 }
 

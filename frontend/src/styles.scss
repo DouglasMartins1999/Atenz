@@ -169,6 +169,11 @@ ul {
             font-weight: 600;
             border-bottom: 3px solid $primary-color;
         }
+
+        &.blocked {
+            color: #444;
+            cursor: not-allowed;
+        }
     }
 }
 
