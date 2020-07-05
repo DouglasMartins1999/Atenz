@@ -95,9 +95,14 @@ namespace Atenz.API.Controllers
 
         [Authorize]
         [Route("search/featured")]
-        public async Task<ActionResult> Featured([FromQuery] string q){
+        public async Task<ActionResult> Featured(
+            [FromQuery] string q,
+            [FromQuery] bool fav = false,
+            [FromQuery] bool watch = false,
+            [FromQuery] bool hist = false
+        ){
             var user = long.Parse(User.Claims.First().Value);
-            var result = await repository.QueryFeatured(q, user);
+            var result = await repository.QueryFeatured(q, user, fav, hist, watch);
             return Ok(result);
         }
     }
