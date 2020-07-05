@@ -18,18 +18,51 @@ namespace Atenz.Repository.Repositories
             return await context.Books.FindAsync(id);
         }
 
-        public async Task<dynamic> Query(string param, long user, int page = 1, int limit = 8)
+        public async Task<dynamic> Query(string param, long user, int page = 1, int limit = 8, bool favs = false, bool read = false)
         {
-            var query = param.ToLower();
-            return await context.Books
-                .Include(b => b.Reads)
-                .Where(b => 
-                    b.Title.ToLower().Contains(query) ||
-                    b.Subtitle.ToLower().Contains(query) ||
-                    b.Author.ToLower().Contains(query) ||
-                    b.Publisher.ToLower().Contains(query) ||
+            var queryStrings = param.ToLower().Split(' ');
+            var baseBooks = context.Books.Include(b => b.Reads);
+            var baseFavs = context.FavoriteBooks.Include(f => f.Book).ThenInclude(b => b.Reads).Select(f => f.Book);
+            var baseReads = context.ReadHistory.Include(r => r.Book).ThenInclude(r => r.Reads).Select(r => r.Book);
+            IQueryable<Book> books = baseBooks;
+
+            foreach(var q in queryStrings){
+                var book = baseBooks.Where(b => 
+                    b.Title.ToLower().Contains(q) ||
+                    b.Subtitle.ToLower().Contains(q) ||
+                    b.Author.ToLower().Contains(q) ||
+                    b.Publisher.ToLower().Contains(q) ||
                     b.Keywords.Contains(param)
-                )
+                );
+
+                books = books.Intersect(book);
+
+                if(favs){
+                    var favBooks = baseFavs.Where(b => 
+                        b.Title.ToLower().Contains(q) ||
+                        b.Subtitle.ToLower().Contains(q) ||
+                        b.Author.ToLower().Contains(q) ||
+                        b.Publisher.ToLower().Contains(q) ||
+                        b.Keywords.Contains(param)
+                    );
+
+                    books = books.Intersect(favBooks);
+                }
+
+                if(read){
+                    var readed = baseReads.Where(b => 
+                        b.Title.ToLower().Contains(q) ||
+                        b.Subtitle.ToLower().Contains(q) ||
+                        b.Author.ToLower().Contains(q) ||
+                        b.Publisher.ToLower().Contains(q) ||
+                        b.Keywords.Contains(param)
+                    );
+
+                    books = books.Intersect(readed);
+                }
+            }
+
+            return await books
                 .Select(b => new {
                     id = b.Id,
                     cover = b.Cover,

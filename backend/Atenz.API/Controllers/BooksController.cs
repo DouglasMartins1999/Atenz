@@ -56,10 +56,15 @@ namespace Atenz.API.Controllers
 
         [Authorize]
         [Route("search")]
-        public async Task<ActionResult> Search([FromQuery] string q, [FromQuery] int pag = 1)
+        public async Task<ActionResult> Search(
+            [FromQuery] string q, 
+            [FromQuery] int pag = 1,
+            [FromQuery] int lim = 4,
+            [FromQuery] bool fav = false,
+            [FromQuery] bool read = false)
         {
             var user = long.Parse(User.Claims.First().Value);
-            var result = await repository.Query(q, user, pag);
+            var result = await repository.Query(q, user, pag, lim, fav, read);
             return Ok(result);
         }
     }
