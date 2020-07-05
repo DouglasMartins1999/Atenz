@@ -9,7 +9,6 @@ namespace Atenz.API.Helpers
     public class StorageService
     {
         public string bucket;
-        public string folder;
         private readonly MinioClient s3client;
 
         public StorageService(IConfiguration config)
@@ -20,19 +19,18 @@ namespace Atenz.API.Helpers
             var secretKey = Environment.GetEnvironmentVariable("S3_SECRET_KEY");
 
             bucket = config.GetValue<string>("Storage:DefaultBucket");
-            folder = config.GetValue<string>("Storage:DefaultFolder");
             s3client = new MinioClient(endpoint, accessKey, secretKey, region).WithSSL();
         }
 
-        public async Task<string> GetPreSignedLink(string link, int expires = 60 * 60 * 2)
+        public async Task<string> GetPreSignedLink(string link, string folder = "courses", int expires = 60 * 60 * 2)
         {
             var obj = this.IsS3Link(link);
-            if(obj == null) return null;
+            if(obj == null) return link;
 
             return await s3client.PresignedGetObjectAsync(bucket, folder + "/" + obj, expires);
         }
 
-        public async Task<ObjectStat> GetObjectInfo(string link)
+        public async Task<ObjectStat> GetObjectInfo(string link, string folder = "courses")
         {
             var obj = this.IsS3Link(link);
             if(obj == null) return null;
