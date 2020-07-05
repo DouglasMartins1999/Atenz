@@ -101,7 +101,7 @@
             <h1 class="title">Lidos Recentemente</h1>
             <ul class="swiper-container">
                 <div class="swiper-wrapper" watchElement (DOMChange)="sliderChangeDetection($event)">
-                    <li *ngFor="let i of content?.recentBooks" class="swiper-slide">
+                    <li *ngFor="let i of content?.recentBooks" class="swiper-slide" (click)="navigate(null, i.id)">
                         <atz-book-card [book]="i"></atz-book-card>
                     </li>
                 </div>
@@ -145,7 +145,7 @@
             <h1 class="title">Mais Lidos</h1>
             <ul class="swiper-container">
                 <div class="swiper-wrapper" watchElement (DOMChange)="sliderChangeDetection($event)">
-                    <li *ngFor="let i of content?.favBooks" class="swiper-slide">
+                    <li *ngFor="let i of content?.favBooks" class="swiper-slide" (click)="navigate(null, i.id)">
                         <atz-book-card [book]="i"></atz-book-card>
                     </li>
                 </div>
@@ -155,7 +155,7 @@
         <section *ngIf="activeSection === 'favBooks'">
             <h1 class="title">Minhas Leituras</h1>
             <ul class="card-list four-itens">
-                <li *ngFor="let i of content?.favBooks" class="swiper-slide">
+                <li *ngFor="let i of content?.favBooks" class="swiper-slide" (click)="navigate(null, i.id)">
                     <atz-book-card [book]="i" [isScaled]="true"></atz-book-card>
                 </li>
             </ul>

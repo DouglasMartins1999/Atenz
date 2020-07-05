@@ -132,6 +132,9 @@ main {
 .courses {
     flex-grow: 1;
     margin-right: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40vw, 1fr));
+    gap: 0 2%;
 
     atz-lesson-card {
         width: 140px;
@@ -179,8 +182,10 @@ main {
 
 .books {
     display: grid;
-    grid-template-columns: repeat(2, 210px);
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
     gap: 24px;
+    flex-grow: 1;
+    min-width: 444px;
 
     li {
         background: $default-bg;
@@ -196,7 +201,7 @@ main {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 10px;
+            margin-top: 16px;
         }
 
         &.active {

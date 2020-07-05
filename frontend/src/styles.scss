@@ -62,7 +62,7 @@ a {
     color: $primary-color;
     text-decoration: none;
 
-    &:visited {
+    &:visited:not(.btn) {
         color: $primary-color;
     }
 }

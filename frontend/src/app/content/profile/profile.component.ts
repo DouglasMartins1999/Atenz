@@ -74,8 +74,16 @@ export class ProfileComponent implements OnInit {
 		return slider;
 	}
 	
-	navigate(lesson = undefined){
-		this.router.navigate(["view"], { queryParams: { lesson }})
+	navigate(lesson = undefined, book = undefined){
+		if(lesson){
+			this.router.navigate(["view"], { queryParams: { lesson }});
+			return;
+		}
+
+		if(book){
+			this.router.navigate(["read"], { queryParams: { book }});
+			return;
+		}
 	}
 
 	fetchData(type){

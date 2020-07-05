@@ -11,7 +11,8 @@ import { HttpClient } from '@angular/common/http';
 export class SearchComponent implements OnInit {
 	query: string;
 	opts = {
-		pag: 1,
+		booksPag: 1,
+		coursesPag: 1,
 		tab: null,
 		favoriteds: false,
 		toWatchLater: false,
@@ -20,6 +21,7 @@ export class SearchComponent implements OnInit {
 	}
 
 	content = [];
+	books = [];
 	featured;
 
 	itens = [false, true, true, false]
@@ -29,11 +31,10 @@ export class SearchComponent implements OnInit {
 	scrollHandler(target){
 		const wrapper = this.wrapper.nativeElement;
 		if(target.offsetHeight + target.scrollTop > wrapper.offsetTop + wrapper.offsetHeight && !this.opts.isBusy){
-			this.updateOptions({ pag: this.opts.pag + 1 });
+			this.updateOptions({ booksPag: this.opts.booksPag + 1, coursesPag: this.opts.coursesPag + 1 });
 			console.log(this.opts);
 		}
 	}
-
 
 	constructor(
 		private router: Router,
@@ -52,17 +53,20 @@ export class SearchComponent implements OnInit {
 			if(data.tab) return;
 		}
 
-		if(!data.pag){
+		if(!data.booksPag && !data.coursesPag){
 			this.featured = null;
 			this.content = []
-			this.opts.pag = 1;
+			this.books = [];
+			this.opts.booksPag = 1;
+			this.opts.coursesPag = 1;
 		}
 
 		if([null, "l"].includes(this.opts.tab)){
-			this.searchfeatured().subscribe();
+			this.searchFeatured().subscribe();
 		}
 		
-		this.search().subscribe();
+		this.searchCourses().subscribe();
+		this.searchBooks().subscribe();
 	}
 
 	ngOnInit(): void {
@@ -74,10 +78,10 @@ export class SearchComponent implements OnInit {
 			});
 	}
 
-	search(){
+	searchCourses(){
 		const opts = { ...this.opts }
 		const url = "/api/courses/search?q=" + this.query +
-					"&pag=" + opts.pag +
+					"&pag=" + opts.coursesPag +
 					"&type=" + opts.tab +
 					"&fav=" + opts.favoriteds +
 					"&hist=" + opts.watcheds +
@@ -86,11 +90,25 @@ export class SearchComponent implements OnInit {
 		return this.http.get(url).pipe(map((data: any[]) => {
 			this.content.push(...data);
 			this.opts.isBusy = !(data.length > 0);
-			this.opts.pag = opts.pag;
+			this.opts.coursesPag = opts.coursesPag;
 		}));
 	}
 
-	searchfeatured(){
+	searchBooks(){
+		const opts = { ...this.opts }
+		const url = "/api/books/search?q=" + this.query +
+				"&pag=" + opts.booksPag +
+				"&fav=" + opts.favoriteds +
+				"&read=" + opts.watcheds;
+
+		return this.http.get(url).pipe(map((data: any[]) => {
+			this.books.push(...data);
+			this.opts.isBusy = !(data.length > 0);
+			this.opts.booksPag = opts.booksPag;
+		}));
+	}
+
+	searchFeatured(){
 		const opts = { ...this.opts }
 		const url = "/api/courses/search/featured?q=" + this.query +
 			"&fav=" + opts.favoriteds +
@@ -110,5 +128,7 @@ export class SearchComponent implements OnInit {
 		this.router.navigate(['view'], { queryParams: nav });
 	}
 
-	
+	goToBook(book){
+		this.router.navigate(['read'], { queryParams: { book }});
+	}
 }

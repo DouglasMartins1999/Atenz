@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <section class="featured">
+    <section class="featured" *ngIf="featured && featured.length">
         <article *ngFor="let i of featured" [ngClass]="{ 'active': i.wasWatched }" class="card" (click)="goToItem(i)">
             <header>
                 <atz-lesson-card class="banner" [image]="i.banner">
@@ -48,7 +48,7 @@
     </section>
 
     <section class="results">
-        <ul class="courses">
+        <ul class="courses" *ngIf="content.length && opts.tab !== 'b'">
             <li *ngFor="let i of content" [ngClass]="{ 'active': i.wasWatched }" (click)="goToItem(i)">
                 <atz-lesson-card class="scale" [width]="20" [image]="i.banner">
                     <div *ngIf="i.amount" class="module-badge">
@@ -68,17 +68,14 @@
             </li>
         </ul>
 
-        <ul class="books">
-            <li *ngFor="let i of itens" [ngClass]="{ 'active': i }">
-                <img src="https://images-na.ssl-images-amazon.com/images/I/41c8kwnJzKL.jpg" class="scale">
+        <ul class="books" *ngIf="books.length && (opts.tab === 'b' || opts.tab === null)">
+            <li *ngFor="let i of books" [ngClass]="{ 'active': i.wasReaded }" (click)="goToBook(i.id)">
+                <img [src]="i.cover" class="scale">
                 <div>
                     <div class="detail">
                         <label>Páginas:</label>
-                        <p>154 pags</p>
+                        <p>{{ i.pages }} pags</p>
                     </div>
-                    <button class="unique">
-                        <i class="cil-info"></i>
-                    </button>
                 </div>
             </li>
         </ul>

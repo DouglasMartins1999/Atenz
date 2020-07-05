@@ -29,7 +29,7 @@
             
             <div class="track-actions">
                 <a class="btn" download="{{ content?.title }}" [href]="content?.link"><i class="cil-cloud-download"></i> <span>Fazer Download</span></a>
-                <button class="secondary">
+                <button class="secondary" (click)="markItAsReaded()">
                     <span>Marcar como Lido</span>
                     <i class="mobile cil-clock"></i>
                 </button>
@@ -55,11 +55,15 @@
         <p class="label">{{ content?.keywords }}</p>
 
         <div class="actions">
-            <button><i class="cil-share-alt"></i></button>
-            <button><i class="cil-star"></i></button>
-            <button (click)="hideDetails = !hideDetails"><i class="cil-low-vision"></i></button>
+            <button (click)="shareIt()"><i class="cil-share-alt"></i></button>
+            <button (click)="favoriteIt()"><i class="cil-star"></i></button>
         </div>
     </section>
 
-    <iframe src="https://atenz.s3.fr-par.scw.cloud/books/vue.pdf" class="book-reader"></iframe>
+    <section class="book-reader">
+        <button (click)="hideDetails = !hideDetails" class="unique">
+            <i [ngClass]="{ 'cil-fullscreen': !hideDetails, 'cil-fullscreen-exit': hideDetails }"></i>
+        </button>
+        <iframe [src]="content?.link" class="book-reader"></iframe>
+    </section>
 </article>
