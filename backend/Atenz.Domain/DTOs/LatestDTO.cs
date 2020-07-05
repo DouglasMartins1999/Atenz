@@ -3,6 +3,7 @@ namespace Atenz.Domain.DTOs
     public class Latest
     {
         public long Id { get; set; }
+        public long CourseId { get; set; }
         public string Module { get; set; }
         public string Name { get; set; }
         public int Position { get; set; }

@@ -19,9 +19,6 @@ namespace Atenz.API.Helpers
             var accessKey = Environment.GetEnvironmentVariable("S3_ACCESS_KEY");
             var secretKey = Environment.GetEnvironmentVariable("S3_SECRET_KEY");
 
-            Console.WriteLine(region);
-            Console.WriteLine(endpoint);
-
             bucket = config.GetValue<string>("Storage:DefaultBucket");
             folder = config.GetValue<string>("Storage:DefaultFolder");
             s3client = new MinioClient(endpoint, accessKey, secretKey, region).WithSSL();
@@ -39,8 +36,7 @@ namespace Atenz.API.Helpers
         {
             var obj = this.IsS3Link(link);
             if(obj == null) return null;
-
-            Console.WriteLine(obj);
+            
             return await s3client.StatObjectAsync(bucket, folder + "/" + obj);
         }
 

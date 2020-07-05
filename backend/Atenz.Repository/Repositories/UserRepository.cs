@@ -72,9 +72,8 @@ namespace Atenz.Repository.Repositories
                 .ThenInclude(m => m.Course)
                 .OrderByDescending(h => h.CreatedAt)
                 .Select(h => h.Lesson.Module.Course)
-                .Distinct()
-                .Take(limit)
                 .Skip((pag - 1) * limit)
+                .Take(limit)
                 .ToListAsync();
         }
 
@@ -82,12 +81,11 @@ namespace Atenz.Repository.Repositories
         {
             return await context.FavoriteCourses
                 .Where(f => f.UserId == userId)
-                .OrderByDescending(h => h.CreatedAt)
                 .Include(f => f.Course)
+                .OrderByDescending(h => h.CreatedAt)
                 .Select(f => f.Course)
-                .Distinct()
-                .Take(limit)
                 .Skip((pag - 1) * limit)
+                .Take(limit)
                 .ToListAsync();
         }
 
@@ -100,9 +98,8 @@ namespace Atenz.Repository.Repositories
                 .ThenInclude(m => m.Course)
                 .OrderByDescending(wl => wl.CreatedAt)
                 .Select(wl => wl.Lesson)
-                .Distinct()
-                .Take(limit)
                 .Skip((pag - 1) * limit)
+                .Take(limit)
                 .ToListAsync();
         }
 
