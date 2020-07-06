@@ -134,7 +134,7 @@ main {
     margin-right: 24px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(40vw, 1fr));
-    gap: 0 2%;
+    gap: 0 3vw;
 
     atz-lesson-card {
         width: 140px;
@@ -304,13 +304,13 @@ main {
         }
 
         atz-lesson-card {
-            width: 60% !important;
+            width: 100% !important;
             margin-left: 0;
         }
     }
 
     .books {
-        grid-template-columns: 1fr;
+        min-width: unset;
 
         li {
             flex-direction: row;

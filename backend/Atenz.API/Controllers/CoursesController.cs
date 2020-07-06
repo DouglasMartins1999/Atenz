@@ -42,6 +42,16 @@ namespace Atenz.API.Controllers
             return Ok(new { added = result });
         }
 
+        [HttpDelete]
+        [Authorize]
+        [Route("{id:long}/favorite")]
+        public async Task<ActionResult> RemoveFromFavorites(long id)
+        {
+            var user = long.Parse(User.Claims.First().Value);
+            var result = await repository.RemoveFavorite(user, id);
+            return Ok(new { added = result });
+        }
+
         [Authorize]
         [Route("module/{id:long}")]
         public async Task<ActionResult> GetModule(long id)
@@ -74,6 +84,16 @@ namespace Atenz.API.Controllers
         {
             var user = long.Parse(User.Claims.First().Value);
             var result = await repository.AddToWatchLater(user, id);
+            return Ok(new { added = result });
+        }
+
+        [HttpDelete]
+        [Authorize]
+        [Route("module/lesson/{id:long}/watchlater")]
+        public async Task<ActionResult> RemoveFromWatchLater(long id)
+        {
+            var user = long.Parse(User.Claims.First().Value);
+            var result = await repository.RemoveFromWatchLater(user, id);
             return Ok(new { added = result });
         }
 

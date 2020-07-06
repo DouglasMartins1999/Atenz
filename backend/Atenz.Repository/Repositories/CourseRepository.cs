@@ -347,6 +347,22 @@ namespace Atenz.Repository.Repositories
             }
         }
 
+        public async Task<bool> RemoveFavorite(long user, long course){
+            try {
+                if(course == 0 || user == 0) return false;
+                var courses = await Context.FavoriteCourses
+                    .Where(f => f.CourseId == course && f.UserId == user)
+                    .ToListAsync();
+
+                Context.FavoriteCourses.RemoveRange(courses);
+                return (await Context.SaveChangesAsync()) > 0;
+
+            } catch(Exception e){
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
         public async Task<bool> AddToWatchLater(long userId, long lessonId)
         {
             try 
@@ -364,6 +380,22 @@ namespace Atenz.Repository.Repositories
             } 
             catch(Exception e)
             {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+        public async Task<bool> RemoveFromWatchLater(long userId, long lessonId){
+            try {
+                if(lessonId == 0 || userId == 0) return false;
+                var lessons = await Context.WatchLater
+                    .Where(f => f.LessonId == lessonId && f.UserId == userId)
+                    .ToListAsync();
+
+                Context.WatchLater.RemoveRange(lessons);
+                return (await Context.SaveChangesAsync()) > 0;
+
+            } catch(Exception e){
                 Console.WriteLine(e.Message);
                 return false;
             }

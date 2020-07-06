@@ -95,6 +95,22 @@ namespace Atenz.Repository.Repositories
             }
         }
 
+        public async Task<bool> RemoveFavorite(long book, long user){
+            try {
+                if(book == 0 || user == 0) return false;
+                var fb = await context.FavoriteBooks
+                    .Where(f => f.BookId == book && f.UserId == user)
+                    .ToListAsync();
+
+                context.FavoriteBooks.RemoveRange(fb);
+                return (await context.SaveChangesAsync()) > 0;
+
+            } catch(Exception e){
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
         public async Task<bool> MarkAsReaded(long book, long user)
         {
             try {
@@ -109,6 +125,22 @@ namespace Atenz.Repository.Repositories
                 return (await context.SaveChangesAsync()) > 0;
                 
             } catch(Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+        public async Task<bool> RemoveReadMark(long book, long user){
+            try {
+                if(book == 0 || user == 0) return false;
+                var books = await context.ReadHistory
+                    .Where(f => f.BookId == book && f.UserId == user)
+                    .ToListAsync();
+
+                context.ReadHistory.RemoveRange(books);
+                return (await context.SaveChangesAsync()) > 0;
+
+            } catch(Exception e){
                 Console.WriteLine(e.Message);
                 return false;
             }

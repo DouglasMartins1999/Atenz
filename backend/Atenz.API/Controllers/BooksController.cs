@@ -44,6 +44,16 @@ namespace Atenz.API.Controllers
             return Ok(result);
         }
 
+        [HttpDelete]
+        [Authorize]
+        [Route("{id:long}/favorite")]
+        public async Task<ActionResult> RemoveFavorite(long id)
+        {
+            var user = long.Parse(User.Claims.First().Value);
+            var result = await repository.RemoveFavorite(id, user);
+            return Ok(result);
+        }
+
         [HttpPost]
         [Authorize]
         [Route("{id:long}/read")]
@@ -51,6 +61,16 @@ namespace Atenz.API.Controllers
         {
             var user = long.Parse(User.Claims.First().Value);
             var result = await repository.MarkAsReaded(id, user);
+            return Ok(result);
+        }
+
+        [HttpDelete]
+        [Authorize]
+        [Route("{id:long}/read")]
+        public async Task<ActionResult> RemoveReadMark(long id)
+        {
+            var user = long.Parse(User.Claims.First().Value);
+            var result = await repository.RemoveReadMark(id, user);
             return Ok(result);
         }
 
