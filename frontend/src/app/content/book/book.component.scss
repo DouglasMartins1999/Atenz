@@ -107,11 +107,116 @@
             }
         }
 
-        iframe {
+        object {
             width: 100%;
             height: 100%;
             border: 0;
             border-radius: 5px;
+        }
+    }
+}
+
+.mobile {
+    display: none;
+}
+
+@media screen and (max-width: 460px){
+    .mobile {
+        display: flex;
+    }
+
+    .book {
+        flex-direction: column-reverse;
+        padding: 0;
+
+        .info {
+            max-width: unset;
+            padding: 12vw 10vw;
+            margin: 0;
+
+            .logo {
+                display: none;
+            }
+
+            .data {
+                margin: 0;
+            }
+
+            .track {
+                margin-top: 24px;
+            }
+
+            .about-track {
+                margin: 0;
+            }
+
+            .track-actions {
+                display: none;
+            }
+        }
+
+        .subtitle {
+            line-height: 1.4;
+            margin-top: 3px;
+        }
+    }
+
+    .cover {
+        width: 100%;
+        height: 280px;
+        display: block;
+        position: relative;
+
+        .small {
+            width: 110%;
+            height: 110%;
+            margin: 0 -5%;
+            object-fit: cover;
+            object-position: center;
+            box-shadow: unset;
+            opacity: 0.8;
+            clip-path: inset(0 0 10% 0);
+            filter: blur(10px);
+        }
+
+        .large {
+            position: absolute;
+            bottom: 0;
+            left: 10vw;
+            max-height: 90%;
+            max-width: unset;
+            margin-bottom: -20px;
+        }
+
+        .btn {
+            position: absolute;
+            right: 36px;
+            bottom: -20px;
+            padding: 17px;
+            border-radius: 50%;
+            font-size: 18px;
+
+            &.unique > * {
+                margin: 0
+            }
+        }
+    }
+
+    .read {
+        padding: 10vw;
+        padding-bottom: 25vh;
+
+        .info {
+            width: 100%;
+            margin: 0;
+
+            p {
+                font-size: 14px;
+            }
+        }
+
+        .book-reader {
+            display: none;
         }
     }
 }

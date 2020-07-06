@@ -1,4 +1,6 @@
-<article class="book" *ngIf="content">
+<atz-header class="mobile" bg-color="#202020"></atz-header>
+
+<article class="book" *ngIf="content"> 
     <section class="info">
         <img src="../../../assets/images/dark_logo.png" class="logo">
 
@@ -40,6 +42,7 @@
     <section class="cover">
         <img [src]="content?.cover" class="small">
         <img [src]="content?.cover" class="large">
+        <a class="btn unique mobile" download="{{ content?.title }}" [href]="content?.link"><i class="cil-cloud-download"></i></a>
     </section>
 </article>
 
@@ -64,6 +67,6 @@
         <button (click)="hideDetails = !hideDetails" class="unique">
             <i [ngClass]="{ 'cil-fullscreen': !hideDetails, 'cil-fullscreen-exit': hideDetails }"></i>
         </button>
-        <iframe [src]="content?.link" class="book-reader"></iframe>
+        <object [data]="content?.link" type="application/pdf"></object>
     </section>
 </article>
