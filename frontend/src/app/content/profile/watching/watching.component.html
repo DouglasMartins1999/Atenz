@@ -1,4 +1,4 @@
-<atz-lesson-card [width]="48" [image]="content?.banner" (click)="navigate(content?.courseId)">
+<atz-lesson-card [width]="48" [image]="content?.banner" (click)="lesson.navigate(null, null, content?.courseId)">
     <p class="lessons">{{ content?.maxLessons }} aulas</p>
     <p class="name">{{ content?.course }}</p>
 </atz-lesson-card>
@@ -11,7 +11,7 @@
         <span class="badge dark">{{ content?.duration | timeduration }} min</span>
     </div>
     <div class="actions">
-        <button (click)="navigate(content?.courseId, content?.id)"><i class="cil-media-play"></i> Assistir Agora</button>
-        <button (click)="watchLater(content?.id)" class="secondary">Assistir Mais Tarde</button>
+        <button (click)="lesson.navigate(content?.id, null, content?.courseId)"><i class="cil-media-play"></i> Assistir Agora</button>
+        <button (click)="lesson.addToWatchLater(content?.id)" class="secondary">Assistir Mais Tarde</button>
     </div>
 </div>

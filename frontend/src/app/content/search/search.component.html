@@ -70,7 +70,7 @@
 
         <ul class="books" *ngIf="books.length && (opts.tab === 'b' || opts.tab === null)">
             <li *ngFor="let i of books" [ngClass]="{ 'active': i.wasReaded }" (click)="goToBook(i.id)">
-                <img [src]="i.cover" class="scale">
+                <img [src]="i.cover" class="scale" [title]="i.title + ' - ' + i.author">
                 <div>
                     <div class="detail">
                         <label>Páginas:</label>
