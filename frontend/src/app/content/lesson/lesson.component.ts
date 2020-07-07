@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, mergeMap, map, distinctUntilChanged } from 'rxjs/operators';
+import { filter, mergeMap, map, distinctUntilKeyChanged } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ModalService, ModalData } from 'src/app/services/modal.service';
 
@@ -31,10 +31,11 @@ export class LessonComponent implements OnInit {
 		this.route.queryParams
 			.pipe(
 				filter(params => params.lesson),
-				distinctUntilChanged(),
+				distinctUntilKeyChanged("lesson"),
 				mergeMap(params => this.http.get("/api/courses/module/lesson/" + params.lesson))
 			)
 			.subscribe((resp: Lesson) => {
+				console.log("data")
 				this.lesson = resp;
 				this.lesson.video = [{ src: resp.link }];
 				this.navigate(null, resp.moduleId, resp.courseId)
