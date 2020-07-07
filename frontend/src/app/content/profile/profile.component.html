@@ -142,7 +142,7 @@
         </section>
 
         <section *ngIf="!activeSection">
-            <h1 class="title">Mais Lidos</h1>
+            <h1 class="title">Seus livros favoritos</h1>
             <ul class="swiper-container">
                 <div class="swiper-wrapper" watchElement (DOMChange)="sliderChangeDetection($event)">
                     <li *ngFor="let i of content?.favBooks" class="swiper-slide" (click)="navigate(null, i.id)">
