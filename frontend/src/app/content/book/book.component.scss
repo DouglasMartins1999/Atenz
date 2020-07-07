@@ -201,6 +201,22 @@
                 margin: 0
             }
         }
+
+        .markit {
+            position: absolute;
+            bottom: 46px;
+            right: 46px;
+            background: rgba(0, 0, 0, 0.4);
+            color: #FFF;
+            padding: 8px;
+            display: flex;
+            border-radius: 3px;
+            
+            & > i {
+                font-size: 16px;
+                margin: 0;
+            }
+        }
     }
 
     .read {
