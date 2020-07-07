@@ -126,8 +126,9 @@
     }
 
     .book {
-        flex-direction: column-reverse;
         padding: 0;
+        overflow: hidden;
+        flex-direction: column-reverse;
 
         .info {
             max-width: unset;
@@ -204,7 +205,6 @@
 
     .read {
         padding: 10vw;
-        padding-bottom: 25vh;
 
         .info {
             width: 100%;

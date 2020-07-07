@@ -1,15 +1,25 @@
 :host {
     display: flex;
+    height: 100vh;
 }
 
 article {
     flex-grow: 1;
-    height: 100vh;
+    height: 100%;
     overflow: hidden;
 }
 
 @media screen and (max-width: 560px){
+    :host {
+        // flex-direction: column-reverse;
+        display: block;
+    }
+
     article {
-        height: calc(100vh - 64px);
+        height: auto;
+
+        &.navpadding {
+            padding-bottom: 64px;
+        }
     }
 }

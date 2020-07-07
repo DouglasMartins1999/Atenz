@@ -4,7 +4,7 @@
     display: block;
     overflow-y: scroll;
     scroll-behavior: smooth;
-    height: 100vh;
+    height: 100%;
 }
 
 
@@ -276,6 +276,10 @@
 }
 
 @media screen and (max-width: 1024px){
+    :host {
+        height: 100%;
+    }
+
     atz-header.mobile {
         display: flex;
     }

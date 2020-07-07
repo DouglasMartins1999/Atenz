@@ -225,6 +225,10 @@ main {
 
 
 @media screen and (max-width: 620px){
+    :host {
+        height: 100%;
+    }
+
     main {
         margin: 5vw 8vw;
     }

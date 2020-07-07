@@ -162,15 +162,17 @@ article {
     .swiper-container {
         width: 100%;
         height: auto;
+        
+        li {
+            cursor: pointer;
+        }
     }
 
     .card-list {
         display: grid;
         gap: 12px;
 
-        li {
-            cursor: pointer;
-        }
+        
     }
 
     .three-itens {
@@ -183,6 +185,11 @@ article {
 }
 
 @media screen and (max-width: 620px){
+    :host {
+        display: block;
+        height: 100%;
+    }
+
     .mobile-hide {
         display: none;
     }
@@ -191,7 +198,8 @@ article {
         box-sizing: border-box;
         width: 100%;
         padding: 12vw;
-        height: auto;
+        height: 100%;
+        overflow: scroll;
 
         #reset {
             flex-wrap: wrap;
@@ -203,8 +211,7 @@ article {
     }
 
     .initial {
-        height: calc(100vh - 64px);
-        border-right: $subsection_color solid 10px;
+        height: 100%;
         box-sizing: border-box;
 
         main {
