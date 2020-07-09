@@ -9,6 +9,28 @@ $active-bg: #202020;
     overflow-y: scroll;
 }
 
+.emptystate {
+    width: 65%;
+    margin: 10vh auto;
+    display: flex;
+    color: #777;
+    font-weight: 300;
+    line-height: 1.45;
+
+    img {
+        width: 100%;
+        max-width: 200px;
+        flex-shrink: 0;
+        margin-right: 5%;
+    }
+
+    h1 {
+        color: #EEE;
+        font-size: 6vh;
+        margin: 0;
+    }
+}
+
 main {
     margin: 52px 70px;
 }

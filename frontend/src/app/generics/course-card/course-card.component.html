@@ -1,11 +1,6 @@
 <img [src]="course?.banner">
 <div class="overlay" (click)="navigate(course?.id)">
     <div>
-        <span class="badge primary">{{ course?.lessons }} aulas</span>
-        <span class="badge">{{ course?.duration }} min</span>
-    </div>
-
-    <div>
         <p class="teacher">{{ course?.teacher }}</p>
         <p class="name">{{ course?.name }}</p>
     </div>

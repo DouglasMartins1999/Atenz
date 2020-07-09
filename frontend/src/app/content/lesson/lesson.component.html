@@ -104,6 +104,12 @@
                     <button (click)="breakBubbling($event)" (click)="addToWatchLater(i.id)"><i class="cil-clock"></i></button>
                 </div>
             </li>
+            
+            <section class="emptystate" *ngIf="!module">
+                <img src="../../../assets/images/empty_states/module.svg">
+                <h1>Selecione um módulo da lista ao lado para ver as aulas que ele contém</h1>
+                <p>A divisão por módulos ajuda o curso a ficar mais organizado :)</p>
+            </section>
         </ul>
     </section>
 </article>

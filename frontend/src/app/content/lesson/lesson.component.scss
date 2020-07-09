@@ -7,6 +7,31 @@
     height: 100%;
 }
 
+.emptystate {
+    width: 40%;
+    color: #888;
+    flex-direction: column;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    img {
+        max-width: 100px;
+    }
+
+    h1 {
+        margin: 16px 0px 8px;
+        font-size: 16px;
+    }
+
+    p {
+        margin: 0;
+        font-size: 14px;
+        color: #666;
+    }
+}
+
 
 .video-player {
     background: linear-gradient(to bottom right, #BB2A49, #CC7E00);
@@ -214,6 +239,8 @@
         background: #2F2F2F;
         border-radius: 18px;
         height: 450px;
+        display: flex;
+        flex-direction: column;
         overflow-y: scroll;
         position: sticky;
         top: 42px;
