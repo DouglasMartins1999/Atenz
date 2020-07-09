@@ -13,8 +13,8 @@
             </div>
 
             <div class="actions">
-                <button (click)="navigate(lesson.id - 1)"><i class="cil-media-step-backward"></i></button>
-                <button (click)="navigate(lesson.id + 1)"><i class="cil-media-step-forward"></i></button>
+                <button (click)="navigate(lesson.id - 1)" [disabled]="lesson.position <= 1"><i class="cil-media-step-backward"></i></button>
+                <button (click)="navigate(lesson.id + 1)" [disabled]="lesson.position >= getLessonAmount()"><i class="cil-media-step-forward"></i></button>
             </div>
         </div>
 

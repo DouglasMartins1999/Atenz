@@ -70,6 +70,10 @@
         color: #646464;
         margin: 0;
     }
+
+    &:disabled {
+        opacity: .4;
+    }
 }
 
 .book,

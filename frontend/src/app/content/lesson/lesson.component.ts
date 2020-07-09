@@ -218,7 +218,7 @@ export class LessonComponent implements OnInit {
 
 	breakBubbling = (evt: any) => evt.stopPropagation();
 	getModuleDuration = () => this.course.modules.map(item => item.duration);
-	getLessonAmount = () => this.course.modules.reduce((acc, x): number => acc + parseInt(x.lessonsAmount), 0);
+	getLessonAmount = () => this.course?.modules?.reduce((acc, x): number => acc + parseInt(x.lessonsAmount), 0);
 }
 
 interface Lesson {
