@@ -18,6 +18,7 @@ export class LessonComponent implements OnInit {
 	module: ModuleLesson[];
 
 	lessonTabActive: boolean = false;
+	currentModule: number = null;
 	
 	constructor(
 		private router: Router,
@@ -78,6 +79,7 @@ export class LessonComponent implements OnInit {
 	
 
 	fetchModuleLesson(id){
+		this.currentModule = id;
 		return this.http.get<ModuleLesson[]>("api/courses/module/" + id)
 			.pipe(map((resp: ModuleLesson[]) => {
 				this.module = resp;

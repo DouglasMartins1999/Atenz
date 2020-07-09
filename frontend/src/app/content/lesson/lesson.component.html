@@ -77,7 +77,7 @@
 
     <section class="content">
         <ul class="modules" [ngClass]="{ 'mobile-hidden': lessonTabActive }">
-            <li *ngFor="let i of course?.modules" (click)="navigate(null, i.id); lessonTabActive = true">
+            <li *ngFor="let i of course?.modules" (click)="navigate(null, i.id); lessonTabActive = true" [ngClass]="{ 'active': i.id == currentModule }">
                 <div>
                     <p>{{ i.name }}</p>
                     <span>{{ i.duration | timeduration }}</span>
