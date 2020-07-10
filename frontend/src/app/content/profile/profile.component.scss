@@ -299,10 +299,6 @@ article {
 
         #reset {
             flex-wrap: wrap;
-
-            .secondary {
-                padding: 16px 24px;
-            }
         }
     }
 
@@ -321,6 +317,21 @@ article {
         .three-itens,
         .four-itens {
             grid-template-columns: 1fr;
+        }
+    }
+
+    .modal-overlay > div {
+        margin: 0 5vw;
+
+        .actions {
+            flex-direction: column;
+
+            .buttons {
+                display: flex;
+                margin-top: 12px;
+                justify-content: flex-end;
+                flex-wrap: wrap-reverse;
+            }
         }
     }
 }

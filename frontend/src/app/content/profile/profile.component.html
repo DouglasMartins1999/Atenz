@@ -223,7 +223,7 @@
                 <input type="checkbox" #books><label>Remover Livros</label><br/>
                 <input type="checkbox" #lessons><label>Remover Aulas</label><br/>
             </div>
-            <div>
+            <div class="buttons">
                 <button (click)="isModalOpen = false" class="secondary">Cancelar</button>
                 <button (click)="clearHistory(mindate.value, maxdate.value, lessons.checked, books.checked)">Confirmar Exclusão</button>
             </div>
