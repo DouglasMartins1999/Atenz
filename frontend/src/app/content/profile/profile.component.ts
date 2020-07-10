@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ModalData, ModalService } from 'src/app/services/modal.service';
 import Swiper from 'swiper';
 
 @Component({
@@ -15,6 +16,7 @@ export class ProfileComponent implements OnInit {
 
 	public content = null;
 	public activeSection = null;
+	public isModalOpen = false;
 	private sliders = [];
 	private sections = {
 		watchLater: {
@@ -38,7 +40,8 @@ export class ProfileComponent implements OnInit {
 		public auth: AuthService, 
 		private http: HttpClient,
 		private router: Router,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		private modal: ModalService
 	) { }
 		
 	ngOnInit(): void {
@@ -96,6 +99,26 @@ export class ProfileComponent implements OnInit {
 					section.isBusy = false;
 					section.pag++;
 				}
+			})
+	}
+
+	clearHistory(mindate, maxdate, lesson, books){
+		const modal = new ModalData().setCloseAction().setVisibility(true).fromService(this.modal);
+		const url = "/api/profile/history" +
+					"?mindate=" + mindate + 
+					"&maxdate=" + maxdate +
+					"&lessons=" + lesson + 
+					"&books=" + books;
+
+		this.isModalOpen = false;
+		this.http.delete(url, {})
+			.subscribe((data: any) => {
+				if(data.changes){
+					modal.setTitle("Sucesso").setDescription(`Removemos ${data.changes} iten${data.changes == 1 ? "" : "s"} do seu histórico entre o período solicitado. Essa ação não afeta suas listas de favoritos e visualização posterior`)
+				} else {
+					modal.setTitle("Oops...").setDescription("Não houve alterações no seu histórico, talvez não houve visualizações no período informado. Tente um valor diferente");
+				}
+				this.modal.changeModalContent(modal);
 			})
 	}
 

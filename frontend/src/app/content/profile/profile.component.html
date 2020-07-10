@@ -79,7 +79,7 @@
 
     <div id="reset">
         <button (click)="auth.signout()">Fazer Logout</button>
-        <button class="secondary" *ngIf="false">Limpar Histórico</button>
+        <button (click)="isModalOpen = true" class="secondary">Limpar Histórico</button>
     </div>
 </section>
 
@@ -206,3 +206,27 @@
         </section>
     </main>
 </article>
+
+<section class="modal-overlay" *ngIf="isModalOpen">
+    <div class="clear-modal">
+        <h1>Limpar Histórico</h1>
+        <p>Você pode limpar os seus dados de navegação em um intervalo de tempo específico, tanto de seus livros quanto de suas aulas. É importante lembrar que essa ação NÃO é reversível.</p>
+
+        <form>
+            <label>Data Mínima</label>
+            <label>Data Máxima</label>
+            <input type="date" placeholder="Data Mínima" #mindate>
+            <input type="date" placeholder="Data Máxima" #maxdate>
+        </form>
+        <div class="actions">
+            <div>
+                <input type="checkbox" #books><label>Remover Livros</label><br/>
+                <input type="checkbox" #lessons><label>Remover Aulas</label><br/>
+            </div>
+            <div>
+                <button (click)="isModalOpen = false" class="secondary">Cancelar</button>
+                <button (click)="clearHistory(mindate.value, maxdate.value, lessons.checked, books.checked)">Confirmar Exclusão</button>
+            </div>
+        </div>
+    </div>
+</section>
