@@ -61,11 +61,11 @@ namespace Atenz.API.Controllers
             var interests = await repository.Interests(id);
             var goals = await repository.Goals(id);
             var latest = await repository.LatestWatched(id);
-            var recentCourse = await repository.RecentsCourses(id, 1, 3);
-            var favoriteCourse = await repository.FavoriteCourses(id, 1, 3);
-            var watchLater = await repository.LessonsToWatchLater(id, 1, 3);
-            var recentBooks = await repository.RecentsBooks(id, 1, 4);
-            var favoriteBooks = await repository.FavoriteBooks(id, 1, 4);
+            var recentCourse = await repository.RecentsCourses(id, 1);
+            var favoriteCourse = await repository.FavoriteCourses(id, 1);
+            var watchLater = await repository.LessonsToWatchLater(id, 1);
+            var recentBooks = await repository.RecentsBooks(id, 1);
+            var favoriteBooks = await repository.FavoriteBooks(id, 1);
             
             var result = mapper.Map<ProfileDTO>(user);
             result.Latest = mapper.Map<Latest>(latest);
@@ -82,11 +82,28 @@ namespace Atenz.API.Controllers
         }
 
         [Authorize]
-        [Route("profile/recents/courses")]
-        public async Task<ActionResult> RecentCourses([FromQuery] int pag)
+        [HttpDelete]
+        [Route("profile/history")]
+        public async Task<ActionResult> ClearHistory(
+            [FromQuery] DateTime? mindate, 
+            [FromQuery] DateTime? maxdate, 
+            [FromQuery] bool lessons,
+            [FromQuery] bool books)
         {
             var id = long.Parse(User.Claims.First().Value);
-            var result = await repository.RecentsCourses(id, pag);
+            var result = await repository.CleanHistory(id, lessons, books,
+                mindate ?? DateTime.MinValue, 
+                maxdate ?? DateTime.MaxValue
+            );
+            return Ok(new { changes = result });
+        }
+
+        [Authorize]
+        [Route("profile/recents/courses")]
+        public async Task<ActionResult> RecentCourses([FromQuery] int pag, [FromQuery] int lim)
+        {
+            var id = long.Parse(User.Claims.First().Value);
+            var result = await repository.RecentsCourses(id, pag, lim);
             return Ok(result);
         }
 
