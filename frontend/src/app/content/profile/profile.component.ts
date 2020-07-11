@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalData, ModalService } from 'src/app/services/modal.service';
 import Swiper from 'swiper';
+import { Title } from '@angular/platform-browser';
 
 @Component({
 	selector: 'atz-profile',
@@ -51,10 +52,12 @@ export class ProfileComponent implements OnInit {
 		private http: HttpClient,
 		private router: Router,
 		private route: ActivatedRoute,
-		private modal: ModalService
+		private modal: ModalService,
+		private title: Title
 	) { }
 		
 	ngOnInit(): void {
+		this.title.setTitle("Atenz - Abra as Portas para o Conhecimento")
 		this.http.get("/api/profile")
 			.subscribe(data => { 
 				this.content = data;

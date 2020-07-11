@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, mergeMap, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { Title } from '@angular/platform-browser';
 
 @Component({
 	selector: 'atz-search',
@@ -43,7 +44,8 @@ export class SearchComponent implements OnInit {
 	constructor(
 		private router: Router,
 		private route: ActivatedRoute,
-		private http: HttpClient
+		private http: HttpClient,
+		private title: Title
 	) {}
 
 	updateOptions(data){
@@ -78,6 +80,7 @@ export class SearchComponent implements OnInit {
 			.pipe(filter(params => params.q))
 			.subscribe(params => {
 				this.query = params.q;
+				this.title.setTitle("Busca por " + params.q + " - ");
 				this.updateOptions({});
 			});
 	}

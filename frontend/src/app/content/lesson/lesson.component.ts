@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { filter, mergeMap, map, distinctUntilKeyChanged } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ModalService, ModalData } from 'src/app/services/modal.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
 	selector: 'atz-lesson',
@@ -25,6 +26,7 @@ export class LessonComponent implements OnInit {
 		private route: ActivatedRoute,
 		private http: HttpClient,
 		private modal: ModalService,
+		private title: Title,
 		private host: ElementRef
 	) {}
 		
@@ -40,6 +42,7 @@ export class LessonComponent implements OnInit {
 				this.lesson = resp;
 				this.lesson.video = [{ src: resp.link }];
 				this.navigate(null, resp.moduleId, resp.courseId)
+				this.title.setTitle(resp.name + " - Atenz");
 			})
 
 		this.route.queryParams
@@ -49,6 +52,10 @@ export class LessonComponent implements OnInit {
 			)
 			.subscribe(resp => {
 				this.course = resp;
+
+				if(!this.lesson){
+					this.title.setTitle(resp.name + " - Atenz")
+				}
 			});
 
 		this.route.queryParams

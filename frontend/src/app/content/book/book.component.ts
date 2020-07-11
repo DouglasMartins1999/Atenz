@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { filter, distinctUntilChanged, mergeMap } from 'rxjs/operators';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ModalService, ModalData } from 'src/app/services/modal.service';
 
 @Component({
@@ -18,6 +18,7 @@ export class BookComponent implements OnInit {
 		private http: HttpClient,
 		private route: ActivatedRoute,
 		private modal: ModalService,
+		private title: Title,
 		private sanitizer: DomSanitizer
 	) { }
 	
@@ -31,6 +32,7 @@ export class BookComponent implements OnInit {
 			.subscribe((resp: any) => {
 				this.content = resp;
 				this.content.link = this.sanitizer.bypassSecurityTrustResourceUrl(resp.link);
+				this.title.setTitle(resp.title + " de " + resp.author + " - Atenz");
 			})
 	}
 
