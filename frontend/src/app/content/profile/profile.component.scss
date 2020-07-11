@@ -361,6 +361,10 @@ article {
         height: 100%;
         box-sizing: border-box;
 
+        section {
+            margin-top: 12vw;
+        }
+
         .three-itens,
         .four-itens {
             grid-template-columns: 1fr;
