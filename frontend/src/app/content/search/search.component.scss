@@ -247,14 +247,58 @@ main {
     }
 }
 
+.list-toggle {
+    display: none;
+}
+
+@media screen and (max-width: 1250px){
+    .books {
+        min-width: unset;
+    }
+}
+
+@media screen and (max-width: 890px){
+    .emptystate {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .list-toggle {
+        display: flex;
+        margin: 36px 0 0;
+
+        .tabs {
+            margin: 0 auto;
+        }
+    }
+
+    .courses {
+        display: none;
+    }
+
+    .books {
+        display: none;
+    }
+
+    .mobile-active {
+        display: grid;
+    }
+}
 
 @media screen and (max-width: 620px){
     :host {
-        height: 100%;
+        height: calc(100vh - 64px);
+    }
+
+    .emptystate {
+        margin: 5vh auto;
+        width: 80%;
     }
 
     main {
         margin: 5vw 8vw;
+        padding: 0;
     }
 
     .filters {
@@ -323,6 +367,8 @@ main {
             .name {
                 font-size: 4.5vw;
                 max-width: unset;
+                word-break: break-word;
+                hyphens: auto;
             }
 
             .badges {

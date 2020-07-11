@@ -14,6 +14,7 @@ export class SearchComponent implements OnInit {
 		booksPag: 1,
 		coursesPag: 1,
 		tab: null,
+		mobileTab: "VID",
 		favoriteds: false,
 		toWatchLater: false,
 		watcheds: false,
@@ -24,10 +25,15 @@ export class SearchComponent implements OnInit {
 	books = [];
 	featured;
 
+	
+
 	@ViewChild("search_wrapper") wrapper;
 	@HostListener("scroll", ["$event.target"])
 	scrollHandler(target){
+		console.log("hande")
 		const wrapper = this.wrapper.nativeElement;
+		console.log(target.offsetHeight + target.scrollTop, wrapper.offsetTop + wrapper.offsetHeight)
+
 		if(target.offsetHeight + target.scrollTop > wrapper.offsetTop + wrapper.offsetHeight && !this.opts.isBusy){
 			this.updateOptions({ booksPag: this.opts.booksPag + 1, coursesPag: this.opts.coursesPag + 1 });
 			console.log(this.opts);
@@ -95,6 +101,7 @@ export class SearchComponent implements OnInit {
 	searchBooks(){
 		const opts = { ...this.opts }
 		const url = "/api/books/search?q=" + this.query +
+				"&lim=" + 13 +
 				"&pag=" + opts.booksPag +
 				"&fav=" + opts.favoriteds +
 				"&read=" + opts.watcheds;
