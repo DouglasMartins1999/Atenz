@@ -38,6 +38,7 @@
     background: $subsection_color;
     width: 30%;
     max-width: 400px;
+    min-width: 365px;
     height: 100vh;
     padding: 52px;
     box-sizing: border-box;
@@ -133,6 +134,7 @@
                 .check {
                     width: 24px;
                     height: 24px;
+                    flex-shrink: 0;
                     border-radius: 50%;
                     border: 1px solid #444343;
                     float: left;
@@ -185,8 +187,9 @@ article {
     overflow-y: scroll;
 
     main {
+        max-width: 930px;
         margin: 42px auto;
-        max-width: 830px;
+        padding: 0 72px;
     }
 
     section {
@@ -208,6 +211,10 @@ article {
 
         li {
             cursor: pointer;
+        }
+
+        &.limited li:nth-child(n+4){
+            display: none;
         }
     }
 
@@ -274,20 +281,10 @@ article {
     }
 }
 
-@media screen and (max-width: 620px){
+@media screen and (max-width: 1000px){
     :host {
         display: block;
         height: 100%;
-    }
-
-    .section-emptystate {
-        width: 100%;
-        flex-direction: column;
-        align-items: flex-start;
-
-        img {
-            margin: 0 0 16px;
-        }
     }
 
     .mobile-hide {
@@ -297,6 +294,7 @@ article {
     .profile {
         box-sizing: border-box;
         max-width: unset;
+        min-width: unset;
         width: 100%;
         padding: 12vw;
         height: 100%;
@@ -308,10 +306,8 @@ article {
     }
 
     .initial {
-        height: 100%;
-        box-sizing: border-box;
-
         main {
+            padding: 0;
             margin: 0 10vw 0;
     
             > section:first-child {
@@ -321,7 +317,7 @@ article {
 
         .three-itens,
         .four-itens {
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, 1fr);
         }
     }
 
@@ -337,6 +333,41 @@ article {
                 justify-content: flex-end;
                 flex-wrap: wrap-reverse;
             }
+        }
+    }
+}
+
+@media screen and (max-width: 1200px){
+    article {
+        .card-list.limited li:nth-child(n+3){
+            display: none;
+        }
+
+        .three-itens,
+        .four-itens {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+}
+
+@media screen and (max-width: 590px){
+    .section-emptystate {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+
+        img {
+            margin: 0 0 16px;
+        }
+    }
+
+    .initial {
+        height: 100%;
+        box-sizing: border-box;
+
+        .three-itens,
+        .four-itens {
+            grid-template-columns: 1fr;
         }
     }
 }

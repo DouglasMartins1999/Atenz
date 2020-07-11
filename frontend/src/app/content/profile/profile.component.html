@@ -100,8 +100,8 @@
                     <span>{{ activeSection === 'recentCourses' ? 'Minimizar' : 'Expandir' }}</span>
                 </button>
             </div>
-            <ul class="card-list three-itens">
-                <li *ngFor="let i of content?.recentCourses | slice:0:( activeSection ? undefined : 3 )">
+            <ul class="card-list three-itens" [ngClass]="{ 'limited': !activeSection }">
+                <li *ngFor="let i of content?.recentCourses">
                     <atz-course-card [course]="i"></atz-course-card>
                 </li>
             </ul>
@@ -142,8 +142,8 @@
                     <span>{{ activeSection === 'favCourses' ? 'Minimizar' : 'Expandir' }}</span>
                 </button>
             </div>
-            <ul class="card-list three-itens">
-                <li *ngFor="let i of content?.favCourses | slice:0:( activeSection ? undefined : 3 )">
+            <ul class="card-list three-itens" [ngClass]="{ 'limited': !activeSection }">
+                <li *ngFor="let i of content?.favCourses">
                     <atz-course-card [course]="i"></atz-course-card>
                 </li>
             </ul>
@@ -165,8 +165,8 @@
                     <span>{{ activeSection === 'watchLater' ? 'Minimizar' : 'Expandir' }}</span>
                 </button>
             </div>
-            <ul class="card-list three-itens">
-                <li *ngFor="let i of content?.watchLater | slice:0:( activeSection ? undefined : 3 )" (click)="navigate(i.id)">
+            <ul class="card-list three-itens" [ngClass]="{ 'limited': !activeSection }">
+                <li *ngFor="let i of content?.watchLater" (click)="navigate(i.id)">
                     <atz-lesson-card [image]="i.banner">
                         <span class="badge spaceless">{{ i.duration | timeduration }} m</span>
                         <p class="name small">{{ i.name }}</p>

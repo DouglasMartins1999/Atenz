@@ -1,51 +1,53 @@
 <atz-header class="mobile" bg-color="#202020"></atz-header>
 
 <article class="lesson" *ngIf="lesson">
-    <section class="info">
-        <img src="../../../assets/images/dark_logo.png" class="logo">
+    <div class="wrapper">
+        <section class="info">
+            <img src="../../../assets/images/dark_logo.png" class="logo">
 
-        <div class="data">
-            <p class="module">{{ lesson.module }}</p>
-            <h1 class="name">{{ lesson.name }}</h1>
-            <div>
-                <span class="badge">Aula {{ lesson.position | padstart: 3 }}</span>
-                <span class="badge dark">{{ lesson.duration | timeduration }} min</span>
-            </div>
-
-            <div class="actions">
-                <button (click)="navigate(lesson.id - 1)" [disabled]="lesson.position <= 1"><i class="cil-media-step-backward"></i></button>
-                <button (click)="navigate(lesson.id + 1)" [disabled]="lesson.position >= getLessonAmount()"><i class="cil-media-step-forward"></i></button>
-            </div>
-        </div>
-
-        <div plyr class="video-player mobile" [plyrSources]="lesson.video" [plyrPoster]="lesson.banner" [plyrTitle]="lesson.name"></div>
-
-        <div class="track">
-            <div class="about-track">
-                <div class="detail">
-                    <label>Tamanho:</label>
-                    <p>{{ lesson.size | filesize }}</p>
+            <div class="data">
+                <p class="module">{{ lesson.module }}</p>
+                <h1 class="name">{{ lesson.name }}</h1>
+                <div>
+                    <span class="badge">Aula {{ lesson.position | padstart: 3 }}</span>
+                    <span class="badge dark">{{ lesson.duration | timeduration }} min</span>
                 </div>
-    
-                <hr/>
 
-                <div class="detail">
-                    <label>Formato:</label>
-                    <p>{{ lesson.link | fileformat }}</p>
+                <div class="actions">
+                    <button (click)="navigate(lesson.id - 1)" [disabled]="lesson.position <= 1"><i class="cil-media-step-backward"></i></button>
+                    <button (click)="navigate(lesson.id + 1)" [disabled]="lesson.position >= getLessonAmount()"><i class="cil-media-step-forward"></i></button>
                 </div>
             </div>
-            
-            <div class="track-actions">
-                <a class="btn" download="{{ lesson.name }}" [href]="lesson.link"><i class="cil-cloud-download"></i> <span>Fazer Download</span></a>
-                <button class="secondary" (click)="addToWatchLater()">
-                    <span>Assistir Mais Tarde</span>
-                    <i class="mobile cil-clock"></i>
-                </button>
-            </div>
-        </div>
-    </section>
 
-    <div plyr class="video-player desktop" [plyrSources]="lesson.video" [plyrPoster]="lesson.banner" [plyrTitle]="lesson.name"></div>
+            <div plyr class="video-player mobile" [plyrSources]="lesson.video" [plyrPoster]="lesson.banner" [plyrTitle]="lesson.name"></div>
+
+            <div class="track">
+                <div class="about-track">
+                    <div class="detail">
+                        <label>Tamanho:</label>
+                        <p>{{ lesson.size | filesize }}</p>
+                    </div>
+        
+                    <hr/>
+
+                    <div class="detail">
+                        <label>Formato:</label>
+                        <p>{{ lesson.link | fileformat }}</p>
+                    </div>
+                </div>
+                
+                <div class="track-actions">
+                    <a class="btn" download="{{ lesson.name }}" [href]="lesson.link"><i class="cil-cloud-download"></i> <span>Fazer Download</span></a>
+                    <button class="secondary" (click)="addToWatchLater()">
+                        <span>Assistir Mais Tarde</span>
+                        <i class="mobile cil-clock"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <div plyr class="video-player desktop" [plyrSources]="lesson.video" [plyrPoster]="lesson.banner" [plyrTitle]="lesson.name"></div>
+    </div>
 </article>
 
 <article class="course">

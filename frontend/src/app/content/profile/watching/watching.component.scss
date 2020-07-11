@@ -41,7 +41,7 @@ atz-lesson-card {
 }
 
 
-@media screen and (max-width: 620px){
+@media screen and (max-width: 770px){
     :host {
         flex-direction: column;
         align-items: flex-start;
@@ -49,10 +49,6 @@ atz-lesson-card {
 
     .lesson {
         margin: 7vw 0 0;
-
-        .name {
-            font-size: 7vw;
-        }
 
         .actions {
             text-align: center;
@@ -65,5 +61,13 @@ atz-lesson-card {
 
     atz-lesson-card {
         width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .lesson {
+        .name {
+            font-size: 7vw;
+        }
     }
 }

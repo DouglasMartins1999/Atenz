@@ -81,9 +81,14 @@
     flex-grow: 1;
     background-color: #202020;
     padding: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+
+    .wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1500px;
+        margin: 0 auto;
+    }
 
     .info {
         display: flex;
@@ -132,6 +137,9 @@
 
 .read,
 .course {
+    max-width: 1500px;
+    margin: 0 auto;
+
     section {
         display: flex;
     }

@@ -32,7 +32,9 @@ $active-bg: #202020;
 }
 
 main {
-    margin: 52px 70px;
+    max-width: 1400px;
+    margin: 52px auto;
+    padding: 0 72px;
 }
 
 .results-amount {

@@ -55,18 +55,17 @@ export class ProfileComponent implements OnInit {
 	) { }
 		
 	ngOnInit(): void {
-		this.route.params.subscribe(param => {
-			if(param['section'] === "home"){
-				this.activeSection = null;
-				return;
-			}
-
-			this.activeSection = param['section'];
-		})
-
 		this.http.get("/api/profile")
 			.subscribe(data => { 
 				this.content = data;
+				this.route.params.subscribe(param => {
+					if(param['section'] === "home"){
+						this.activeSection = null;
+						return;
+					}
+		
+					this.toggleActive(param['section']);
+				})
 			});
 	}
 
@@ -76,7 +75,7 @@ export class ProfileComponent implements OnInit {
 			spaceBetween: 20,
 			slidesPerView: 4,
 			breakpoints: {
-				360: { slidesPerView: 1 },
+				0: { slidesPerView: 1 },
 				480: { slidesPerView: 2 },
 				1130: { slidesPerView: 3 },
 				1300: { slidesPerView: 4 }
@@ -84,12 +83,9 @@ export class ProfileComponent implements OnInit {
 		})
 
 		slider.on('reachEnd', () => {
-			const sect = slider.$el[0].id;
-
-			if(!this.sections[sect].isBusy)
-				this.fetchData(sect)
-					.add(() => slider.update())
-					.unsubscribe();
+			this.fetchData(slider.$el[0].id)
+				.add(() => slider.update())
+				.unsubscribe();
 		})
 
 		this.sliders.push(slider);
@@ -110,6 +106,8 @@ export class ProfileComponent implements OnInit {
 
 	fetchData(type){
 		const section = this.sections[type];
+		if(section.isBusy) return;
+
 		section.isBusy = true;
 		return this.http.get("/api/profile/" + section.url + "?pag=" + section.pag)
 			.subscribe((data: any[]) => {
@@ -142,7 +140,8 @@ export class ProfileComponent implements OnInit {
 	}
 
 	toggleActive(value){
-		if(!this.activeSection){
+		console.log(value)
+		if(this.activeSection !== value){
 			this.activeSection = value
 			this.fetchData(value)
 
@@ -157,7 +156,7 @@ export class ProfileComponent implements OnInit {
 		const target = evnt.target;
 
 		if(target.offsetHeight + target.scrollTop > wrapper.offsetTop + wrapper.offsetHeight){
-			if(this.activeSection && !this.sections[this.activeSection].isBusy){
+			if(this.activeSection){
 				this.fetchData(this.activeSection);
 			}
 		}
