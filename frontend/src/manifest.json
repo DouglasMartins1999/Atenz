@@ -1,5 +1,12 @@
 {
     "name": "Atenz - View & Read Everywhere",
+    "short_name": "Atenz",
+    "start_url": "/",
+    "icons": {
+        "192": "/favicon_192.png",
+        "512": "/favicon.png"
+    },
     "display": "standalone",
-    "theme_color": "#202020"
+    "theme_color": "#202020",
+    "background_color": "#202020"
 }

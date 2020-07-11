@@ -12,6 +12,8 @@ import { ActivateRouteGuard } from './services/auth.guard';
 
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 registerLocaleData(ptBr);
 
 @NgModule({
@@ -25,6 +27,7 @@ registerLocaleData(ptBr);
     LoginModule,
     GenericsModule,
     HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     ActivateRouteGuard,
