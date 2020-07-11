@@ -9,6 +9,28 @@ $active-bg: #202020;
     overflow-y: scroll;
 }
 
+.emptystate {
+    width: 65%;
+    margin: 10vh auto;
+    display: flex;
+    color: #777;
+    font-weight: 300;
+    line-height: 1.45;
+
+    img {
+        width: 100%;
+        max-width: 200px;
+        flex-shrink: 0;
+        margin-right: 5%;
+    }
+
+    h1 {
+        color: #EEE;
+        font-size: 6vh;
+        margin: 0;
+    }
+}
+
 main {
     margin: 52px 70px;
 }
@@ -70,6 +92,7 @@ main {
         width: 100%;
         padding: 36px;
         box-sizing: border-box;
+        cursor: pointer;
 
         &.active {
             background: $active-bg;
@@ -150,6 +173,7 @@ main {
         display: flex;
         align-items: center;
         position: relative;
+        cursor: pointer;
 
         .data {
             margin-left: 24px;
@@ -195,6 +219,7 @@ main {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
+        cursor: pointer;
 
         > div {
             width: 100%;
@@ -222,13 +247,17 @@ main {
 
 
 @media screen and (max-width: 620px){
+    :host {
+        height: 100%;
+    }
+
     main {
         margin: 5vw 8vw;
     }
 
     .filters {
         flex-direction: column;
-        align-items: flex-end;
+        align-items: flex-start;
         margin: 6vw 0;
     }
 
@@ -237,6 +266,7 @@ main {
     }
 
     .featured {
+        margin-top: 46px;
         grid-template-columns: 1fr;
         gap: 12vw;
 
@@ -311,6 +341,7 @@ main {
 
     .books {
         min-width: unset;
+        width: 100%;
 
         li {
             flex-direction: row;

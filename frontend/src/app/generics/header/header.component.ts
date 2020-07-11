@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
 
   search(event, q){
     event.preventDefault();
+    if(q === "") return;
     this.router.navigate(['search'], { queryParams: { q }})
   }
 

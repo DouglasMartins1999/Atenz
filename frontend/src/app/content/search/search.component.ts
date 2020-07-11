@@ -24,8 +24,6 @@ export class SearchComponent implements OnInit {
 	books = [];
 	featured;
 
-	itens = [false, true, true, false]
-
 	@ViewChild("search_wrapper") wrapper;
 	@HostListener("scroll", ["$event.target"])
 	scrollHandler(target){

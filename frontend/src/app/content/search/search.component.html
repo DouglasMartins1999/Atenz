@@ -70,7 +70,7 @@
 
         <ul class="books" *ngIf="books.length && (opts.tab === 'b' || opts.tab === null)">
             <li *ngFor="let i of books" [ngClass]="{ 'active': i.wasReaded }" (click)="goToBook(i.id)">
-                <img [src]="i.cover" class="scale">
+                <img [src]="i.cover" class="scale" [title]="i.title + ' - ' + i.author">
                 <div>
                     <div class="detail">
                         <label>Páginas:</label>
@@ -79,5 +79,13 @@
                 </div>
             </li>
         </ul>
+    </section>
+
+    <section class="emptystate" *ngIf="opts.tab == 'b' && !books.length || (opts.tab == 'l' || opts.tab == null) && !featured.length || (opts.tab == 'c' || opts.tab == 'm') && !content.length ">
+        <img src="../../../assets/images/empty_states/search.svg">
+        <div>
+            <h1>Oops...</h1>
+            <p>Parece que ainda não temos nada sobre "{{ query }}" em nosso catálogo. Talvez se você procurar com menos palavras ou algo diferente possamos encontrar o que deseja :)</p>
+        </div>
     </section>
 </main>

@@ -13,8 +13,8 @@
             </div>
 
             <div class="actions">
-                <button (click)="navigate(lesson.id - 1)"><i class="cil-media-step-backward"></i></button>
-                <button (click)="navigate(lesson.id + 1)"><i class="cil-media-step-forward"></i></button>
+                <button (click)="navigate(lesson.id - 1)" [disabled]="lesson.position <= 1"><i class="cil-media-step-backward"></i></button>
+                <button (click)="navigate(lesson.id + 1)" [disabled]="lesson.position >= getLessonAmount()"><i class="cil-media-step-forward"></i></button>
             </div>
         </div>
 
@@ -77,7 +77,7 @@
 
     <section class="content">
         <ul class="modules" [ngClass]="{ 'mobile-hidden': lessonTabActive }">
-            <li *ngFor="let i of course?.modules" (click)="navigate(null, i.id); lessonTabActive = true">
+            <li *ngFor="let i of course?.modules" (click)="navigate(null, i.id); lessonTabActive = true" [ngClass]="{ 'active': i.id == currentModule }">
                 <div>
                     <p>{{ i.name }}</p>
                     <span>{{ i.duration | timeduration }}</span>
@@ -104,6 +104,12 @@
                     <button (click)="breakBubbling($event)" (click)="addToWatchLater(i.id)"><i class="cil-clock"></i></button>
                 </div>
             </li>
+            
+            <section class="emptystate" *ngIf="!module">
+                <img src="../../../assets/images/empty_states/module.svg">
+                <h1>Selecione um módulo da lista ao lado para ver as aulas que ele contém</h1>
+                <p>A divisão por módulos ajuda o curso a ficar mais organizado :)</p>
+            </section>
         </ul>
     </section>
 </article>

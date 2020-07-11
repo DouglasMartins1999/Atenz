@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { filter, distinctUntilChanged, mergeMap } from 'rxjs/operators';
@@ -53,41 +53,91 @@ export class BookComponent implements OnInit {
 		}
 	}
 
-	favoriteIt(){
-		this.http.post(`api/books/${this.content.id}/favorite`, {})
+	favoriteIt(remove = false){
+		const deletion = {
+			call: this.http.delete(`api/books/${this.content.id}/favorite`, {}),
+			success: "Removemos esse item da sua lista de favoritos. Quando quiser vê-lo novamente, basta fazer uma busca",
+			error: "Houve um erro ao remover esse item da sua lista de favoritos, se ele de fato estiver presente, talvez estejamos passando por instabilidades. Tente mais tarde, okay?"
+		}
+
+		const addiction = {
+			call: this.http.post(`api/books/${this.content.id}/favorite`, {}),
+			success: "Adicionamos esse item a sua lista de favoritos, você poderá encontrá-lo a partir da tela inicial",
+			error: "Houve um erro ao adicionar esse item a sua lista de favoritos, talvez ele já tenha sido adicionado ou estamos com problemas temporarios. Confira a lista e tente novamente mais tarde"
+		}
+
+		const operation = remove ? deletion : addiction;
+		
+		operation.call
 			.subscribe((resp: boolean ) => {
 				const data = new ModalData()
 					.fromService(this.modal)
 					.setCloseAction()
 					.setVisibility(true);
 
+				if(!remove) {
+					data.setAction({
+						title: "Remover Favorito",
+						isPrimary: false,
+						action: () => {
+							this.modal.toggleVisibility();
+							this.favoriteIt(true)
+						}
+					});
+				}
+
 				if(resp) data
 					.setTitle("Sucesso!")
-					.setDescription("Adicionamos esse livro a sua lista de favoritos, você poderá encontrá-lo a partir da tela inicial")
+					.setDescription(operation.success)
 
 				else data
 					.setTitle("Oops...")
-					.setDescription("Houve um erro ao adicionar esse livro a sua lista de favoritos, talvez ele já tenha sido adicionado ou estamos com problemas temporarios. Confira a lista e tente novamente mais tarde");
+					.setDescription(operation.error);
 				
 				this.modal.changeModalContent(data);
 			})
 	}
 
-	markItAsReaded(){
-		this.http.post(`api/books/${this.content.id}/read`, {})
-			.subscribe((resp: boolean) => {
+	markItAsReaded(remove = false){
+		const deletion = {
+			call: this.http.delete(`api/books/${this.content.id}/read`, {}),
+			success: "Removemos esse item da sua lista de livros lidos. Quando quiser vê-lo novamente, basta fazer uma busca, ou salvá-lo em seus favoritos.",
+			error: "Houve um erro ao remover esse item da sua lista de livros lidos, se ele de fato estiver presente, talvez estejamos passando por instabilidades. Tente mais tarde, ok?"
+		}
+
+		const addiction = {
+			call: this.http.post(`api/books/${this.content.id}/read`, {}),
+			success: "Parabéns por concluir mais uma leitura! Estamos orgulhosos por te ajudar nessa caminhada. Continue assim!",
+			error: "Estamos com problemas, talvez esse livro já tenha sido marcado anteriormente ou precisamos dar uma arrumada na casa. Tente mais tarde, okay?"
+		}
+
+		const operation = remove ? deletion : addiction;
+		
+		operation.call
+			.subscribe((resp: boolean ) => {
 				const data = new ModalData()
 					.fromService(this.modal)
 					.setCloseAction()
 					.setVisibility(true);
 
+				if(!remove) {
+					data.setAction({
+						title: "Marcar como \"Não Lido\"",
+						isPrimary: false,
+						action: () => {
+							this.modal.toggleVisibility();
+							this.markItAsReaded(true);
+						}
+					});
+				}
+
 				if(resp) data
 					.setTitle("Sucesso!")
-					.setDescription("Parabéns por concluir mais uma leitura! Estamos orgulhosos por te ajudar nessa caminhada. Continue assim!")
+					.setDescription(operation.success)
 
 				else data
 					.setTitle("Oops...")
-					.setDescription("Estamos com problemas, talvez esse livro já tenha sido marcado anteriormente ou precisamos dar uma arrumada na casa. Tente mais tarde, okay?");
+					.setDescription(operation.error);
 				
 				this.modal.changeModalContent(data);
 			})

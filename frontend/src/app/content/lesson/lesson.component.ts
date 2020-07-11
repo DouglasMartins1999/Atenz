@@ -1,6 +1,6 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, mergeMap, map, distinctUntilChanged } from 'rxjs/operators';
+import { filter, mergeMap, map, distinctUntilKeyChanged } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ModalService, ModalData } from 'src/app/services/modal.service';
 
@@ -9,12 +9,16 @@ import { ModalService, ModalData } from 'src/app/services/modal.service';
 	templateUrl: './lesson.component.html',
 	styleUrls: ['./lesson.component.scss']
 })
+@Injectable({
+	providedIn: 'root'
+})
 export class LessonComponent implements OnInit {
 	lesson: Lesson;
 	course: Course;
 	module: ModuleLesson[];
 
 	lessonTabActive: boolean = false;
+	currentModule: number = null;
 	
 	constructor(
 		private router: Router,
@@ -28,10 +32,11 @@ export class LessonComponent implements OnInit {
 		this.route.queryParams
 			.pipe(
 				filter(params => params.lesson),
-				distinctUntilChanged(),
+				distinctUntilKeyChanged("lesson"),
 				mergeMap(params => this.http.get("/api/courses/module/lesson/" + params.lesson))
 			)
 			.subscribe((resp: Lesson) => {
+				console.log("data")
 				this.lesson = resp;
 				this.lesson.video = [{ src: resp.link }];
 				this.navigate(null, resp.moduleId, resp.courseId)
@@ -71,26 +76,10 @@ export class LessonComponent implements OnInit {
 		this.router.navigate(['view'], { queryParams, queryParamsHandling: "merge" })
 	}
 
-	addToWatchLater(id = this.lesson.id){
-		const data = new ModalData().fromService(this.modal).setCloseAction();
-
-		this.http.post(`/api/courses/module/lesson/${id}/watchlater`, undefined)
-			.subscribe((result: { added: boolean }) => {
-				if(result.added){
-					data.setTitle("Perfeito!")
-						.setDescription("Essa aula foi adicionada para visualização posterior. Pode conferir todas as aulas a partir do seu perfil, na página inicial")
-						.setVisibility(true);
-				} else {
-					data.setTitle("Oops...")
-						.setDescription("Não foi possível adicionar essa aula na lista de assistir posteriormente. Talvez ela já esteja cadastrada ou estamos com problemas no momento. Se possível, tente novamente mais tarde")
-						.setVisibility(true);
-				}
-
-				return this.modal.changeModalContent(data);
-			})
-	}
+	
 
 	fetchModuleLesson(id){
+		this.currentModule = id;
 		return this.http.get<ModuleLesson[]>("api/courses/module/" + id)
 			.pipe(map((resp: ModuleLesson[]) => {
 				this.module = resp;
@@ -117,21 +106,91 @@ export class LessonComponent implements OnInit {
 		}
 	}
 
-	favoriteIt(){
-		this.http.post(`api/courses/${this.course.id}/favorite`, {})
-			.subscribe((resp: { added: boolean }) => {
+	favoriteIt(remove = false){
+		const deletion = {
+			call: this.http.delete(`api/courses/${this.course.id}/favorite`, {}),
+			success: "Removemos esse item da sua lista de favoritos. Quando quiser vê-lo novamente, basta fazer uma busca",
+			error: "Houve um erro ao remover esse item da sua lista de favoritos, se ele de fato estiver presente, talvez estejamos passando por instabilidades. Tente mais tarde, okay?"
+		}
+
+		const addiction = {
+			call: this.http.post(`api/courses/${this.course.id}/favorite`, {}),
+			success: "Adicionamos esse item a sua lista de favoritos, você poderá encontrá-lo a partir da tela inicial",
+			error: "Houve um erro ao adicionar esse item a sua lista de favoritos, talvez ele já tenha sido adicionado ou estamos com problemas temporarios. Confira a lista e tente novamente mais tarde"
+		}
+
+		const operation = remove ? deletion : addiction;
+		
+		operation.call
+			.subscribe((resp: boolean ) => {
 				const data = new ModalData()
 					.fromService(this.modal)
 					.setCloseAction()
 					.setVisibility(true);
 
-				if(resp.added) data
+				if(!remove) {
+					data.setAction({
+						title: "Remover Favorito",
+						isPrimary: false,
+						action: () => {
+							this.modal.toggleVisibility();
+							this.favoriteIt(true)
+						}
+					});
+				}
+
+				if(resp) data
 					.setTitle("Sucesso!")
-					.setDescription("Adicionamos esse curso a sua lista de favoritos, você poderá encontrá-lo a partir da tela inicial")
+					.setDescription(operation.success)
 
 				else data
 					.setTitle("Oops...")
-					.setDescription("Houve um erro ao adicionar esse curso a sua lista de favoritos, talvez ele já tenha sido adicionado ou estamos com problemas temporarios. Confira a lista e tente novamente mais tarde");
+					.setDescription(operation.error);
+				
+				this.modal.changeModalContent(data);
+			})
+	}
+
+	addToWatchLater(id = this.lesson.id, remove = false){
+		const deletion = {
+			call: this.http.delete(`/api/courses/module/lesson/${id}/watchlater`, undefined),
+			success: "Removemos a marcação dessa aula. Quando quiser vê-lo novamente, basta fazer uma busca. Você pode salvar o curso nos favoritos para facilitar",
+			error: "Houve um erro ao remover esse item da sua lista. Se ele de fato estiver presente, talvez estejamos passando por instabilidades. Tente mais tarde, ok?"
+		}
+
+		const addiction = {
+			call: this.http.post(`/api/courses/module/lesson/${id}/watchlater`, undefined),
+			success: "Essa aula foi adicionada para visualização posterior. Pode conferir todas as aulas a partir do seu perfil, na página inicial",
+			error: "Não foi possível adicionar essa aula na lista de assistir posteriormente. Talvez ela já esteja cadastrada ou estamos com problemas no momento. Se possível, tente novamente mais tarde"
+		}
+
+		const operation = remove ? deletion : addiction;
+		
+		operation.call
+			.subscribe((resp: boolean ) => {
+				const data = new ModalData()
+					.fromService(this.modal)
+					.setCloseAction()
+					.setVisibility(true);
+
+				if(!remove) {
+					data.setAction({
+						title: "Remover Favorito",
+						isPrimary: false,
+						action: () => {
+							this.modal.toggleVisibility();
+							this.addToWatchLater(id, true)
+						}
+					});
+				}
+
+				if(resp) data
+					.setTitle("Sucesso!")
+					.setDescription(operation.success)
+
+				else data
+					.setTitle("Oops...")
+					.setDescription(operation.error);
 				
 				this.modal.changeModalContent(data);
 			})
@@ -161,7 +220,7 @@ export class LessonComponent implements OnInit {
 
 	breakBubbling = (evt: any) => evt.stopPropagation();
 	getModuleDuration = () => this.course.modules.map(item => item.duration);
-	getLessonAmount = () => this.course.modules.reduce((acc, x): number => acc + parseInt(x.lessonsAmount), 0);
+	getLessonAmount = () => this.course?.modules?.reduce((acc, x): number => acc + parseInt(x.lessonsAmount), 0);
 }
 
 interface Lesson {

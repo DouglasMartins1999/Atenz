@@ -4,7 +4,32 @@
     display: block;
     overflow-y: scroll;
     scroll-behavior: smooth;
-    height: 100vh;
+    height: 100%;
+}
+
+.emptystate {
+    width: 40%;
+    color: #888;
+    flex-direction: column;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    img {
+        max-width: 100px;
+    }
+
+    h1 {
+        margin: 16px 0px 8px;
+        font-size: 16px;
+    }
+
+    p {
+        margin: 0;
+        font-size: 14px;
+        color: #666;
+    }
 }
 
 
@@ -44,6 +69,10 @@
     i {
         color: #646464;
         margin: 0;
+    }
+
+    &:disabled {
+        opacity: .4;
     }
 }
 
@@ -173,6 +202,16 @@
             padding: 16px 18px;
             border-bottom: 1px solid #373737;
             cursor: pointer;
+            transition: all ease 400ms;
+            border-left: 5px solid transparent;
+
+            &.active {
+                border-left-color: #c76218;
+
+                p {
+                    font-weight: 700;
+                }
+            }
 
             p {
                 color: #FFF;
@@ -214,6 +253,8 @@
         background: #2F2F2F;
         border-radius: 18px;
         height: 450px;
+        display: flex;
+        flex-direction: column;
         overflow-y: scroll;
         position: sticky;
         top: 42px;
@@ -276,6 +317,10 @@
 }
 
 @media screen and (max-width: 1024px){
+    :host {
+        height: 100%;
+    }
+
     atz-header.mobile {
         display: flex;
     }

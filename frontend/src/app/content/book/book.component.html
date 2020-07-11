@@ -42,6 +42,9 @@
     <section class="cover">
         <img [src]="content?.cover" class="small">
         <img [src]="content?.cover" class="large">
+        <button class="secondary mobile markit" (click)="markItAsReaded()">
+            <i class="cil-bookmark"></i>
+        </button>
         <a class="btn unique mobile" download="{{ content?.title }}" [href]="content?.link"><i class="cil-cloud-download"></i></a>
     </section>
 </article>

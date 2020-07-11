@@ -2,6 +2,6 @@
 <atz-loading *ngIf="loadingStatus"></atz-loading>
 <atz-navbar *ngIf="authService.isAuth"></atz-navbar>
 
-<article>
+<article [ngClass]="{ 'navpadding': authService.isAuth }">
     <router-outlet></router-outlet>
 </article>

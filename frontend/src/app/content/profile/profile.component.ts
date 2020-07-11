@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ModalData, ModalService } from 'src/app/services/modal.service';
 import Swiper from 'swiper';
 
 @Component({
@@ -15,22 +16,33 @@ export class ProfileComponent implements OnInit {
 
 	public content = null;
 	public activeSection = null;
+	public isModalOpen = false;
 	private sliders = [];
 	private sections = {
 		watchLater: {
 			url: "watchLater",
 			isBusy: false,
-			pag: 1,
+			pag: 2,
 		},
 		favCourses: {
 			url: "favorite/courses",
 			isBusy: false,
-			pag: 1,
+			pag: 2,
 		},
 		favBooks: {
 			url: "favorite/books",
 			isBusy: false,
-			pag: 1,
+			pag: 2,
+		},
+		recentBooks: {
+			url: "recents/books",
+			isBusy: false,
+			pag: 2
+		},
+		recentCourses: {
+			url: "recents/courses",
+			isBusy: false,
+			pag: 2
 		}
 	}
 
@@ -38,7 +50,8 @@ export class ProfileComponent implements OnInit {
 		public auth: AuthService, 
 		private http: HttpClient,
 		private router: Router,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		private modal: ModalService
 	) { }
 		
 	ngOnInit(): void {
@@ -70,6 +83,15 @@ export class ProfileComponent implements OnInit {
 			}
 		})
 
+		slider.on('reachEnd', () => {
+			const sect = slider.$el[0].id;
+
+			if(!this.sections[sect].isBusy)
+				this.fetchData(sect)
+					.add(() => slider.update())
+					.unsubscribe();
+		})
+
 		this.sliders.push(slider);
 		return slider;
 	}
@@ -89,7 +111,7 @@ export class ProfileComponent implements OnInit {
 	fetchData(type){
 		const section = this.sections[type];
 		section.isBusy = true;
-		this.http.get("/api/profile/" + section.url + "?pag=" + section.pag)
+		return this.http.get("/api/profile/" + section.url + "?pag=" + section.pag)
 			.subscribe((data: any[]) => {
 				if(data.length){
 					this.content[type].push(...data);
@@ -99,16 +121,32 @@ export class ProfileComponent implements OnInit {
 			})
 	}
 
+	clearHistory(mindate, maxdate, lesson, books){
+		const modal = new ModalData().setCloseAction().setVisibility(true).fromService(this.modal);
+		const url = "/api/profile/history" +
+					"?mindate=" + mindate + 
+					"&maxdate=" + maxdate +
+					"&lessons=" + lesson + 
+					"&books=" + books;
+
+		this.isModalOpen = false;
+		this.http.delete(url, {})
+			.subscribe((data: any) => {
+				if(data.changes){
+					modal.setTitle("Sucesso").setDescription(`Removemos ${data.changes} iten${data.changes == 1 ? "" : "s"} do seu histórico entre o período solicitado. Essa ação não afeta suas listas de favoritos e visualização posterior`)
+				} else {
+					modal.setTitle("Oops...").setDescription("Não houve alterações no seu histórico, talvez não houve visualizações no período informado. Tente um valor diferente");
+				}
+				this.modal.changeModalContent(modal);
+			})
+	}
+
 	toggleActive(value){
 		if(!this.activeSection){
 			this.activeSection = value
-			this.content[value].length = 0;
 			this.fetchData(value)
 
 		} else {
-			this.content[this.activeSection].length = 3;
-			this.sections[this.activeSection].isBusy = false;
-			this.sections[this.activeSection].pag = 1;
 			this.activeSection = null;
 		}
 	}

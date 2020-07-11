@@ -30,6 +30,10 @@
         <ul>
             <li *ngFor="let i of content?.interests">{{ i }}</li>
         </ul>
+
+        <div class="section-emptystate" *ngIf="!content?.interests.length">
+            <p>Registraremos aqui algumas palavras chaves dos cursos que interagir com maior frequência, assim poderá encontrar material relacionado mais facilmente</p>
+        </div>
     </div>
 
     <div id="goals">
@@ -75,7 +79,7 @@
 
     <div id="reset">
         <button (click)="auth.signout()">Fazer Logout</button>
-        <button class="secondary">Limpar Progresso</button>
+        <button (click)="isModalOpen = true" class="secondary">Limpar Histórico</button>
     </div>
 </section>
 
@@ -83,29 +87,51 @@
     <atz-header></atz-header>
     
     <main #wrapper>
-        <section *ngIf="!activeSection">
+        <section *ngIf="!activeSection && content?.latest">
             <h1 class="title">Continue Assistindo</h1>
             <atz-watching [latest]="content?.latest"></atz-watching>
         </section>
 
-        <section *ngIf="!activeSection">
-            <h1 class="title">Cursos Recentes</h1>
+        <section *ngIf="!activeSection || activeSection === 'recentCourses'">
+            <div class="header-row">
+                <h1 class="title">Cursos Recentes</h1>
+                <button class="secondary" (click)="toggleActive('recentCourses')">
+                    <i class="cil-list"></i>
+                    <span>{{ activeSection === 'recentCourses' ? 'Minimizar' : 'Expandir' }}</span>
+                </button>
+            </div>
             <ul class="card-list three-itens">
-                <li *ngFor="let i of content?.recentCourses">
+                <li *ngFor="let i of content?.recentCourses | slice:0:( activeSection ? undefined : 3 )">
                     <atz-course-card [course]="i"></atz-course-card>
                 </li>
             </ul>
+
+            <div class="section-emptystate" *ngIf="!content?.recentCourses.length">
+                <img src="../../../assets/images/empty_states/course.svg">
+                <div>
+                    <h4>Quer aprender algo novo?</h4>
+                    <p>Sempre que acessar qualquer aula de qualquer curso, ele ficará registrado aqui para que você possa continuar facilmente de onde parou. Não é prático?</p>
+                </div>
+            </div>
         </section>
 
         <section *ngIf="!activeSection">
             <h1 class="title">Lidos Recentemente</h1>
-            <ul class="swiper-container">
+            <ul class="swiper-container" id="recentBooks">
                 <div class="swiper-wrapper" watchElement (DOMChange)="sliderChangeDetection($event)">
                     <li *ngFor="let i of content?.recentBooks" class="swiper-slide" (click)="navigate(null, i.id)">
                         <atz-book-card [book]="i"></atz-book-card>
                     </li>
                 </div>
             </ul>
+
+            <div class="section-emptystate" *ngIf="!content?.recentBooks.length">
+                <img src="../../../assets/images/empty_states/books.svg">
+                <div>
+                    <h4>Como andam suas leituras?</h4>
+                    <p>Assim que terminar de ler algum livro, clique na opção "Marcar como Lido" na própria página, e poderá ter fácil acesso a eles a partir dessa seção</p>
+                </div>
+            </div>
         </section>
 
         <section *ngIf="!activeSection || activeSection === 'favCourses'">
@@ -117,10 +143,18 @@
                 </button>
             </div>
             <ul class="card-list three-itens">
-                <li *ngFor="let i of content?.favCourses">
+                <li *ngFor="let i of content?.favCourses | slice:0:( activeSection ? undefined : 3 )">
                     <atz-course-card [course]="i"></atz-course-card>
                 </li>
             </ul>
+
+            <div class="section-emptystate" *ngIf="!content?.recentCourses.length">
+                <img src="../../../assets/images/empty_states/course.svg">
+                <div>
+                    <h4>Será que não há um curso que você possa gostar?</h4>
+                    <p>Procure por cursos que te disperte interesse, e poderá registrá-los para serem acessados facilmente por essa seção ao tocar na estrela abaixo da descrição de cada curso</p>
+                </div>
+            </div>
         </section>
 
         <section *ngIf="!activeSection || activeSection === 'watchLater'">
@@ -132,24 +166,40 @@
                 </button>
             </div>
             <ul class="card-list three-itens">
-                <li *ngFor="let i of content?.watchLater" (click)="navigate(i.id)">
+                <li *ngFor="let i of content?.watchLater | slice:0:( activeSection ? undefined : 3 )" (click)="navigate(i.id)">
                     <atz-lesson-card [image]="i.banner">
                         <span class="badge spaceless">{{ i.duration | timeduration }} m</span>
                         <p class="name small">{{ i.name }}</p>
                     </atz-lesson-card>
                 </li>
             </ul>
+
+            <div class="section-emptystate" *ngIf="!content?.watchLater.length">
+                <img src="../../../assets/images/empty_states/books2.svg">
+                <div>
+                    <h4>Não precisa procurar por uma aula sempre que desejar acessá-la</h4>
+                    <p>Você pode marcá-las para "Assistir Mais Tarde" na tela de cada aula e elas aparecerão aqui para assitir quantas vezes desejar</p>
+                </div>
+            </div>
         </section>
 
         <section *ngIf="!activeSection">
-            <h1 class="title">Mais Lidos</h1>
-            <ul class="swiper-container">
+            <h1 class="title">Seus livros favoritos</h1>
+            <ul class="swiper-container" id="favBooks">
                 <div class="swiper-wrapper" watchElement (DOMChange)="sliderChangeDetection($event)">
                     <li *ngFor="let i of content?.favBooks" class="swiper-slide" (click)="navigate(null, i.id)">
                         <atz-book-card [book]="i"></atz-book-card>
                     </li>
                 </div>
             </ul>
+
+            <div class="section-emptystate" *ngIf="!content?.favBooks.length">
+                <img src="../../../assets/images/empty_states/books.svg">
+                <div>
+                    <h4>Gostou muito de um livro? Não o perca nunca mais</h4>
+                    <p>Você pode marcar um livro como "Favorito" em suas respectivas páginas para que você possa vê-lo aqui quando precisar</p>
+                </div>
+            </div>
         </section>
 
         <section *ngIf="activeSection === 'favBooks'">
@@ -162,3 +212,27 @@
         </section>
     </main>
 </article>
+
+<section class="modal-overlay" *ngIf="isModalOpen">
+    <div class="clear-modal">
+        <h1>Limpar Histórico</h1>
+        <p>Você pode limpar os seus dados de navegação em um intervalo de tempo específico, tanto de seus livros quanto de suas aulas. É importante lembrar que essa ação NÃO é reversível.</p>
+
+        <form>
+            <label>Data Mínima</label>
+            <label>Data Máxima</label>
+            <input type="date" placeholder="Data Mínima" #mindate>
+            <input type="date" placeholder="Data Máxima" #maxdate>
+        </form>
+        <div class="actions">
+            <div>
+                <input type="checkbox" #books><label>Remover Livros</label><br/>
+                <input type="checkbox" #lessons><label>Remover Aulas</label><br/>
+            </div>
+            <div class="buttons">
+                <button (click)="isModalOpen = false" class="secondary">Cancelar</button>
+                <button (click)="clearHistory(mindate.value, maxdate.value, lessons.checked, books.checked)">Confirmar Exclusão</button>
+            </div>
+        </div>
+    </div>
+</section>
