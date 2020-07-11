@@ -45,6 +45,27 @@ namespace Atenz.Repository.Repositories
             return user;
         }
 
+        public async Task<int> CleanHistory(long user, bool lessons, bool books, DateTime mindate, DateTime maxdate)
+        {
+            if(maxdate < mindate) return 0;
+
+            if(lessons) {
+                var lessonsToRemove = context.History
+                    .Where(i => i.CreatedAt >= mindate && i.CreatedAt <= maxdate && i.UserId == user);
+
+                context.History.RemoveRange(lessonsToRemove);
+            }
+
+            if(books){
+                var booksToRemove = context.ReadHistory
+                    .Where(i => i.CreatedAt >= mindate && i.CreatedAt <= maxdate && i.UserId == user);
+
+                context.ReadHistory.RemoveRange(booksToRemove);
+            }
+
+            return await context.SaveChangesAsync();
+        }
+
         public async Task<User> ProfileBasic(long id){
             return await context.Users
                 .Where(u => u.Id == id)
@@ -63,7 +84,7 @@ namespace Atenz.Repository.Repositories
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<List<Course>> RecentsCourses(long userId, int pag = 1, int limit = 12)
+        public async Task<dynamic> RecentsCourses(long userId, int pag = 1, int limit = 12)
         {
             return await context.History
                 .Where(h => h.UserId == userId)
@@ -72,8 +93,9 @@ namespace Atenz.Repository.Repositories
                 .ThenInclude(m => m.Course)
                 .OrderByDescending(h => h.CreatedAt)
                 .Select(h => h.Lesson.Module.Course)
+                .Distinct()
+                .Take(limit * pag)
                 .Skip((pag - 1) * limit)
-                .Take(limit)
                 .ToListAsync();
         }
 
@@ -84,8 +106,9 @@ namespace Atenz.Repository.Repositories
                 .Include(f => f.Course)
                 .OrderByDescending(h => h.CreatedAt)
                 .Select(f => f.Course)
+                .Distinct()
+                .Take(limit * pag)
                 .Skip((pag - 1) * limit)
-                .Take(limit)
                 .ToListAsync();
         }
 
@@ -98,8 +121,9 @@ namespace Atenz.Repository.Repositories
                 .ThenInclude(m => m.Course)
                 .OrderByDescending(wl => wl.CreatedAt)
                 .Select(wl => wl.Lesson)
+                .Distinct()
+                .Take(limit * pag)
                 .Skip((pag - 1) * limit)
-                .Take(limit)
                 .ToListAsync();
         }
 
@@ -194,11 +218,17 @@ namespace Atenz.Repository.Repositories
         {
             var lessonsAmount = await context.History
                 .Where(h => h.UserId == userId)
+                .Select(i => i.LessonId)
+                .Distinct()
                 .CountAsync();
 
             var booksAmount = await context.ReadHistory
                 .Where(h => h.UserId == userId)
+                .Select(h => h.BookId)
+                .Distinct()
                 .CountAsync();
+
+            Console.WriteLine(lessonsAmount);
 
             return new List<bool>(){
                 lessonsAmount > 0,
@@ -216,8 +246,9 @@ namespace Atenz.Repository.Repositories
                 .Where(h => h.UserId == userId)
                 .OrderByDescending(h => h.CreatedAt)
                 .Select(h => h.Book)
+                .Distinct()
+                .Take(limit * pag)
                 .Skip((pag - 1) * limit)
-                .Take(limit)
                 .ToListAsync();
         }
 
@@ -228,8 +259,9 @@ namespace Atenz.Repository.Repositories
                 .Where(h => h.UserId == userId)
                 .OrderByDescending(h => h.CreatedAt)
                 .Select(h => h.Book)
+                .Distinct()
+                .Take(limit * pag)
                 .Skip((pag - 1) * limit)
-                .Take(limit)
                 .ToListAsync();
         }
     }
