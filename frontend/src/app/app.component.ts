@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ModalService, ModalData } from './services/modal.service';
 import { LoadingService } from './services/loading.service';
 import { AuthService } from './services/auth.service';
@@ -8,7 +8,7 @@ import { AuthService } from './services/auth.service';
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 	public modalContent: ModalData;
 	public loadingStatus: boolean;
 	
@@ -26,5 +26,10 @@ export class AppComponent implements OnInit {
 		this.loadingService.visibility
 			.asObservable()
 			.subscribe(data => this.loadingStatus = data);
+	}
+
+	ngOnDestroy(){
+		this.modalService.content.unsubscribe();
+		this.loadingService.visibility.unsubscribe();
 	}
 }

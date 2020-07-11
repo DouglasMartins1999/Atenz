@@ -37,6 +37,7 @@
 .profile {
     background: $subsection_color;
     width: 30%;
+    max-width: 400px;
     height: 100vh;
     padding: 52px;
     box-sizing: border-box;
@@ -184,7 +185,8 @@ article {
     overflow-y: scroll;
 
     main {
-        margin: 42px 70px;
+        margin: 42px auto;
+        max-width: 830px;
     }
 
     section {
@@ -204,7 +206,9 @@ article {
         display: grid;
         gap: 12px;
 
-        
+        li {
+            cursor: pointer;
+        }
     }
 
     .three-itens {
@@ -292,6 +296,7 @@ article {
 
     .profile {
         box-sizing: border-box;
+        max-width: unset;
         width: 100%;
         padding: 12vw;
         height: 100%;
