@@ -1,0 +1,10 @@
+[
+    {
+        "id": "oracle",
+        "host": "mynamespace.compat.objectstorage.us-phoenix-1.oraclecloud.com",
+        "region": "us-east-1",
+        "withSSL": false,
+        "accessKey": "YOUR ACCESS KEY",
+        "secretKey": "YOUR SECRET KEY"
+    }
+]

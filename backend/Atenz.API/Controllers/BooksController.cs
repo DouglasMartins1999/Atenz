@@ -28,7 +28,7 @@ namespace Atenz.API.Controllers
         public async Task<ActionResult> GetOne(long id)
         {
             var result = await repository.GetById(id);
-            var link = await storage.GetPreSignedLink(result.Link, "books");
+            var link = await storage.GetPreSignedLink(result.Link);
 
             result.Link = link;
             return Ok(result);

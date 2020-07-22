@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Minio;
@@ -8,41 +11,76 @@ namespace Atenz.API.Helpers
 {
     public class StorageService
     {
-        public string bucket;
-        private readonly MinioClient s3client;
+        private List<Storage> storages;
+        private Regex pattern = new Regex("\\w{0,}\\.\\w{0,}@s3:\\/\\/.{0,}");
 
         public StorageService(IConfiguration config)
         {
-            var region = config.GetValue<string>("Storage:Region");
-            var endpoint = config.GetValue<string>("Storage:Endpoint");
-            var accessKey = Environment.GetEnvironmentVariable("S3_ACCESS_KEY");
-            var secretKey = Environment.GetEnvironmentVariable("S3_SECRET_KEY");
+            String json = File.ReadAllText("storageSettings.json");
+            storages = System.Text.Json.JsonSerializer.Deserialize<List<Storage>>(json);
 
-            bucket = config.GetValue<string>("Storage:DefaultBucket");
-            s3client = new MinioClient(endpoint, accessKey, secretKey, region).WithSSL();
+            foreach (var item in storages)
+            {
+                item.client = new MinioClient(item.host, item.accessKey, item.secretKey, item.region);
+                if(item.withSSL){
+                    item.client.WithSSL();
+                }
+            }
         }
 
-        public async Task<string> GetPreSignedLink(string link, string folder = "courses", int expires = 60 * 60 * 2)
+        public async Task<string> GetPreSignedLink(string link, int expires = 60 * 60 * 2)
         {
             var obj = this.IsS3Link(link);
             if(obj == null) return link;
 
-            return await s3client.PresignedGetObjectAsync(bucket, folder + "/" + obj, expires);
+            return await obj.client.PresignedGetObjectAsync(obj.bucket, obj.file, expires);
         }
 
-        public async Task<ObjectStat> GetObjectInfo(string link, string folder = "courses")
+        public async Task<ObjectStat> GetObjectInfo(string link)
         {
             var obj = this.IsS3Link(link);
             if(obj == null) return null;
             
-            return await s3client.StatObjectAsync(bucket, folder + "/" + obj);
+            return await obj.client.StatObjectAsync(obj.bucket, obj.file);
         }
 
-        private string IsS3Link(string link)
+        private StorageObject IsS3Link(string link)
         {
-            var prefix = "s3://";
-            var isS3 = link.Contains(prefix);
-            return isS3 ? link.Replace(prefix, "") : null;
+            if(!this.pattern.IsMatch(link)) return null;   
+            // Links must follow this structure: [bucket].[storageID]@s3://[object path]
+
+            var bucket = link.Split(".")[0];
+            var hostName = link.Split(".")[1].Split("@")[0];
+            var file = link.Split("@s3://")[1];
+            var storage = this.storages.Find(s => s.id == hostName);
+
+            Console.WriteLine(bucket);
+            Console.WriteLine(hostName);
+            Console.WriteLine(file);
+            Console.WriteLine(storage.host);
+
+            return new StorageObject(){
+                client = storage.client,
+                bucket = bucket,
+                file = file
+            };
         }
+    }
+
+    public class Storage {
+        public string id { get; set; }
+        public string host { get; set; }
+        public string region { get; set; }
+        public bool withSSL { get; set; }
+        public string accessKey { get; set; }
+        public string secretKey { get; set; }
+        public MinioClient client { get; set; }
+        public string bucket { get; set; }
+    }
+
+    public class StorageObject {
+        public MinioClient client { get; set; }
+        public string bucket { get; set; }
+        public string file { get; set; }
     }
 }

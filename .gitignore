@@ -81,3 +81,4 @@ msbuild.wrn
 
 # Protected Info
 Environment.txt
+storageSettings.json

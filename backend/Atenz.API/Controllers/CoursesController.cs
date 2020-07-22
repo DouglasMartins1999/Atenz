@@ -72,7 +72,7 @@ namespace Atenz.API.Controllers
             var result = mapper.Map<LessonDTO>(lesson);
 
             result.Link = link ?? lesson.Link;
-            result.Size = metadata.Size;
+            result.Size = metadata == null ? 0 : metadata.Size;
             await repository.AddToHistory(user, id);
             return Ok(result);
         }
