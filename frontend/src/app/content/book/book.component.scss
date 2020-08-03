@@ -153,11 +153,20 @@
 
             .about-track {
                 margin: 0;
+                flex-wrap: wrap;
+
+                .detail {
+                    margin-bottom: 16px;
+                }
             }
 
             .track-actions {
                 display: none;
             }
+        }
+
+        .wrapper {
+            flex-direction: column-reverse;
         }
 
         .subtitle {
