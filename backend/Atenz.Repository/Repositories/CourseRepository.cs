@@ -140,8 +140,7 @@ namespace Atenz.Repository.Repositories
                     .Where(m => m.Name.ToLower().Contains(k));
 
                 var lessonQuery = baseLessons
-                    .Where(l => l.Name.ToLower().Contains(k))
-                    .Skip(page == 1 ? 2 : 0);
+                    .Where(l => l.Name.ToLower().Contains(k));
 
                 courses = courses.Intersect(courseQuery);
                 modules = modules.Intersect(moduleQuery);
@@ -247,81 +246,6 @@ namespace Atenz.Repository.Repositories
                 .ThenBy(s => s.lesson)
                 .Skip((page - 1) * limit)
                 .Take(limit)
-                .ToListAsync();
-        }
-
-        public async Task<dynamic> QueryFeatured(string query, long user, bool favs, bool watchs, bool marked)
-        {
-            var queryStrings = query.ToLower().Split(' ');
-            var baseLessons = Context.Lessons
-                .Include(l => l.Module)
-                .ThenInclude(m => m.Course)
-                .Include(l => l.Watches);
-
-            var baseFavLessons = Context.FavoriteCourses
-                .Include(f => f.Course)
-                .ThenInclude(c => c.Modules)
-                .ThenInclude(m => m.Lessons)
-                .ThenInclude(l => l.Watches)
-                .Where(h => h.UserId == user)
-                .Select(f => f.Course)
-                .SelectMany(c => c.Modules)
-                .SelectMany(m => m.Lessons);
-
-            var baseHistory = Context.History
-                .Include(h => h.Lesson)
-                .ThenInclude(l => l.Module)
-                .ThenInclude(m => m.Course)
-                .Include(l => l.Lesson)
-                .ThenInclude(l => l.Watches)
-                .Where(h => h.UserId == user)
-                .Select(h => h.Lesson);
-
-            var baseWatchLater = Context.WatchLater
-                .Include(h => h.Lesson)
-                .ThenInclude(l => l.Module)
-                .ThenInclude(m => m.Course)
-                .Include(l => l.Lesson)
-                .ThenInclude(l => l.Watches)
-                .Where(h => h.UserId == user)
-                .Select(h => h.Lesson);
-
-            IQueryable<Lesson> lessons = baseLessons;
-
-            foreach(var k in queryStrings){
-                var lesson = baseLessons.Where(l => l.Name.ToLower().Contains(k));
-                lessons = lessons.Intersect(lesson);
-
-                if(favs){
-                    var favorites = baseFavLessons.Where(l => l.Name.ToLower().Contains(k));
-                    lessons = lessons.Join(favorites, l => l.Id, f => f.Id, (l, f) => l);
-                }
-
-                if(watchs){
-                    var history = baseHistory.Where(l => l.Name.ToLower().Contains(k));
-                    lessons = lessons.Intersect(history);
-                }
-
-                if(marked){
-                    var markeds = baseWatchLater.Where(l => l.Name.ToLower().Contains(k));
-                    lessons = lessons.Intersect(markeds);
-                }
-            }
-
-            return await lessons
-                .Take(2)
-                .Select(m => new {
-                    id = m.Id,
-                    name = m.Name,
-                    banner = m.Module.Course.Banner,
-                    course = m.Module.Course.Name,
-                    module = m.Module.Name,
-                    teacher = m.Module.Course.Teacher,
-                    duration = m.Duration.ToString(),
-                    wasWatched = m.Watches.Where(i => i.UserId == user).Count() > 0,
-                    position = m.Position,
-                    lessonsAmount = m.Module.Course.Modules.Select(x => x.Lessons.Count).Sum()
-                })
                 .ToListAsync();
         }
 
