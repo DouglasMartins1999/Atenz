@@ -19,23 +19,26 @@ export class SearchComponent implements OnInit {
 		favoriteds: false,
 		toWatchLater: false,
 		watcheds: false,
-		isBusy: false
+		isBusy: {
+			onBooks: false,
+			onCourses: false
+		}
 	}
 
 	content = [];
 	books = [];
 	featured;
 
-	
-
 	@ViewChild("search_wrapper") wrapper;
 	@HostListener("scroll", ["$event.target"])
 	scrollHandler(target){
-		console.log("hande")
 		const wrapper = this.wrapper.nativeElement;
-		console.log(target.offsetHeight + target.scrollTop, wrapper.offsetTop + wrapper.offsetHeight)
+		const scrollPosition = target.offsetHeight + target.scrollTop;
+		const totalScroll = wrapper.offsetTop + wrapper.offsetHeight;
 
-		if(target.offsetHeight + target.scrollTop > wrapper.offsetTop + wrapper.offsetHeight && !this.opts.isBusy){
+		console.log(scrollPosition, totalScroll);
+
+		if(scrollPosition > totalScroll && !(this.opts.isBusy.onBooks && this.opts.isBusy.onCourses)){
 			this.updateOptions({ booksPag: this.opts.booksPag + 1, coursesPag: this.opts.coursesPag + 1 });
 			console.log(this.opts);
 		}
@@ -49,7 +52,7 @@ export class SearchComponent implements OnInit {
 	) {}
 
 	updateOptions(data){
-		this.opts = { ...this.opts, isBusy: true, ...data };
+		this.opts = { ...this.opts, ...data };
 		
 		if(this.opts.toWatchLater || this.opts.watcheds){
 			if(this.opts.tab !== "l"){
@@ -58,6 +61,9 @@ export class SearchComponent implements OnInit {
 
 			if(data.tab) return;
 		}
+
+		this.opts.isBusy.onBooks = !!data.booksPag;
+		this.opts.isBusy.onCourses = !!data.coursesPag;
 
 		if(!data.booksPag && !data.coursesPag){
 			this.featured = null;
@@ -96,7 +102,7 @@ export class SearchComponent implements OnInit {
 
 		return this.http.get(url).pipe(map((data: any[]) => {
 			this.content.push(...data);
-			this.opts.isBusy = !(data.length > 0);
+			this.opts.isBusy.onCourses = !(data.length > 0);
 			this.opts.coursesPag = opts.coursesPag;
 		}));
 	}
@@ -111,7 +117,7 @@ export class SearchComponent implements OnInit {
 
 		return this.http.get(url).pipe(map((data: any[]) => {
 			this.books.push(...data);
-			this.opts.isBusy = !(data.length > 0);
+			this.opts.isBusy.onBooks = !(data.length > 0);
 			this.opts.booksPag = opts.booksPag;
 		}));
 	}
@@ -127,11 +133,11 @@ export class SearchComponent implements OnInit {
 	}
 
 	goToItem(item){
+		console.log(item);
 		const nav: any = {}
 		if(item.lesson && typeof item.lesson == "number") nav.lesson = item.lesson;
 		if(item.module && typeof item.module == "number") nav.module = item.module;
 		if(item.course && typeof item.course == "number") nav.course = item.course;
-		if(item.id && typeof item.id == "number") nav.lesson = item.id;
 
 		this.router.navigate(['view'], { queryParams: nav });
 	}

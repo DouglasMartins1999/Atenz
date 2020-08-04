@@ -20,7 +20,7 @@
     </div>
 
     <section class="featured" *ngIf="featured && featured.length">
-        <article *ngFor="let i of featured" [ngClass]="{ 'active': i.wasWatched }" class="card" (click)="goToItem(i)">
+        <article *ngFor="let i of featured" [ngClass]="{ 'active': i.wasWatched }" class="card" (click)="goToItem({ lesson: i.id })">
             <header>
                 <atz-lesson-card class="banner" [image]="i.banner">
                     <p class="lessons">{{ i.lessonsAmount }} aulas</p>
