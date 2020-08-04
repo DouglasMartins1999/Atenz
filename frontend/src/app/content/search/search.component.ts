@@ -27,7 +27,6 @@ export class SearchComponent implements OnInit {
 
 	content = [];
 	books = [];
-	featured;
 
 	@ViewChild("search_wrapper") wrapper;
 	@HostListener("scroll", ["$event.target"])
@@ -66,15 +65,10 @@ export class SearchComponent implements OnInit {
 		this.opts.isBusy.onCourses = !!data.coursesPag;
 
 		if(!data.booksPag && !data.coursesPag){
-			this.featured = null;
 			this.content = []
 			this.books = [];
 			this.opts.booksPag = 1;
 			this.opts.coursesPag = 1;
-		}
-
-		if([null, "l"].includes(this.opts.tab)){
-			this.searchFeatured().subscribe();
 		}
 		
 		this.searchCourses().subscribe();
@@ -110,7 +104,7 @@ export class SearchComponent implements OnInit {
 	searchBooks(){
 		const opts = { ...this.opts }
 		const url = "/api/books/search?q=" + this.query +
-				"&lim=" + 13 +
+				"&lim=" + 9 +
 				"&pag=" + opts.booksPag +
 				"&fav=" + opts.favoriteds +
 				"&read=" + opts.watcheds;
@@ -120,16 +114,6 @@ export class SearchComponent implements OnInit {
 			this.opts.isBusy.onBooks = !(data.length > 0);
 			this.opts.booksPag = opts.booksPag;
 		}));
-	}
-
-	searchFeatured(){
-		const opts = { ...this.opts }
-		const url = "/api/courses/search/featured?q=" + this.query +
-			"&fav=" + opts.favoriteds +
-			"&hist=" + opts.watcheds +
-			"&watch=" + opts.toWatchLater;
-
-		return this.http.get(url).pipe(map(item => this.featured = item));
 	}
 
 	goToItem(item){

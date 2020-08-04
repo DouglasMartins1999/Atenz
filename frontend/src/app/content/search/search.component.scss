@@ -65,72 +65,6 @@ main {
     }
 }
 
-.featured {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-    margin-top: 68px;
-
-    .card {
-        background: $default-bg;
-        border-radius: 14px;
-        width: 100%;
-        padding: 36px;
-        box-sizing: border-box;
-        cursor: pointer;
-
-        &.active {
-            background: $active-bg;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-
-            .metadata {
-                margin-left: 36px;
-    
-                .detail {
-                    margin-bottom: 16px;
-                }
-            }
-        }
-    }
-
-    .info {
-        margin-top: 32px;
-
-        h1, h2, p {
-            margin: 0;
-        } 
-
-        h2 {
-            color: $primary-color;
-            font-size: 14px;
-            font-weight: 300;
-        }
-
-        h1 {
-            color: #FFF;
-            font-size: 30px;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        p {
-            color: #666666;
-            font-size: 12px;
-            text-transform: uppercase;
-            margin-top: 3px;
-        }
-    }
-
-    .banner {
-        width: 75% !important;
-        margin-top: -68px;
-    }
-}
-
 .results {
     margin-top: 24px;
     display: flex;
@@ -364,43 +298,6 @@ main {
 
     .toggles {
         margin-top: 16px;
-    }
-
-    .featured {
-        margin-top: 46px;
-        grid-template-columns: 1fr;
-        gap: 12vw;
-
-        .banner {
-            width: 100% !important;
-            margin-top: -14vw;
-        }
-
-        .card {
-            padding: 8vw;
-
-            header {
-                flex-direction: column;
-
-                .metadata {
-                    margin: 0;
-                    display: flex;
-                    margin-top: 16px;
-
-                    > * {
-                        margin-right: 20px;
-                    }
-                }
-            }
-        }
-
-        .info {
-            margin-top: 3vw;
-
-            h1 {
-                font-size: 7vw;
-            }
-        }
     }
 
     .results {
