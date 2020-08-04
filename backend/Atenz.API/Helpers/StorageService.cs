@@ -54,11 +54,6 @@ namespace Atenz.API.Helpers
             var file = link.Split("@s3://")[1];
             var storage = this.storages.Find(s => s.id == hostName);
 
-            Console.WriteLine(bucket);
-            Console.WriteLine(hostName);
-            Console.WriteLine(file);
-            Console.WriteLine(storage.host);
-
             return new StorageObject(){
                 client = storage.client,
                 bucket = bucket,

@@ -112,18 +112,5 @@ namespace Atenz.API.Controllers
             var result = await repository.Query(q, type, user, pag, lim, fav, hist, watch);
             return Ok(result);
         }
-
-        [Authorize]
-        [Route("search/featured")]
-        public async Task<ActionResult> Featured(
-            [FromQuery] string q,
-            [FromQuery] bool fav = false,
-            [FromQuery] bool watch = false,
-            [FromQuery] bool hist = false
-        ){
-            var user = long.Parse(User.Claims.First().Value);
-            var result = await repository.QueryFeatured(q, user, fav, hist, watch);
-            return Ok(result);
-        }
     }
 }
