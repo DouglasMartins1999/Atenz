@@ -20,7 +20,7 @@
     </div>
 
     <section class="featured" *ngIf="featured && featured.length">
-        <article *ngFor="let i of featured" [ngClass]="{ 'active': i.wasWatched }" class="card" (click)="goToItem(i)">
+        <article *ngFor="let i of featured" [ngClass]="{ 'active': i.wasWatched }" class="card" (click)="goToItem({ lesson: i.id })">
             <header>
                 <atz-lesson-card class="banner" [image]="i.banner">
                     <p class="lessons">{{ i.lessonsAmount }} aulas</p>
@@ -56,34 +56,28 @@
 
     <section class="results">
         <ul class="courses" *ngIf="content.length && opts.tab !== 'b'" [ngClass]="{ 'mobile-active': opts.mobileTab == 'VID' }">
-            <li *ngFor="let i of content" [ngClass]="{ 'active': i.wasWatched }" (click)="goToItem(i)">
-                <atz-lesson-card class="scale" [width]="20" [image]="i.banner">
+            <li *ngFor="let i of content" (click)="goToItem(i)">
+                <div class="banner">
+                    <img [src]="i.banner">
                     <div *ngIf="i.amount" class="module-badge">
                         <i class="cil-layers"></i>
                         <span>{{ i.amount | padstart: 2 }}</span>
                     </div>
-                </atz-lesson-card>
-
-                <div class="data">
-                    <p class="meta">{{ i.label ? i.label : i.module ? '(Módulo)' : '(Curso)' }}</p>
-                    <h3 class="name">{{ i.name }}</h3>
                 </div>
 
-                <div class="badges">
-                    <div class="badge dark" *ngIf="i.duration">{{ i.duration }}</div>
+                <div class="data">
+                    <div class="item-duration" *ngIf="i.duration">{{ i.duration }}</div>
+                    <div class="item-title">{{ i.name }}</div>
+                    <div class="item-subtitle" *ngIf="i.label">{{ i.label }}</div>
                 </div>
             </li>
         </ul>
 
         <ul class="books" *ngIf="books.length && (opts.tab === 'b' || opts.tab === null)" [ngClass]="{ 'mobile-active': opts.mobileTab == 'LEC' }">
-            <li *ngFor="let i of books" [ngClass]="{ 'active': i.wasReaded }" (click)="goToBook(i.id)">
+            <li class="book-item" *ngFor="let i of books" (click)="goToBook(i.id)">
                 <img [src]="i.cover" class="scale" [title]="i.title + ' - ' + i.author">
-                <div>
-                    <div class="detail">
-                        <label>Páginas:</label>
-                        <p>{{ i.pages }} pags</p>
-                    </div>
-                </div>
+                <div class="readed" *ngIf="i.wasReaded"><i class="cil-check-circle"></i></div>
+                <div class="pages">{{ i.pages }} pgs</div>
             </li>
         </ul>
     </section>
