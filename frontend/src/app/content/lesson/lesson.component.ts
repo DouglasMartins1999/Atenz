@@ -228,6 +228,8 @@ export class LessonComponent implements OnInit {
 	breakBubbling = (evt: any) => evt.stopPropagation();
 	getModuleDuration = () => this.course.modules.map(item => item.duration);
 	getLessonAmount = () => this.course?.modules?.reduce((acc, x): number => acc + parseInt(x.lessonsAmount), 0);
+	lockScreen = () => window.screen.orientation.lock("landscape");
+	unlockScreen = () => window.screen.orientation.unlock();
 }
 
 interface Lesson {

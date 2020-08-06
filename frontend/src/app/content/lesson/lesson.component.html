@@ -19,7 +19,14 @@
                 </div>
             </div>
 
-            <div plyr class="video-player mobile" [plyrSources]="lesson.video" [plyrPoster]="lesson.banner" [plyrTitle]="lesson.name"></div>
+            <div plyr 
+                class="video-player mobile" 
+                [plyrSources]="lesson.video" 
+                [plyrPoster]="lesson.banner" 
+                [plyrTitle]="lesson.name" 
+                (plyrEnterFullScreen)="lockScreen()" 
+                (plyrExitFullScreen)="unlockScreen()">
+            </div>
 
             <div class="track">
                 <div class="about-track">
