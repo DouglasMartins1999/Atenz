@@ -99,10 +99,10 @@ namespace Atenz.Repository.Repositories
                 })
                 .OrderByDescending(h => h.Max(n => n.CreatedAt))
                 .Select(h => new {
-                    id = h.Key.Id,
-                    name = h.Key.Name,
-                    teacher = h.Key.Teacher,
-                    banner = h.Key.Banner
+                    h.Key.Id,
+                    h.Key.Name,
+                    h.Key.Teacher,
+                    h.Key.Banner
                 })
                 .Take(limit * pag)
                 .Skip((pag - 1) * limit)

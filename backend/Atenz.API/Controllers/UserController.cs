@@ -69,7 +69,7 @@ namespace Atenz.API.Controllers
             
             var result = mapper.Map<ProfileDTO>(user);
             result.Latest = mapper.Map<Latest>(latest);
-            result.RecentCourses = mapper.Map<List<MinimalCourse>>(recentCourse);
+            result.RecentCourses = recentCourse;
             result.FavCourses = mapper.Map<List<MinimalCourse>>(favoriteCourse);
             result.WatchLater = mapper.Map<List<MinimalLesson>>(watchLater);
             result.Interests = interests;
