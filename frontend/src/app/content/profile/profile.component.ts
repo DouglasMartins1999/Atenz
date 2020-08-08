@@ -112,7 +112,7 @@ export class ProfileComponent implements OnInit {
 		if(section.isBusy) return;
 
 		section.isBusy = true;
-		return this.http.get("/api/profile/" + section.url + "?pag=" + section.pag)
+		return this.http.get("/api/profile/" + section.url + "?pag=" + section.pag + "&lim=12")
 			.subscribe((data: any[]) => {
 				if(data.length){
 					this.content[type].push(...data);
