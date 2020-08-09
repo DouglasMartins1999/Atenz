@@ -18,7 +18,7 @@ namespace Atenz.Domain.DTOs
         public Statistics Statistics { get; set; }
         public List<bool> Goals { get; set; }
         public Latest Latest { get; set; }
-        public List<MinimalCourse> RecentCourses { get; set; }
+        public dynamic RecentCourses { get; set; }
         public List<MinimalBook> RecentBooks { get; set; }
         public List<MinimalCourse> FavCourses { get; set; }
         public List<MinimalLesson> WatchLater { get; set; }

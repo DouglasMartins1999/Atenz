@@ -91,9 +91,19 @@ namespace Atenz.Repository.Repositories
                 .Include(h => h.Lesson)
                 .ThenInclude(l => l.Module)
                 .ThenInclude(m => m.Course)
-                .OrderByDescending(h => h.CreatedAt)
-                .Select(h => h.Lesson.Module.Course)
-                .Distinct()
+                .GroupBy(h => new { 
+                    h.Lesson.Module.Course.Id, 
+                    h.Lesson.Module.Course.Name,
+                    h.Lesson.Module.Course.Teacher,
+                    h.Lesson.Module.Course.Banner,
+                })
+                .OrderByDescending(h => h.Max(n => n.CreatedAt))
+                .Select(h => new {
+                    h.Key.Id,
+                    h.Key.Name,
+                    h.Key.Teacher,
+                    h.Key.Banner
+                })
                 .Take(limit * pag)
                 .Skip((pag - 1) * limit)
                 .ToListAsync();
