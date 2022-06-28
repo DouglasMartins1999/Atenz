@@ -1,0 +1,23 @@
+version: "3"
+services:
+  atenz-service:
+    image: martindoug/atenz-service:latest
+    container_name: atenz-service
+    environment:
+      - DB_CONN=Host=domain.ex;Port=5432;Pooling=true;Database=atenz;User Id=atenz;Password=2004c39a0f514dabbf2972ba27abf92b; # RANDOM DATA
+      - JWT_SECRET=7a790b34cf6ecab16876693d266e2cc18b3b7c9f5ae343c6f7e110b7c6fbde81 # RANDOM TOKEN
+    volumes:
+      - ${HOME}/settings:/settings
+    
+  atenz-app:
+    image: martindoug/atenz-app:latest
+    container_name: atenz-app
+    ports:
+      - 80:80
+      - 443:443
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+networks:
+  default:
+    name: atenz
+    driver: bridge
