@@ -1,6 +1,6 @@
 # **Atenz**
 
-O **Atenz** - derivado de Atena, deusa do conhecimento na mitologia grega - é uma web biblioteca online para streaming de cursos e livros didáticos e educacionais. Por meio dela, os usuários podem criar um perfil para armazenar sua atividade, favoritos, próximos passos e visualizar indicadores sobre seu progresso. Uma versão de demonstração pode ser encontrada em atenz.dotins.eu.org. Utilize “demo” como usuário e senha para acessar um perfil modelo.
+O **Atenz** - derivado de Atena, deusa do conhecimento na mitologia grega - é uma web biblioteca online para streaming de cursos e livros didáticos e educacionais. Por meio dela, os usuários podem criar um perfil para armazenar sua atividade, favoritos, próximos passos e visualizar indicadores sobre seu progresso. Uma versão de demonstração pode ser encontrada em [atenz.dotins.eu.org](atenz.dotins.eu.org). Utilize “dotins” como usuário e "demo" como senha para acessar um perfil modelo.
 
 ![Atenz](https://i.imgur.com/VYrM8pa.jpg)
 
