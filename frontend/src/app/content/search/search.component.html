@@ -28,29 +28,33 @@
 
     <section class="results">
         <ul class="courses" *ngIf="content.length && opts.tab !== 'b'" [ngClass]="{ 'mobile-active': opts.mobileTab == 'VID' }">
-            <li *ngFor="let i of content" (click)="goToItem(i)">
-                <div class="banner">
-                    <img [src]="i.banner">
-                    <div *ngIf="i.amount" class="module-badge">
-                        <i class="cil-layers"></i>
-                        <span>{{ i.amount | padstart: 2 }}</span>
+            <a *ngFor="let i of content" href="view?course={{i.course}}&module={{i.module}}&lesson={{i.lesson}}">
+                <li>
+                    <div class="banner">
+                        <img [src]="i.banner">
+                        <div *ngIf="i.amount" class="module-badge">
+                            <i class="cil-layers"></i>
+                            <span>{{ i.amount | padstart: 2 }}</span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="data">
-                    <div class="item-duration" *ngIf="i.duration">{{ i.duration }}</div>
-                    <div class="item-title">{{ i.name }}</div>
-                    <div class="item-subtitle" *ngIf="i.label">{{ i.label }}</div>
-                </div>
-            </li>
+                    <div class="data">
+                        <div class="item-duration" *ngIf="i.duration">{{ i.duration }}</div>
+                        <div class="item-title">{{ i.name }}</div>
+                        <div class="item-subtitle" *ngIf="i.label">{{ i.label }}</div>
+                    </div>
+                </li>
+            </a>
         </ul>
 
         <ul class="books" *ngIf="books.length && (opts.tab === 'b' || opts.tab === null)" [ngClass]="{ 'mobile-active': opts.mobileTab == 'LEC' }">
-            <li class="book-item" *ngFor="let i of books" (click)="goToBook(i.id)">
-                <img [src]="i.cover" class="scale" [title]="i.title + ' - ' + i.author">
-                <div class="readed" *ngIf="i.wasReaded"><i class="cil-check-circle"></i></div>
-                <div class="pages">{{ i.pages }} pgs</div>
-            </li>
+            <a *ngFor="let i of books" href="read?book={{i.id}}">
+                <li class="book-item">
+                    <img [src]="i.cover" class="scale" [title]="i.title + ' - ' + i.author">
+                    <div class="readed" *ngIf="i.wasReaded"><i class="cil-check-circle"></i></div>
+                    <div class="pages">{{ i.pages }} pgs</div>
+                </li>
+            </a>
         </ul>
     </section>
 

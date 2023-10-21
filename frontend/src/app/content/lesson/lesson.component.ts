@@ -33,7 +33,7 @@ export class LessonComponent implements OnInit {
 	ngOnInit(): void {
 		this.route.queryParams
 			.pipe(
-				filter(params => params.lesson),
+				filter(params => params.lesson && params.lesson != "0"),
 				distinctUntilKeyChanged("lesson"),
 				mergeMap(params => this.http.get("/api/courses/module/lesson/" + params.lesson))
 			)
@@ -60,7 +60,7 @@ export class LessonComponent implements OnInit {
 
 		this.route.queryParams
 			.pipe(
-				filter(params => params.module),
+				filter(params => params.module && params.module != "0"),
 				mergeMap(params => this.fetchModuleLesson(params.module))
 			)
 			.subscribe()

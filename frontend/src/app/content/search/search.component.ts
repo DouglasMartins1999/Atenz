@@ -122,11 +122,14 @@ export class SearchComponent implements OnInit {
 		if(item.lesson && typeof item.lesson == "number") nav.lesson = item.lesson;
 		if(item.module && typeof item.module == "number") nav.module = item.module;
 		if(item.course && typeof item.course == "number") nav.course = item.course;
+		// this.router.navigate(['view'], { queryParams: nav });
 
-		this.router.navigate(['view'], { queryParams: nav });
+		const params = new URLSearchParams(nav).toString()
+		window.open('view?' + params, '_blank')
 	}
 
 	goToBook(book){
-		this.router.navigate(['read'], { queryParams: { book }});
+		// this.router.navigate(['read'], { queryParams: { book }});
+		window.open('read?book=' + book, '_blank')
 	}
 }

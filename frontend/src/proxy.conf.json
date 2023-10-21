@@ -1,6 +1,6 @@
 {
     "/api/*": {
-        "target": "https://atenz.xyz",
+        "target": "https://atenz.eu.org",
         "secure": false
     }
 }
